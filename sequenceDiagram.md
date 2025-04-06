@@ -15,7 +15,7 @@ Note over Administrator, Database: Login
   Database-->>System: Valid credentials(res.status(409))
   System-->>Farmer: Alert message: wrong credentials.
  end
- 
+
  Administrator->>System: Login Credentials
  System->>Database: Validate Credentials
  alt is credentialsValid
@@ -36,7 +36,7 @@ Note over Farmer, Database: Farm creation
  Database-->>System: Failed to create (res.status(409))
  System-->>Farmer: Message: describe error and point how to fix.
  end
- 
+
 Note over Farmer, Database: Area creation
  Farmer->>System: Data input to create area
  System->>Database: Try insert area data
@@ -47,7 +47,7 @@ Note over Farmer, Database: Area creation
  Database-->>System: Failed to create (res.status(409))
  System-->>Farmer: Message: describe error and point how to fix.
  end
- 
+
 Note over Farmer, Database: Cultivation creation
  Farmer->>System: Data input to create cultivation
  System->>Database: Try insert cultivation data
@@ -146,7 +146,7 @@ Note over Farmer, Database: Buildings creation
  Database-->>System: Failed to create (res.status(409))
  System-->>Farmer: Message: describe error and point how to fix.
  end
- 
+
 Note over Farmer, Database: Task Creation
  Farmer->>System: Insert resources and date values
  System->>Database: Get tasks period and related resources
@@ -177,7 +177,7 @@ Note over Farmer, Database: Accounting entry create
  end
 
 destroy Farmer
-Farmer-xFarmer: 
+Farmer-xFarmer:
 
 Note over Administrator, Database: Supply Type creation
  Administrator->>System: Data input to create supply type
@@ -256,5 +256,5 @@ Note over Administrator, Database: Accounting entry create
  Database-->>System: Failed to create (res.status(409))
  System-->>Administrator: Message: describe error and point how to fix.
  end
-  
+
 ```
