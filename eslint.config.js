@@ -1,6 +1,6 @@
-import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import prettier from 'eslint-plugin-prettier';
+import js from '@eslint/js'
+import tseslint from 'typescript-eslint'
+import prettier from 'eslint-plugin-prettier'
 
 export default [
   js.configs.recommended,
@@ -23,4 +23,4 @@ export default [
       '@typescript-eslint/no-explicit-any': 'warn',
     },
   },
-];
+]
