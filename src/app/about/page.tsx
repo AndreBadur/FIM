@@ -1,4 +1,4 @@
-import Menu from "@/components/Menu";
+import Menu from '@/components/Menu'
 
 export default function Home() {
   return (
@@ -6,5 +6,5 @@ export default function Home() {
       <h1 className="bg-yellow-100">HELLO WORLD! We are seeing the about!</h1>
       <Menu />
     </div>
-  );
+  )
 }

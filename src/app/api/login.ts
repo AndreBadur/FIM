@@ -3,7 +3,7 @@ export class Login {
     public userEmail: string,
     public userPassword: string,
   ) {
-    this.userEmail = userEmail;
-    this.userPassword = userPassword;
+    this.userEmail = userEmail
+    this.userPassword = userPassword
   }
 }

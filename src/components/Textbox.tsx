@@ -1,3 +1,3 @@
 export default function Textbox() {
-  return <input className="border-black" type="text" />;
+  return <input className="border-black" type="text" />
 }
