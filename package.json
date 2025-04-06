@@ -6,13 +6,15 @@
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext .ts,.tsx",
+    "lint": "next lint",
     "prepare": "husky install",
     "format": "sudo npx prettier --write ."
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "husky": "^9.1.7",
     "next": "^15.2.4",
+    "prisma": "^6.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
