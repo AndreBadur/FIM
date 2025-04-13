@@ -1,14 +1,28 @@
-import Textbox from '@/components/Textbox'
+'use client'
 
-export default async function Login() {
-  return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1>LOGIN</h1>
-      <Textbox />
-      <h1>PASSWORD</h1>
-      <Textbox />
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
-      <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded">LOGIN</button>
-    </div>
-  )
+export default function Login() {
+    const [user, setUser] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const router = useRouter()
+
+    console.log(user, password)
+
+    return (
+        <div className="flex flex-col items-center justify-center h-screen">
+            <form>
+                <label>USUÁRIO</label>
+                <input type="text" onChange={(e) => setUser(e.target.value)} />
+                <label>SENHA</label>
+                <input type="text" onChange={(e) => setPassword(e.target.value)} />
+                <input
+                    type="button"
+                    onClick={() => router.push('/about')}
+                    value={'OLA SOU O BOTÃO'}
+                />
+            </form>
+        </div>
+    )
 }
