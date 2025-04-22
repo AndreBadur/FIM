@@ -1,35 +1,27 @@
 'use client'
 
 import { useState } from 'react'
+import { FarmManagement } from './Classes/FarmManagements'
 
-async function fetchHandler(
-    idFarmer: string,
-    idAddress: string,
-    farmCnpj: string,
-    corporateName: string,
-): Promise<Response> {
-    console.log(idFarmer, idAddress)
+type farmType = [
+    {
+        cnpj: string
+        corporate_name: string
+        created_at: string
+        id_address: number
+        id_farm: number
+        id_farmer: number
+        updated_at: number
+    },
+]
 
-    const response: Response = await fetch('api/farms', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            idFarmer,
-            idAddress,
-            farmCnpj,
-            corporateName,
-        }),
-    })
-    if (response.ok) {
-        alert('Post created successfully!')
-        return response
-    } else {
-        alert('Error creating post.')
-        return response
-    }
-}
+const farmManagement = new FarmManagement()
+const farmList = JSON.stringify(await farmManagement.FarmListAll())
+const parseFarmList: farmType = JSON.parse(farmList)
+
+parseFarmList.map((value) => {
+    console.log(value.id_farm, value.corporate_name)
+})
 
 export default function FarmCreation() {
     const [idFarmer, setIdFarmer] = useState<string>('')
@@ -43,7 +35,7 @@ export default function FarmCreation() {
                 className="flex flex-col items-center justify-center h-screen"
                 onSubmit={(e) => {
                     e.preventDefault()
-                    fetchHandler(idFarmer, idAddress, cnpj, corporateName)
+                    farmManagement.FarmCreation(idFarmer, idAddress, cnpj, corporateName)
                 }}
             >
                 <h1>ID FARMER</h1>
