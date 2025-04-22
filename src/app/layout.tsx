@@ -1,4 +1,11 @@
 import '@/styles/globals.css'
+import { Poppins } from 'next/font/google'
+
+const poppins = Poppins({
+    subsets: ['latin'],
+    weight: ['400', '500', '600', '700'], // escolha os pesos que vai usar
+    variable: '--font-poppins', // opcional, útil se for usar como uma variável CSS
+})
 
 export const metadata = {
     title: 'Next.js',
@@ -7,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en">
+        <html lang="en" className={poppins.variable}>
             <body>
                 <div className="bg-red-400 w-32 h-32"></div>
                 {children}
