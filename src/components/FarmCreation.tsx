@@ -35,7 +35,6 @@ export default function FarmCreation() {
                 className="flex flex-col items-center justify-center h-screen"
                 onSubmit={(e) => {
                     e.preventDefault()
-                    farmManagement.FarmCreation(idFarmer, idAddress, cnpj, corporateName)
                 }}
             >
                 <h1>ID FARMER</h1>
@@ -78,6 +77,7 @@ export default function FarmCreation() {
                 <button
                     className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
                     type="submit"
+                    onClick={farmManagement.FarmCreation(idFarmer, idAddress, cnpj, corporateName)}
                 >
                     CRIAR FAZENDA
                 </button>
