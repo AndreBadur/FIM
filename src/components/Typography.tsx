@@ -9,9 +9,9 @@ export function Subtitle({ children }: { children: React.ReactNode }) {
 }
 
 export function Text({ children }: { children: React.ReactNode }) {
-    return <p className="text-base text-gray-800 font-helvetica">{children}</p>
+    return <p className="text-base text-gray-800 font-raleway">{children}</p>
 }
 
 export function Label({ children }: { children: React.ReactNode }) {
-    return <label className="text-sm text-gray-800">{children}</label>
+    return <label className="text-sm text-gray-800 font-raleway">{children}</label>
 }
