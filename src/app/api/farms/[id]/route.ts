@@ -1,62 +1,63 @@
 'use server'
+
+import { isDataNullOrUndefined } from '@/utils/verifications'
 import { PrismaClient } from '@prisma/client'
 import { NextResponse } from 'next/server'
 
 const prisma = new PrismaClient()
 
-export async function GET(request: Request, { params }: { params: { id: number } }) {
-    const { id } = await params
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+    try {
+        const { id } = await params
 
-    const farm = await prisma.farm.findUnique({
-        where: {
-            id_farm: Number(id),
-        },
-    })
+        const data = await prisma.farm.findUnique({
+            where: {
+                id_farm: Number(id),
+            },
+        })
 
-    if (farm) {
-        return NextResponse.json(farm, { status: 200 })
-    } else {
-        return NextResponse.json(null, { status: 404 })
+        isDataNullOrUndefined(data)
+        return NextResponse.json(data, { status: 200 })
+    } catch (error) {
+        throw error
     }
 }
 
-export async function PATCH(request: Request, { params }: { params: { id: number } }) {
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
-    const { idAddress, farmCnpj, corporateName } = await request.json()
-    const id_address = Number(idAddress)
-    const cnpj = farmCnpj.toString()
-    const corporate_name = corporateName.toString()
+    const { id_address, cnpj, corporate_name } = await request.json()
 
-    console.log('IN PATCH')
+    try {
+        const data = await prisma.farm.update({
+            where: {
+                id_farm: Number(id),
+            },
+            data: {
+                corporate_name,
+                id_address,
+                cnpj,
+            },
+        })
 
-    const farm = await prisma.farm.update({
-        where: {
-            id_farm: Number(id),
-        },
-        data: {
-            corporate_name: corporate_name,
-            id_address: id_address,
-            cnpj: cnpj,
-        },
-    })
-
-    return NextResponse.json(farm, { status: 200 })
+        isDataNullOrUndefined(data)
+        return NextResponse.json(data, { status: 201 })
+    } catch (error) {
+        throw error
+    }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: number } }) {
-    console.log('route DELETE')
-    console.log(params.id)
-    const id = params.id
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params
+    try {
+        const data = await prisma.farm.delete({
+            where: {
+                id_farm: Number(id),
+            },
+        })
 
-    const farm = await prisma.farm.delete({
-        where: {
-            id_farm: Number(id),
-        },
-    })
-    console.log('DELETE: ', farm)
-    if (farm) {
-        return NextResponse.json(farm, { status: 200 })
-    } else {
-        return NextResponse.json(null, { status: 404 })
+        isDataNullOrUndefined(data)
+        return NextResponse.json(data, { status: 201 })
+    } catch (error) {
+        throw error
     }
 }

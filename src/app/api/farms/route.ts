@@ -1,37 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
+import { isDataNullOrUndefined } from '@/utils/verifications'
 
 const prisma = new PrismaClient()
 
 export async function GET() {
-    console.log('here in get')
-    const getAll = await prisma.farm.findMany({ orderBy: { id_farm: 'desc' } })
-    console.log(getAll)
+    try {
+        const data = await prisma.farm.findMany({ orderBy: { id_farm: 'asc' } })
 
-    return NextResponse.json(getAll, { status: 200 })
+        isDataNullOrUndefined(data)
+        return NextResponse.json(data, { status: 200 })
+    } catch (error) {
+        throw error
+    }
 }
 
 export async function POST(request: NextRequest) {
-    const { idAddress, idFarmer, farmCnpj, corporateName } = await request.json()
-    const id_farmer = Number(idFarmer)
-    const id_address = Number(idAddress)
-    const cnpj = farmCnpj.toString()
-    const corporate_name = corporateName.toString()
+    const { id_farmer, id_address, cnpj, corporate_name } = await request.json()
 
-    const post = await prisma.farm.create({
-        data: {
-            id_farmer,
-            id_address,
-            cnpj,
-            corporate_name,
-        },
-    })
+    try {
+        const data = await prisma.farm.create({
+            data: {
+                id_farmer,
+                id_address,
+                cnpj,
+                corporate_name,
+            },
+        })
 
-    return NextResponse.json(post, { status: 201 })
+        isDataNullOrUndefined(data)
+        return NextResponse.json(data, { status: 201 })
+    } catch (error) {
+        throw error
+    }
 }
-
-// export async function PUT(request: Request) {}
-
-// export async function DELETE(request: Request) {}
-
-// export async function HEAD(request: Request) {}
