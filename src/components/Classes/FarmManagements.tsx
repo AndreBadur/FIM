@@ -12,38 +12,46 @@ export class FarmManagement {
     constructor() {}
 
     public async FarmCreation(
-        farmerId: string,
+        idFarmer: string,
         idAddress: string,
         farmCnpj: string,
         corporateName: string,
     ): Promise<Response> {
-        const response: Response = await fetch('api/farms', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                idFarmer: farmerId,
-                idAddress: idAddress,
-                farmCnpj: farmCnpj,
-                corporateName: corporateName,
-            }),
-        })
+        try {
+            const response: Response = await fetch('api/farms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    idFarmer,
+                    idAddress,
+                    farmCnpj,
+                    corporateName,
+                }),
+            })
 
-        if (response.ok) {
-            return response
-        } else {
-            throw new Error('Error handling the Farm POST method')
+            if (response.ok) {
+                return response
+            } else {
+                throw new Error('Error handling the Farm Creation method')
+            }
+        } catch (error) {
+            throw error
         }
     }
 
     public async FarmListAll(): Promise<farmType[]> {
-        const response: Response = await fetch('api/farms')
+        try {
+            const response: Response = await fetch('api/farms')
 
-        if (response.ok) {
-            return response.json()
-        } else {
-            throw new Error('Error handling the Farm GET method')
+            if (response.ok) {
+                return response.json()
+            } else {
+                throw response.status
+            }
+        } catch (error) {
+            throw error
         }
     }
 
@@ -53,22 +61,26 @@ export class FarmManagement {
         corporateName: string,
         id: string,
     ): Promise<Response> {
-        const response: Response = await fetch(`api/farms/${Number(id)}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                idAddress: idAddress,
-                farmCnpj: farmCnpj,
-                corporateName: corporateName,
-            }),
-        })
+        try {
+            const response: Response = await fetch(`api/farms/${Number(id)}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    idAddress,
+                    farmCnpj,
+                    corporateName,
+                }),
+            })
 
-        if (response.ok) {
-            return response
-        } else {
-            throw new Error('Error handling the Farm POST method')
+            if (response.ok) {
+                return response
+            } else {
+                throw response.status
+            }
+        } catch (error) {
+            throw error
         }
     }
 
@@ -77,6 +89,7 @@ export class FarmManagement {
             const response: Response = await fetch(`api/farms/${Number(id)}`, {
                 method: 'GET',
             })
+
             if (response.ok) {
                 return response.json()
             } else {
@@ -88,11 +101,11 @@ export class FarmManagement {
     }
 
     public async deleteUniqueFarm(id: string): Promise<Request> {
-        console.log('deleteUniqueFarm')
         try {
             const response: Response = await fetch(`api/farms/${Number(id)}`, {
                 method: 'DELETE',
             })
+
             if (response.ok) {
                 return response.json()
             } else {
