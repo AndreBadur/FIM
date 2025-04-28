@@ -5,7 +5,13 @@ import { FarmManagement } from '../classes/FarmManagements'
 import { useRouter } from 'next/navigation'
 
 const farmManagement = new FarmManagement()
-console.log(await farmManagement.listAllFarm())
+const list = await farmManagement.listAllFarms('1')
+
+if (list) {
+    list.map((value) => {
+        console.log(value.corporate_name)
+    })
+}
 
 export default function FarmCreation() {
     const [idFarmer, setIdFarmer] = useState<string>('')

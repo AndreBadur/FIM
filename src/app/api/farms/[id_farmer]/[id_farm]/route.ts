@@ -6,22 +6,22 @@ import { NextResponse } from 'next/server'
 
 const prisma = new PrismaClient()
 
-export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
-    try {
-        const { id } = await params
+// export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+//     try {
+//         const { id } = await params
 
-        const data = await prisma.farm.findUnique({
-            where: {
-                id_farm: Number(id),
-            },
-        })
+//         const data = await prisma.farm.findUnique({
+//             where: {
+//                 id_farm: Number(id),
+//             },
+//         })
 
-        isDataNullOrUndefined(data)
-        return NextResponse.json(data, { status: 200 })
-    } catch (error) {
-        throw error
-    }
-}
+//         isDataNullOrUndefined(data)
+//         return NextResponse.json(data, { status: 200 })
+//     } catch (error) {
+//         throw error
+//     }
+// }
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const { id } = await params

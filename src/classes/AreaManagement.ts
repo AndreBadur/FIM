@@ -39,4 +39,6 @@ export class AreaManagement {
             return undefined
         }
     }
+
+    //public async listAllArea(request: Request, { params }: { params: Promise<{ id: string }> }) {}
 }

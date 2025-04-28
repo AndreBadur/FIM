@@ -13,11 +13,14 @@ type farmType = {
 export class FarmManagement {
     constructor() {}
 
-    public async createFarm(bodyRequest: Partial<farmType>): Promise<Response | undefined> {
-        const { id_farmer, id_address, cnpj, corporate_name } = bodyRequest
+    public async createFarm(
+        bodyRequest: Partial<farmType>,
+        id_farmer: string,
+    ): Promise<Response | undefined> {
+        const { id_address, cnpj, corporate_name } = bodyRequest
 
         try {
-            const response = await fetch('api/farms', {
+            const response = await fetch(`api/farms/${id_farmer}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -38,9 +41,9 @@ export class FarmManagement {
         }
     }
 
-    public async listAllFarm(): Promise<farmType[] | undefined> {
+    public async listAllFarmsByFarmer(id_farmer: string): Promise<farmType[] | undefined> {
         try {
-            const response = await fetch('api/farms', {
+            const response = await fetch(`api/farms/${id_farmer}`, {
                 method: 'GET',
             })
 
