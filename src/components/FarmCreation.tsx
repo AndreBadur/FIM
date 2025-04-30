@@ -5,11 +5,11 @@ import { FarmManagement } from '../classes/FarmManagements'
 import { useRouter } from 'next/navigation'
 
 const farmManagement = new FarmManagement()
-const list = await farmManagement.listAllFarms('1')
+const list = await farmManagement.listAllFarmsByFarmer('1')
 
 if (list) {
     list.map((value) => {
-        console.log(value.corporate_name)
+        console.log(value.id_farm, value.corporate_name)
     })
 }
 
@@ -27,12 +27,14 @@ export default function FarmCreation() {
                 className="flex flex-col items-center justify-center h-screen"
                 onSubmit={async (e) => {
                     e.preventDefault()
-                    const teste = await farmManagement.createFarm({
-                        id_farmer: Number(idFarmer),
-                        id_address: Number(idAddress),
-                        cnpj: cnpj,
-                        corporate_name: corporateName,
-                    })
+                    const teste = await farmManagement.createFarm(
+                        {
+                            id_address: Number(idAddress),
+                            cnpj: cnpj,
+                            corporate_name: corporateName,
+                        },
+                        `${idFarmer}`,
+                    )
                     console.log(teste)
                 }}
             >
@@ -86,18 +88,20 @@ export default function FarmCreation() {
                 className="flex flex-col items-center justify-center h-screen"
                 onSubmit={async (e) => {
                     e.preventDefault()
-                    const teste = await farmManagement.updateFarm(
+                    const teste = await farmManagement.updateFarmByFarmId(
                         {
                             id_address: Number(idAddress),
                             cnpj: cnpj,
                             corporate_name: corporateName,
                         },
+                        '1',
                         idFarmer,
                     )
                     console.log(teste)
                 }}
             >
-                <h1>ID FARMER</h1>
+                {/* estou utilizando esse campo como se fosse o idFarm mas passando valor pro idFarmer, somente como forma de agilizar testes */}
+                <h1>ID FARM</h1>
                 <input
                     className="border-black"
                     type="text"
@@ -147,7 +151,7 @@ export default function FarmCreation() {
                 className="flex flex-col items-center justify-center h-screen"
                 onSubmit={async (e) => {
                     e.preventDefault()
-                    const teste = await farmManagement.findUniqueFarm(idFarmer)
+                    const teste = await farmManagement.findUniqueFarmByFarmId('1', idFarmer)
                     if (teste) {
                         console.log(teste?.corporate_name)
                     } else {
@@ -177,7 +181,7 @@ export default function FarmCreation() {
                 className="flex flex-col items-center justify-center h-screen"
                 onSubmit={async (e) => {
                     e.preventDefault()
-                    const teste = await farmManagement.deleteUniqueFarm(idFarmer)
+                    const teste = await farmManagement.deleteFarmByFarmId('1', idFarmer)
                     console.log(teste)
                 }}
             >
