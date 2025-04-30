@@ -17,7 +17,7 @@ type Props<T> = {
     dados: T[]
 }
 
-const TabelaGeral = <T extends Record<string, string>>({ tipo, dados }: Props<T>) => {
+const TabelaGeral = <T extends Record<string, string | number>>({ tipo, dados }: Props<T>) => {
     return (
         <table className="w-full border border-gray-300 mt-4">
             <thead>
@@ -52,7 +52,10 @@ const TabelaGeral = <T extends Record<string, string>>({ tipo, dados }: Props<T>
     )
 }
 
-export function GenericTables<T extends Record<string, string>>({ tipo, dados }: Props<T>) {
+export function GenericTables<T extends Record<string, string | number>>({
+    tipo,
+    dados,
+}: Props<T>) {
     return (
         <table className="w-full border border-gray-300 mt-4">
             <thead>
@@ -70,7 +73,7 @@ export function GenericTables<T extends Record<string, string>>({ tipo, dados }:
                     <tr key={index}>
                         {tipo === 'farm' &&
                             columnData[1].map((column) => (
-                                <td key={column[0]} className="p-2 border">
+                                <td key={column} className="p-2 border">
                                     {item[column]}
                                 </td>
                             ))}
@@ -80,54 +83,5 @@ export function GenericTables<T extends Record<string, string>>({ tipo, dados }:
         </table>
     )
 }
-
-// const GenericTable: React.FC<Props> = ({ tipo, dados }) => {
-//     return (
-//         <table className="w-full border border-gray-300 mt-4">
-//             <thead>
-//                 <tr className="bg-gray-100">
-//                     {tipo === 'pessoa' && (
-//                         <>
-//                             <th className="p-2 border">Nome</th>
-//                             <th className="p-2 border">Idade</th>
-//                             <th className="p-2 border">Número</th>
-//                         </>
-//                     )}
-//                     {tipo === 'empresa' && (
-//                         <>
-//                             <th className="p-2 border">CNPJ</th>
-//                             <th className="p-2 border">Nome</th>
-//                             <th className="p-2 border">Email</th>
-//                             <th className="p-2 border">Cidade</th>
-//                             <th className="p-2 border">Número</th>
-//                         </>
-//                     )}
-//                 </tr>
-//             </thead>
-//             <tbody>
-//                 {dados.map((item, index) => (
-//                     <tr key={index}>
-//                         {tipo === 'pessoa' && (
-//                             <>
-//                                 <td className="p-2 border">{item.nome}</td>
-//                                 <td className="p-2 border">{item.idade}</td>
-//                                 <td className="p-2 border">{item.numero}</td>
-//                             </>
-//                         )}
-//                         {tipo === 'empresa' && (
-//                             <>
-//                                 <td className="p-2 border">{item.cnpj}</td>
-//                                 <td className="p-2 border">{item.nome}</td>
-//                                 <td className="p-2 border">{item.email}</td>
-//                                 <td className="p-2 border">{item.cidade}</td>
-//                                 <td className="p-2 border">{item.numero}</td>
-//                             </>
-//                         )}
-//                     </tr>
-//                 ))}
-//             </tbody>
-//         </table>
-//     )
-// }
 
 export default TabelaGeral
