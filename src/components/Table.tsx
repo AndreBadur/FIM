@@ -19,44 +19,6 @@ type Props<T> = {
     dados: T[]
 }
 
-const TabelaGeral = <T extends Record<string, string | number | undefined>>({
-    tipo,
-    dados,
-}: Props<T>) => {
-    return (
-        <table className="w-full border border-gray-300 mt-4">
-            <thead>
-                <tr className="bg-gray-100">
-                    {tipo === 'farm' && (
-                        <>
-                            {columnTable[0].map((valor, index) => (
-                                <th key={index} className="p-2 border">
-                                    {valor}
-                                </th>
-                            ))}
-                        </>
-                    )}
-                </tr>
-            </thead>
-            <tbody>
-                {dados.map((item, index) => (
-                    <tr key={index}>
-                        {tipo === 'farm' && (
-                            <>
-                                {Object.values(item).map((valor, i) => (
-                                    <td key={i} className="p-2 border">
-                                        {valor}
-                                    </td>
-                                ))}
-                            </>
-                        )}
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    )
-}
-
 export function GenericTables<T extends Record<string, string | number | undefined>>({
     tipo,
     dados,
@@ -70,21 +32,21 @@ export function GenericTables<T extends Record<string, string | number | undefin
             break
     }
     return (
-        <table className="w-full border border-gray-300 mt-4">
-            <thead>
-                <tr className="bg-gray-100">
+        <table className="w-full mt-4 text-sm text-left">
+            <thead className="bg-gray-100 uppercase rounded-md">
+                <tr>
                     {columnTable?.[indexType].map((valor, index) => (
-                        <th key={index} className="p-2 border">
+                        <th key={index} className="px-4 py-3 font-medium">
                             {valor}
                         </th>
                     ))}
                 </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-gray-200">
                 {dados.map((item, index) => (
-                    <tr key={index}>
-                        {columnData[indexType].map((column) => (
-                            <td key={column} className="p-2 border">
+                    <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
+                        {columnData[indexType].map((column, colIndex) => (
+                            <td key={colIndex} className="px-3 py-3">
                                 {item[column]}
                             </td>
                         ))}
@@ -94,5 +56,3 @@ export function GenericTables<T extends Record<string, string | number | undefin
         </table>
     )
 }
-
-export default TabelaGeral

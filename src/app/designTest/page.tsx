@@ -12,7 +12,7 @@ export default function designTest() {
             <div>
                 <h1 className="text-xl font-bold mb-4">Lista de Empresas</h1>
                 <GenericTables tipo="farm" dados={farmList!} />
-                <GenericTables tipo="generalFarms" dados={farmList!}></GenericTables>
+                <GenericTables tipo="generalFarms" dados={farmList!} />
             </div>
         </div>
     )
