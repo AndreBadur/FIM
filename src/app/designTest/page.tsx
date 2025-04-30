@@ -1,8 +1,6 @@
 'use client'
 
 import { FarmManagement } from '@/classes/FarmManagements'
-// import { Title, Subtitle, Text, Label } from '@/components/Typography'
-import TabelaGeral from '@/components/Table'
 import { GenericTables } from '@/components/Table'
 
 const farmManagement = new FarmManagement()
@@ -13,8 +11,8 @@ export default function designTest() {
         <div className="flex justify-center items-center">
             <div>
                 <h1 className="text-xl font-bold mb-4">Lista de Empresas</h1>
-                <TabelaGeral tipo="farm" dados={farmList!} />
-                <GenericTables tipo="farm" dados={farmList!}></GenericTables>
+                <GenericTables tipo="farm" dados={farmList!} />
+                <GenericTables tipo="generalFarms" dados={farmList!}></GenericTables>
             </div>
         </div>
     )

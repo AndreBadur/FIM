@@ -10,7 +10,9 @@ const columnData = [
     ['id_farm', 'created_at', 'updated_at', 'cnpj', 'corporate_name'],
 ]
 
-type TipoTabela = 'farm'
+type TipoTabela = 'farm' | 'generalFarms'
+
+let indexType: number
 
 type Props<T> = {
     tipo: TipoTabela
@@ -59,27 +61,33 @@ export function GenericTables<T extends Record<string, string | number | undefin
     tipo,
     dados,
 }: Props<T>) {
+    switch (tipo) {
+        case 'generalFarms':
+            indexType = 0
+            break
+        case 'farm':
+            indexType = 1
+            break
+    }
     return (
         <table className="w-full border border-gray-300 mt-4">
             <thead>
                 <tr className="bg-gray-100">
-                    {tipo === 'farm' &&
-                        columnTable?.[1].map((valor, index) => (
-                            <th key={index} className="p-2 border">
-                                {valor}
-                            </th>
-                        ))}
+                    {columnTable?.[indexType].map((valor, index) => (
+                        <th key={index} className="p-2 border">
+                            {valor}
+                        </th>
+                    ))}
                 </tr>
             </thead>
             <tbody>
                 {dados.map((item, index) => (
                     <tr key={index}>
-                        {tipo === 'farm' &&
-                            columnData[1].map((column) => (
-                                <td key={column} className="p-2 border">
-                                    {item[column]}
-                                </td>
-                            ))}
+                        {columnData[indexType].map((column) => (
+                            <td key={column} className="p-2 border">
+                                {item[column]}
+                            </td>
+                        ))}
                     </tr>
                 ))}
             </tbody>
