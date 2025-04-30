@@ -28,7 +28,6 @@ export async function PATCH(
     { params }: { params: Promise<{ id_farm: string }> },
 ) {
     const { id_farm } = await params
-    console.log('é o id farm: ', id_farm)
     const { id_address, cnpj, corporate_name } = await request.json()
 
     try {
