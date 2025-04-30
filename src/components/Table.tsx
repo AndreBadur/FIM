@@ -17,7 +17,10 @@ type Props<T> = {
     dados: T[]
 }
 
-const TabelaGeral = <T extends Record<string, string | number>>({ tipo, dados }: Props<T>) => {
+const TabelaGeral = <T extends Record<string, string | number | undefined>>({
+    tipo,
+    dados,
+}: Props<T>) => {
     return (
         <table className="w-full border border-gray-300 mt-4">
             <thead>
@@ -52,7 +55,7 @@ const TabelaGeral = <T extends Record<string, string | number>>({ tipo, dados }:
     )
 }
 
-export function GenericTables<T extends Record<string, string | number>>({
+export function GenericTables<T extends Record<string, string | number | undefined>>({
     tipo,
     dados,
 }: Props<T>) {
