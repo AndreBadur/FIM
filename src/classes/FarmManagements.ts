@@ -55,14 +55,15 @@ export class FarmManagement {
         }
     }
 
-    public async updateFarm(
+    public async updateFarmByFarmId(
         bodyRequest: Partial<farmType>,
-        id: string,
+        id_farmer: string,
+        id_farm: string,
     ): Promise<Response | undefined> {
         const { id_address, cnpj, corporate_name } = bodyRequest
 
         try {
-            const response = await fetch(`api/farms/${Number(id)}`, {
+            const response = await fetch(`api/farms/${Number(id_farmer)}/${Number(id_farm)}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,11 +83,17 @@ export class FarmManagement {
         }
     }
 
-    public async findUniqueFarm(id: string): Promise<farmType | undefined> {
+    public async findUniqueFarmByFarmId(
+        id_farmer: string,
+        id_farm: string,
+    ): Promise<farmType | undefined> {
         try {
-            const response: Response = await fetch(`api/farms/${Number(id)}`, {
-                method: 'GET',
-            })
+            const response: Response = await fetch(
+                `api/farms/${Number(id_farmer)}/${Number(id_farm)}`,
+                {
+                    method: 'GET',
+                },
+            )
 
             verifyApiResponse(response)
             return response.json()
@@ -96,11 +103,17 @@ export class FarmManagement {
         }
     }
 
-    public async deleteUniqueFarm(id: string): Promise<Request | undefined> {
+    public async deleteFarmByFarmId(
+        id_farmer: string,
+        id_farm: string,
+    ): Promise<Request | undefined> {
         try {
-            const response: Response = await fetch(`api/farms/${Number(id)}`, {
-                method: 'DELETE',
-            })
+            const response: Response = await fetch(
+                `api/farms/${Number(id_farmer)}/${Number(id_farm)}`,
+                {
+                    method: 'DELETE',
+                },
+            )
 
             verifyApiResponse(response)
             return response.json()
