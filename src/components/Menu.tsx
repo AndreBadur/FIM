@@ -1,7 +1,4 @@
 export default function Menu() {
-<<<<<<< HEAD
-    return <div className="bg-yellow-700">MENU COMPONENT</div>
-=======
     return (
         <div className="bg-gray-600 w-48 h-screen flex flex-col items-center pt-4">
             <h1 className="font-bold text-white mb-2">MENU</h1>
@@ -25,5 +22,4 @@ export default function Menu() {
             </a>
         </div>
     )
->>>>>>> 4a5c4a3 (Salvando alterações antes de mudar para Home)
 }
