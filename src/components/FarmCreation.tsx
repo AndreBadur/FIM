@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { FarmManagement } from '../classes/FarmManagements'
+import { FarmManagement, farmType } from '../classes/FarmManagements'
 import { useRouter } from 'next/navigation'
+import { Button, FieldError, Form, Input, Label, TextField } from 'react-aria-components'
 
 const farmManagement = new FarmManagement()
 const list = await farmManagement.listAllFarmsByFarmer('1')
@@ -201,6 +202,44 @@ export default function FarmCreation() {
                     DELETAR FAZENDA
                 </button>
             </form>
+
+            <Form
+                onSubmit={async (e) => {
+                    e.preventDefault()
+                    const data = JSON.stringify(Object.fromEntries(new FormData(e.currentTarget)))
+                    const parseData: farmType = JSON.parse(data)
+
+                    const teste = await farmManagement.createFarm(
+                        {
+                            id_address: Number(parseData.id_address),
+                            cnpj: parseData.cnpj,
+                            corporate_name: parseData.corporate_name,
+                        },
+                        `1`,
+                    )
+                    console.log(teste)
+                }}
+            >
+                <TextField name="id_address" isRequired>
+                    <Label>ID ADDRESS</Label>
+                    <Input />
+                    <FieldError />
+                </TextField>
+                <TextField name="cnpj" isRequired>
+                    <Label>CNPJ</Label>
+                    <Input />
+                    <FieldError />
+                </TextField>
+                <TextField name="corporate_name" isRequired>
+                    <Label>CORPORATE NAME</Label>
+                    <Input />
+                    <FieldError />
+                </TextField>
+                <div style={{ display: 'flex', gap: 8 }}>
+                    <Button type="submit">Submit</Button>
+                    <Button type="reset">Reset</Button>
+                </div>
+            </Form>
         </div>
     )
 }
