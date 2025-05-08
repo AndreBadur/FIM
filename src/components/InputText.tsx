@@ -6,7 +6,7 @@ export default function InputText() {
     const [text, setText] = useState('')
 
     return (
-        <div>
+        <div className='mt-4 mb-2'>
             <input
                 type="text"
                 className="text-black"
@@ -14,7 +14,6 @@ export default function InputText() {
                 onChange={(userInput) => setText(userInput.target.value)}
                 placeholder="Digite"
             />
-            <p>Você escreveu: {text}</p>
         </div>
     )
 }

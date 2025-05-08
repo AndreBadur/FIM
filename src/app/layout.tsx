@@ -16,10 +16,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en" className={poppins.variable}>
             <body>
-                <div className="bg-red-400 w-32 h-32"></div>
                 {children}
             </body>
         </html>
     )
 }
-/*<div className="bg-blue-400 w-32 h-32"></div>*/
+/*<div className="bg-red-400 w-32 h-32"></div>*/
