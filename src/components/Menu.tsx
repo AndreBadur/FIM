@@ -1,25 +1,20 @@
 export default function Menu() {
     return (
-        <div className="bg-gray-600 w-48 h-screen flex flex-col items-center pt-4">
+        <div className='bg-gray-600 flex-col items-center pt-4'>
             <h1 className="font-bold text-white mb-2">MENU</h1>
-            <a href="/equipamentArea" className="text-white mt-6">
-                Equipamentos
+            <a href="/areaControl" className="text-white mt-6">
+                Áreas
             </a>
-            <a href="/storageArea" className="text-white mt-6">
-                Estoque
-            </a>
-            <a href="/funcionaryArea" className="text-white mt-6">
+            <a href="/farmEmployeeControl" className="text-white mt-6">
                 Funcionários
             </a>
-            <a href="/machinaryArea" className="text-white mt-6">
-                Maquinário
+            <a href="/machineryControl" className="text-white mt-6">
+                Maquinários
             </a>
-            <a href="/cultivationArea" className="text-white mt-6">
-                Cultivo
-            </a>
-            <a href="/resourseManagementArea" className="text-white mt-6">
+            <a href="/resourseManagementControl" className="text-white mt-6">
                 Tarefas
             </a>
         </div>
+
     )
 }

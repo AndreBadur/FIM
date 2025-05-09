@@ -1,19 +1,19 @@
 'use client'
 
-import { AreaManagement } from '@/classes/AreaManagement'
+// import { AreaManagement } from '@/classes/AreaManagement'
 
-const areaManagement = new AreaManagement()
+// const areaManagement = new AreaManagement()
 
-const creation = areaManagement.createArea({
-    id_type_area: 1,
-    id_farm: 22,
-    name: 'Area de descanso',
-    description: 'Essa area possui redes e sombra',
-    features: 'Features da Area',
-    capacity: 15000,
-    status: true,
-})
-console.log(creation)
+// const creation = areaManagement.createArea({
+//     id_type_area: 1,
+//     id_farm: 22,
+//     name: 'Area de descanso',
+//     description: 'Essa area possui redes e sombra',
+//     features: 'Features da Area',
+//     capacity: 15000,
+//     status: true,
+// })
+// console.log(creation)
 
 // const readAll = areaManagement.listAllAreas()
 // console.log(readAll)
@@ -41,7 +41,11 @@ console.log(creation)
 export default function areaControl() {
     return (
         <div>
-            <h1 className="flex items-center">AREA CONTROL</h1>
+            <div className="flex">
+                <div className="flex items-center justify-center flex-1 bg-black h-screen">
+                    <h1 className="text-white text-2xl">Áreas!</h1>
+                </div>
+            </div>
         </div>
     )
 }
