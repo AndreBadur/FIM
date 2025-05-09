@@ -1,6 +1,6 @@
 import { verifyApiResponse } from '@/utils/verifications'
 
-type farmType = {
+export type farmType = {
     cnpj: string
     corporate_name: string
     created_at: string
