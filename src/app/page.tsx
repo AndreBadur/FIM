@@ -7,7 +7,6 @@ export default function Index() {
             <br />
             <center>
                 <h1>PAGINA INDEX</h1>
-
             </center>
         </div>
     )

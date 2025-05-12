@@ -15,6 +15,5 @@ export default function Menu() {
                 Tarefas
             </a>
         </div>
-
     )
 }
