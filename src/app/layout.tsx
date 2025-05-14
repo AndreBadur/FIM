@@ -1,5 +1,7 @@
 import '@/styles/globals.css'
+import Menu from '@/components/Menu'
 import {Poppins} from 'next/font/google'
+import Navbar from '@/components/Navbar'
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -15,7 +17,18 @@ export const metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
     return (
         <html lang="en" className={poppins.variable}>
-            <body>{children}</body>
+            <body>
+                <div>
+                    <Navbar />
+                </div>
+                <div className="flex">
+                    <div>
+                        <Menu />
+                    </div>
+                    <main className="flex-1">{children}</main>
+                </div>
+            </body>
         </html>
     )
 }
+/*<div className="bg-blue-400 w-32 h-32"></div>*/
