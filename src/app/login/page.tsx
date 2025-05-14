@@ -1,7 +1,7 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import {useRouter} from 'next/navigation'
+import {useState} from 'react'
 
 export default function Login() {
     const [user, setUser] = useState<string>('')
@@ -16,7 +16,10 @@ export default function Login() {
                 <label>USUÁRIO</label>
                 <input type="text" onChange={(e) => setUser(e.target.value)} />
                 <label>SENHA</label>
-                <input type="text" onChange={(e) => setPassword(e.target.value)} />
+                <input
+                    type="text"
+                    onChange={(e) => setPassword(e.target.value)}
+                />
                 <input
                     type="button"
                     onClick={() => router.push('/about')}

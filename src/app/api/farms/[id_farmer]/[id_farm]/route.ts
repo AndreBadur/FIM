@@ -1,14 +1,17 @@
 'use server'
 
-import { isDataNullOrUndefined } from '@/utils/verifications'
-import { PrismaClient } from '@prisma/client'
-import { NextResponse } from 'next/server'
+import {isDataNullOrUndefined} from '@/utils/verifications'
+import {PrismaClient} from '@prisma/client'
+import {NextResponse} from 'next/server'
 
 const prisma = new PrismaClient()
 
-export async function GET(request: Request, { params }: { params: Promise<{ id_farm: string }> }) {
+export async function GET(
+    request: Request,
+    {params}: {params: Promise<{id_farm: string}>},
+) {
     try {
-        const { id_farm } = await params
+        const {id_farm} = await params
 
         const data = await prisma.farm.findUnique({
             where: {
@@ -17,7 +20,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id_f
         })
 
         isDataNullOrUndefined(data)
-        return NextResponse.json(data, { status: 200 })
+        return NextResponse.json(data, {status: 200})
     } catch (error) {
         throw error
     }
@@ -25,10 +28,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ id_f
 
 export async function PATCH(
     request: Request,
-    { params }: { params: Promise<{ id_farm: string }> },
+    {params}: {params: Promise<{id_farm: string}>},
 ) {
-    const { id_farm } = await params
-    const { id_address, cnpj, corporate_name } = await request.json()
+    const {id_farm} = await params
+    const {id_address, cnpj, corporate_name} = await request.json()
 
     try {
         const data = await prisma.farm.update({
@@ -43,7 +46,7 @@ export async function PATCH(
         })
 
         isDataNullOrUndefined(data)
-        return NextResponse.json(data, { status: 201 })
+        return NextResponse.json(data, {status: 201})
     } catch (error) {
         throw error
     }
@@ -51,9 +54,9 @@ export async function PATCH(
 
 export async function DELETE(
     request: Request,
-    { params }: { params: Promise<{ id_farm: string }> },
+    {params}: {params: Promise<{id_farm: string}>},
 ) {
-    const { id_farm } = await params
+    const {id_farm} = await params
     try {
         const data = await prisma.farm.delete({
             where: {
@@ -62,7 +65,7 @@ export async function DELETE(
         })
 
         isDataNullOrUndefined(data)
-        return NextResponse.json(data, { status: 201 })
+        return NextResponse.json(data, {status: 201})
     } catch (error) {
         throw error
     }
