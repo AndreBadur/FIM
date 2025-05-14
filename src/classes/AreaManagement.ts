@@ -135,7 +135,7 @@ export class AreaManagement {
                     method: 'DELETE',
                 },
             )
-            
+
             verifyApiResponse(response)
             return response.json()
         } catch (error) {

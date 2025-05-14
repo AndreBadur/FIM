@@ -54,20 +54,22 @@ export async function PATCH(
     }
 }
 
-export async function DELETE(request: Request,
-    {params}: {params: Promise<{id_area: string}>}) {
-        const {id_area} = await params
+export async function DELETE(
+    request: Request,
+    {params}: {params: Promise<{id_area: string}>},
+) {
+    const {id_area} = await params
 
-        try {
-            const data = await prisma.area.delete({
-                where:{
-                    id_area: Number(id_area)
-                }
-            })
+    try {
+        const data = await prisma.area.delete({
+            where: {
+                id_area: Number(id_area),
+            },
+        })
 
-            isDataNullOrUndefined(data)
-            return NextResponse.json(data,{status:201})
-        } catch (error) {
-            
-        }
+        isDataNullOrUndefined(data)
+        return NextResponse.json(data, {status: 201})
+    } catch (error) {
+        throw error
     }
+}
