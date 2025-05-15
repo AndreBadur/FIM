@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-    Cell,
-    Column,
-    Row,
-    Table,
-    TableBody,
-    TableHeader,
-} from 'react-aria-components'
-
+import { Cell, Column, Row, Table, TableBody, TableHeader } from 'react-aria-components'
 
 const columnTable = [
     ['ID Farm', 'ID Farmer', 'ID Address', 'Created At', 'Updated At', 'CNPJ', 'Nome'],
@@ -29,9 +21,8 @@ type Props<T> = {
 }
 
 export function AriaTable<T extends Record<string, string | number>>({ tipo, dados }: Props<T>) {
-    
     // const router =  useRouter()
-    
+
     switch (tipo) {
         case 'generalFarms':
             indexType = 0
@@ -66,7 +57,7 @@ export function AriaTable<T extends Record<string, string | number>>({ tipo, dad
                                 {item[column]}
                             </Cell>
                         ))}
-                    </Row>  
+                    </Row>
                 ))}
             </TableBody>
         </Table>
