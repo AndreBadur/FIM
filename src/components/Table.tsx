@@ -1,5 +1,20 @@
 import React from 'react'
-import { Cell, Column, Row, Table, TableBody, TableHeader } from 'react-aria-components'
+import {
+    Button,
+    Cell,
+    Column,
+    Dialog,
+    DialogTrigger,
+    Heading,
+    Input,
+    Modal,
+    Row,
+    Table,
+    TableBody,
+    TableHeader,
+    TextField,
+} from 'react-aria-components'
+import { Label } from './Typography'
 
 const columnTable = [
     ['ID Farm', 'ID Farmer', 'ID Address', 'Created At', 'Updated At', 'CNPJ', 'Nome'],
@@ -44,57 +59,37 @@ export function AriaTable<T extends Record<string, string | number>>({ tipo, dad
             </TableHeader>
             <TableBody>
                 {dados.map((item, index) => (
-                    <Row
-                        key={index}
-                        onAction={() => alert(index + 1)}
-                        className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}
-                    >
-                        {columnData[indexType].map((column, colIndex) => (
-                            <Cell key={colIndex} className="px-3 py-3">
-                                {item[column]}
-                            </Cell>
-                        ))}
-                    </Row>
+                    <DialogTrigger key={index}>
+                        <Row
+                            key={index}
+                            onAction={() => {}}
+                            className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}
+                        >
+                            {columnData[indexType].map((column, colIndex) => (
+                                <Cell key={colIndex} className="px-3 py-3">
+                                    {item[column]}
+                                </Cell>
+                            ))}
+                        </Row>
+                        <Modal>
+                            <Dialog>
+                                <form>
+                                    <Heading slot="title">Sign up</Heading>
+                                    <TextField autoFocus>
+                                        <Label>First Name:</Label>
+                                        <Input />
+                                    </TextField>
+                                    <TextField>
+                                        <Label>Last Name:</Label>
+                                        <Input />
+                                    </TextField>
+                                    <Button slot="close">Submit</Button>
+                                </form>
+                            </Dialog>
+                        </Modal>
+                    </DialogTrigger>
                 ))}
             </TableBody>
         </Table>
     )
 }
-
-// export function GenericTables<T extends Record<string, string | number>>({
-//     tipo,
-//     dados,
-// }: Props<T>) {
-//     switch (tipo) {
-//         case 'generalFarms':
-//             indexType = 0
-//             break
-//         case 'farm':
-//             indexType = 1
-//             break
-//     }
-//     return (
-//         <table className="w-full mt-4 text-sm text-left">
-//             <thead className="bg-gray-100 uppercase rounded-md">
-//                 <tr>
-//                     {columnTable?.[indexType].map((valor, index) => (
-//                         <th key={index} className="px-4 py-3 font-medium">
-//                             {valor}
-//                         </th>
-//                     ))}
-//                 </tr>
-//             </thead>
-//             <tbody className="divide-gray-200">
-//                 {dados.map((item, index) => (
-//                     <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
-//                         {columnData[indexType].map((column, colIndex) => (
-//                             <td key={colIndex} className="px-3 py-3">
-//                                 {item[column]}
-//                             </td>
-//                         ))}
-//                     </tr>
-//                 ))}
-//             </tbody>
-//         </table>
-//     )
-// }
