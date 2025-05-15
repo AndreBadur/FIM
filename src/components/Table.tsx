@@ -1,20 +1,13 @@
 import React from 'react'
 import {
-    Button,
     Cell,
     Column,
-    Dialog,
-    DialogTrigger,
-    Heading,
-    Input,
-    Modal,
     Row,
     Table,
     TableBody,
     TableHeader,
-    TextField,
 } from 'react-aria-components'
-import { Label } from './Typography'
+
 
 const columnTable = [
     ['ID Farm', 'ID Farmer', 'ID Address', 'Created At', 'Updated At', 'CNPJ', 'Nome'],
@@ -36,6 +29,9 @@ type Props<T> = {
 }
 
 export function AriaTable<T extends Record<string, string | number>>({ tipo, dados }: Props<T>) {
+    
+    // const router =  useRouter()
+    
     switch (tipo) {
         case 'generalFarms':
             indexType = 0
@@ -59,35 +55,18 @@ export function AriaTable<T extends Record<string, string | number>>({ tipo, dad
             </TableHeader>
             <TableBody>
                 {dados.map((item, index) => (
-                    <DialogTrigger key={index}>
-                        <Row
-                            key={index}
-                            onAction={() => {}}
-                            className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}
-                        >
-                            {columnData[indexType].map((column, colIndex) => (
-                                <Cell key={colIndex} className="px-3 py-3">
-                                    {item[column]}
-                                </Cell>
-                            ))}
-                        </Row>
-                        <Modal>
-                            <Dialog>
-                                <form>
-                                    <Heading slot="title">Sign up</Heading>
-                                    <TextField autoFocus>
-                                        <Label>First Name:</Label>
-                                        <Input />
-                                    </TextField>
-                                    <TextField>
-                                        <Label>Last Name:</Label>
-                                        <Input />
-                                    </TextField>
-                                    <Button slot="close">Submit</Button>
-                                </form>
-                            </Dialog>
-                        </Modal>
-                    </DialogTrigger>
+                    <Row
+                        key={index}
+                        onAction={() => {}}
+                        className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}
+                        // href="/updateTest"
+                    >
+                        {columnData[indexType].map((column, colIndex) => (
+                            <Cell key={colIndex} className="px-3 py-3">
+                                {item[column]}
+                            </Cell>
+                        ))}
+                    </Row>  
                 ))}
             </TableBody>
         </Table>
