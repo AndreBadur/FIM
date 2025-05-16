@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { FarmManagement, farmType } from '../classes/FarmManagements'
 import { Button, FieldError, Label, TextField, Input, Form } from 'react-aria-components'
 
@@ -12,14 +13,22 @@ type GeneralUpdateProps = {
 }
 
 export function GeneralUpdate({ farmerId, caseToUpdateId }: GeneralUpdateProps) {
-    const [farmData, setFarmData] = useState<farmType | null>(null)
+    const router = useRouter()
+    const [farmData, setFormData] = useState({
+        corporate_name: '',
+        cnpj: '',
+    })
 
     useEffect(() => {
         const fetchFarm = async () => {
             const farm = await farmManagement.findUniqueFarmByFarmId(farmerId, caseToUpdateId)
-            setFarmData(farm)
+            if (farm) {
+                setFormData({
+                    corporate_name: farm.corporate_name ?? '',
+                    cnpj: farm.cnpj ?? '',
+                })
+            }
         }
-
         fetchFarm()
     }, [farmerId, caseToUpdateId])
 
@@ -39,22 +48,41 @@ export function GeneralUpdate({ farmerId, caseToUpdateId }: GeneralUpdateProps) 
                     farmerId,
                     caseToUpdateId,
                 )
+
                 console.log(teste)
+
+                router.push('/designTest')
+                router.refresh()
             }}
         >
             <TextField name="corporate_name">
                 <Label>CORPORATE NAME</Label>
-                <Input placeholder={farmData?.corporate_name.toString()} defaultValue="teste" />
+                <Input
+                    value={farmData.corporate_name}
+                    onChange={(e) => setFormData({ ...farmData, corporate_name: e.target.value })}
+                />
                 <FieldError />
             </TextField>
             <TextField name="cnpj">
                 <Label>CNPJ</Label>
-                <Input defaultValue="qweqwe" />
+                <Input
+                    value={farmData.cnpj}
+                    onChange={(e) => setFormData({ ...farmData, cnpj: e.target.value })}
+                />
                 <FieldError />
             </TextField>
             <div style={{ display: 'flex', gap: 8 }}>
                 <Button type="submit">Submit</Button>
-                <Button type="reset">Reset</Button>
+                <Button
+                    type="button"
+                    onPress={async () => {
+                        await farmManagement.deleteFarmByFarmId(farmerId, caseToUpdateId)
+                        router.push('/designTest')
+                        router.refresh()
+                    }}
+                >
+                    Delete
+                </Button>
             </div>
         </Form>
     )

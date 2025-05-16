@@ -1,3 +1,6 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { Cell, Column, Row, Table, TableBody, TableHeader } from 'react-aria-components'
 
@@ -21,7 +24,7 @@ type Props<T> = {
 }
 
 export function AriaTable<T extends Record<string, string | number>>({ tipo, dados }: Props<T>) {
-    // const router =  useRouter()
+    const router = useRouter()
 
     switch (tipo) {
         case 'generalFarms':
@@ -48,9 +51,8 @@ export function AriaTable<T extends Record<string, string | number>>({ tipo, dad
                 {dados.map((item, index) => (
                     <Row
                         key={index}
-                        onAction={() => {}}
+                        onAction={() => router.push(`/updateTest?id=${item.id_farm}`)}
                         className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}
-                        // href="/updateTest"
                     >
                         {columnData[indexType].map((column, colIndex) => (
                             <Cell key={colIndex} className="px-3 py-3">
