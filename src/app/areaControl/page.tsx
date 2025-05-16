@@ -50,14 +50,14 @@ import {
     Key,
 } from 'react-aria-components'
 
-export default function areaControl() {
-    let FarmOptions = [
+export default function AreaControl() {
+    const FarmOptions = [
         {id: 60, name: 'Fazenda azul'},
         {id: 61, name: 'Fazenda verde'},
         {id: 62, name: 'Fazenda amarela'},
     ]
 
-    let AreaOptions = [
+    const AreaOptions = [
         {id: 1, name: 'Área de descanso'},
         {id: 2, name: 'Área de cultivo'},
         {id: 3, name: 'Área de estoque'},
