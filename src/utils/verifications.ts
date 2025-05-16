@@ -1,3 +1,5 @@
+import {NextRequest} from 'next/server'
+
 export function verifyApiResponse(response: Response) {
     if (response.ok) {
         return true
@@ -11,4 +13,13 @@ export function isDataNullOrUndefined(data: any) {
         return false
     }
     throw Error
+}
+
+export async function handleRequestJsonData<T>(request: NextRequest) {
+    const data: T = await request.json()
+    return data
+}
+
+export function handleFormBodyRequest<T>(data: T){
+    return data
 }

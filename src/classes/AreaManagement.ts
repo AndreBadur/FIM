@@ -1,4 +1,4 @@
-import {verifyApiResponse} from '@/utils/verifications'
+import {handleFormBodyRequest, verifyApiResponse} from '@/utils/verifications'
 
 export type areaType = {
     id_type_area?: number
@@ -16,29 +16,22 @@ export class AreaManagement {
     public async createArea(
         bodyRequest: areaType,
     ): Promise<Response | undefined> {
-        const {
-            id_type_area,
-            id_farm,
-            name,
-            description,
-            features,
-            capacity,
-            status,
-        } = bodyRequest
+        const bodyData = handleFormBodyRequest<areaType>(bodyRequest)
+        
         try {
-            const response = await fetch(`api/areas/${id_farm}`, {
+            const response = await fetch(`api/areas/${bodyData.id_farm}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    id_type_area,
-                    id_farm,
-                    name,
-                    description,
-                    features,
-                    capacity,
-                    status,
+                    id_type_area: bodyData.id_type_area,
+                    id_farm: bodyData.id_farm,
+                    name:bodyData.description,
+                    description: bodyData.description,
+                    features: bodyData.features,
+                    capacity: bodyData.capacity,
+                    status: bodyData.status,
                 }),
             })
 
@@ -66,7 +59,7 @@ export class AreaManagement {
         }
     }
 
-    public async updateArea(
+    public async updateAreaById(
         bodyRequest: areaType,
         {id_area}: {id_area: string},
     ): Promise<Response | undefined> {
@@ -104,7 +97,7 @@ export class AreaManagement {
         }
     }
 
-    public async findUniqueAreaByAreaId(
+    public async findUniqueAreaById(
         id_farm: string,
         id_area: string,
     ): Promise<areaType | undefined> {
@@ -124,7 +117,7 @@ export class AreaManagement {
         }
     }
 
-    public async deleteUniqueAreaByAreaId(
+    public async deleteUniqueAreaById(
         id_farm: string,
         id_area: string,
     ): Promise<areaType | undefined> {

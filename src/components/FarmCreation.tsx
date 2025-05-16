@@ -44,8 +44,7 @@ export default function FarmCreation() {
                         `${idFarmer}`,
                     )
                     console.log(teste)
-                }}
-            >
+                }}>
                 <h1>ID FARMER</h1>
                 <input
                     className="border-black"
@@ -85,8 +84,7 @@ export default function FarmCreation() {
 
                 <button
                     className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                    type="submit"
-                >
+                    type="submit">
                     CRIAR FAZENDA
                 </button>
             </form>
@@ -106,8 +104,7 @@ export default function FarmCreation() {
                         idFarmer,
                     )
                     console.log(teste)
-                }}
-            >
+                }}>
                 {/* estou utilizando esse campo como se fosse o idFarm mas passando valor pro idFarmer, somente como forma de agilizar testes */}
                 <h1>ID FARM</h1>
                 <input
@@ -148,8 +145,7 @@ export default function FarmCreation() {
 
                 <button
                     className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                    type="submit"
-                >
+                    type="submit">
                     ATUALIZAR FAZENDA
                 </button>
             </form>
@@ -168,8 +164,7 @@ export default function FarmCreation() {
                     } else {
                         router.push('/')
                     }
-                }}
-            >
+                }}>
                 <h1>ID FARMER</h1>
                 <input
                     className="border-black"
@@ -181,8 +176,7 @@ export default function FarmCreation() {
                 />
                 <button
                     className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                    type="submit"
-                >
+                    type="submit">
                     BUSCAR FAZENDA
                 </button>
             </form>
@@ -197,8 +191,7 @@ export default function FarmCreation() {
                         idFarmer,
                     )
                     console.log(teste)
-                }}
-            >
+                }}>
                 <h1>ID FARMER</h1>
                 <input
                     className="border-black"
@@ -210,8 +203,7 @@ export default function FarmCreation() {
                 />
                 <button
                     className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                    type="submit"
-                >
+                    type="submit">
                     DELETAR FAZENDA
                 </button>
             </form>
@@ -235,8 +227,7 @@ export default function FarmCreation() {
                         `1`,
                     )
                     console.log(teste)
-                }}
-            >
+                }}>
                 <TextField name="id_address" isRequired>
                     <Label>ID ADDRESS</Label>
                     <Input />

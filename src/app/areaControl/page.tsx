@@ -91,8 +91,7 @@ export default function AreaControl() {
                             name: parseData.name,
                             status: true,
                         })
-                    }}
-                >
+                    }}>
                     <TextField name="name" isRequired>
                         <div className="flex flex-col">
                             <Label>Nome</Label>
@@ -106,8 +105,7 @@ export default function AreaControl() {
                             label="Fazenda da área"
                             defaultItems={FarmOptions}
                             onSelectionChange={setFarmId}
-                            allowsCustomValue
-                        >
+                            allowsCustomValue>
                             {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
                         </FimComboBox>
                         <FieldError />
@@ -139,8 +137,7 @@ export default function AreaControl() {
                             label="Tipo de área"
                             defaultItems={AreaOptions}
                             onSelectionChange={setTypeAreaId}
-                            allowsCustomValue
-                        >
+                            allowsCustomValue>
                             {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
                         </FimComboBox>
                         <FieldError />

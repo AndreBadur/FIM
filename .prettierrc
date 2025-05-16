@@ -5,5 +5,9 @@
     "tabWidth": 4,
     "printWidth": 80,
     "bracketSpacing": false,
-    "arrowParens": "always"
+    "arrowParens": "always",
+    "bracketSameLine": true,
+    "cursorOffset": -1,
+    "embeddedLanguageFormatting": "auto",
+    "parser":"typescript"
 }
