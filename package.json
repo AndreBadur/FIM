@@ -11,7 +11,7 @@
         "format": "npx prettier --write ."
     },
     "dependencies": {
-        "@prisma/client": "^6.6.0",
+        "@prisma/client": "^6.7.0",
         "bcrypt": "^5.1.1",
         "husky": "^9.1.7",
         "next": "^15.2.4",
