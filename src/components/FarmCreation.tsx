@@ -1,9 +1,16 @@
 'use client'
 
-import { useState } from 'react'
-import { FarmManagement, farmType } from '../classes/FarmManagements'
-import { useRouter } from 'next/navigation'
-import { Button, FieldError, Form, Input, Label, TextField } from 'react-aria-components'
+import {useState} from 'react'
+import {FarmManagement, farmType} from '../classes/FarmManagements'
+import {useRouter} from 'next/navigation'
+import {
+    Button,
+    FieldError,
+    Form,
+    Input,
+    Label,
+    TextField,
+} from 'react-aria-components'
 
 const farmManagement = new FarmManagement()
 const list = await farmManagement.listAllFarmsByFarmer('1')
@@ -152,7 +159,10 @@ export default function FarmCreation() {
                 className="flex flex-col items-center justify-center h-screen"
                 onSubmit={async (e) => {
                     e.preventDefault()
-                    const teste = await farmManagement.findUniqueFarmByFarmId('1', idFarmer)
+                    const teste = await farmManagement.findUniqueFarmByFarmId(
+                        '1',
+                        idFarmer,
+                    )
                     if (teste) {
                         console.log(teste?.corporate_name)
                     } else {
@@ -182,7 +192,10 @@ export default function FarmCreation() {
                 className="flex flex-col items-center justify-center h-screen"
                 onSubmit={async (e) => {
                     e.preventDefault()
-                    const teste = await farmManagement.deleteFarmByFarmId('1', idFarmer)
+                    const teste = await farmManagement.deleteFarmByFarmId(
+                        '1',
+                        idFarmer,
+                    )
                     console.log(teste)
                 }}
             >
@@ -206,8 +219,12 @@ export default function FarmCreation() {
             <Form
                 onSubmit={async (e) => {
                     e.preventDefault()
-                    const data = JSON.stringify(Object.fromEntries(new FormData(e.currentTarget)))
+                    const data = JSON.stringify(
+                        Object.fromEntries(new FormData(e.currentTarget)),
+                    )
+                    console.log(data)
                     const parseData: farmType = JSON.parse(data)
+                    console.log(parseData.id_address)
 
                     const teste = await farmManagement.createFarm(
                         {
@@ -235,7 +252,7 @@ export default function FarmCreation() {
                     <Input />
                     <FieldError />
                 </TextField>
-                <div style={{ display: 'flex', gap: 8 }}>
+                <div style={{display: 'flex', gap: 8}}>
                     <Button type="submit">Submit</Button>
                     <Button type="reset">Reset</Button>
                 </div>

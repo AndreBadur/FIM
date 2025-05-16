@@ -1,4 +1,4 @@
-import { verifyApiResponse } from '@/utils/verifications'
+import {verifyApiResponse} from '@/utils/verifications'
 
 export type farmType = {
     cnpj: string
@@ -17,7 +17,7 @@ export class FarmManagement {
         bodyRequest: Partial<farmType>,
         id_farmer: string,
     ): Promise<Response | undefined> {
-        const { id_address, cnpj, corporate_name } = bodyRequest
+        const {id_address, cnpj, corporate_name} = bodyRequest
 
         try {
             const response = await fetch(`api/farms/${id_farmer}`, {
@@ -41,7 +41,9 @@ export class FarmManagement {
         }
     }
 
-    public async listAllFarmsByFarmer(id_farmer: string): Promise<farmType[] | undefined> {
+    public async listAllFarmsByFarmer(
+        id_farmer: string,
+    ): Promise<farmType[] | undefined> {
         try {
             const response = await fetch(`api/farms/${id_farmer}`, {
                 method: 'GET',
@@ -60,20 +62,23 @@ export class FarmManagement {
         id_farmer: string,
         id_farm: string,
     ): Promise<Response | undefined> {
-        const { id_address, cnpj, corporate_name } = bodyRequest
+        const {id_address, cnpj, corporate_name} = bodyRequest
 
         try {
-            const response = await fetch(`api/farms/${Number(id_farmer)}/${Number(id_farm)}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
+            const response = await fetch(
+                `api/farms/${Number(id_farmer)}/${Number(id_farm)}`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id_address,
+                        cnpj,
+                        corporate_name,
+                    }),
                 },
-                body: JSON.stringify({
-                    id_address,
-                    cnpj,
-                    corporate_name,
-                }),
-            })
+            )
 
             verifyApiResponse(response)
             return response.json()
