@@ -8,6 +8,5 @@
     "arrowParens": "always",
     "bracketSameLine": true,
     "cursorOffset": -1,
-    "embeddedLanguageFormatting": "auto",
-    "parser":"typescript"
+    "embeddedLanguageFormatting": "auto"
 }

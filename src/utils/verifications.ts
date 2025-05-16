@@ -20,6 +20,6 @@ export async function handleRequestJsonData<T>(request: NextRequest) {
     return data
 }
 
-export function handleFormBodyRequest<T>(data: T){
+export function handleFormBodyRequest<T>(data: T) {
     return data
 }

@@ -17,7 +17,7 @@ export class AreaManagement {
         bodyRequest: areaType,
     ): Promise<Response | undefined> {
         const bodyData = handleFormBodyRequest<areaType>(bodyRequest)
-        
+
         try {
             const response = await fetch(`api/areas/${bodyData.id_farm}`, {
                 method: 'POST',
@@ -27,7 +27,7 @@ export class AreaManagement {
                 body: JSON.stringify({
                     id_type_area: bodyData.id_type_area,
                     id_farm: bodyData.id_farm,
-                    name:bodyData.description,
+                    name: bodyData.description,
                     description: bodyData.description,
                     features: bodyData.features,
                     capacity: bodyData.capacity,

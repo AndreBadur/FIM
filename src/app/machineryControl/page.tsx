@@ -1,11 +1,11 @@
 'use client'
 
-import {
-    MachineryManagement,
-    machineryStatus,
-} from '@/classes/MachineryManagement'
+// import {
+//     MachineryManagement,
+//     machineryStatus,
+// } from '@/classes/MachineryManagement'
 
-const machineryManagement = new MachineryManagement()
+// const machineryManagement = new MachineryManagement()
 
 // const create = await machineryManagement.createMachinery({
 //     cost_per_hour: 2,
