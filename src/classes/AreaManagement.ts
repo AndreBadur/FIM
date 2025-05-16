@@ -1,6 +1,6 @@
 import {verifyApiResponse} from '@/utils/verifications'
 
-type areaType = {
+export type areaType = {
     id_type_area?: number
     id_farm?: number
     name?: string
