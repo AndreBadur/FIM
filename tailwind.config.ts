@@ -8,6 +8,10 @@ export default {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                raleway: ['Raleway', 'Helvetica'],
+                helvetica: ['Helvetica', 'sans-serif'],
+            },
             colors: {
                 background: 'var(--background)',
                 foreground: 'var(--foreground)',
