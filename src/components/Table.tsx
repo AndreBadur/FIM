@@ -59,6 +59,9 @@ export function AriaTable<T extends Record<string, string | number>>({
         case 'farm':
             indexType = 1
             break
+        //case 'area':
+        //    indexType = 2
+        //    break
     }
     return (
         <Table
