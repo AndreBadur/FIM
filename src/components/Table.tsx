@@ -1,6 +1,6 @@
 'use client'
 
-import {useRouter} from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import {
     Cell,
@@ -22,6 +22,7 @@ const columnTable = [
         'Nome',
     ],
     ['ID Farm', 'Created At', 'Updated At', 'CNPJ', 'Nome'],
+    ['ID Type Area', 'ID Farm', 'Name', 'Description', 'Features'],
 ]
 
 const columnData = [
@@ -35,34 +36,24 @@ const columnData = [
         'corporate_name',
     ],
     ['id_farm', 'created_at', 'updated_at', 'cnpj', 'corporate_name'],
+    ['id_type_area', 'id_farm', 'name', 'description', 'features'],
 ]
 
-type TipoTabela = 'farm' | 'generalFarms'
-
-let indexType: number
+type TipoTabela = 'farm' | 'generalFarms' | 'area'
 
 type Props<T> = {
     tipo: TipoTabela
     dados: T[]
 }
 
-export function AriaTable<T extends Record<string, string | number>>({
+export function AriaTable<T extends Record<string, string | number | boolean>>({
     tipo,
     dados,
 }: Props<T>) {
     const router = useRouter()
 
-    switch (tipo) {
-        case 'generalFarms':
-            indexType = 0
-            break
-        case 'farm':
-            indexType = 1
-            break
-        //case 'area':
-        //    indexType = 2
-        //    break
-    }
+    const indexType = tipo === 'generalFarms' ? 0 : tipo === 'farm' ? 1 : 2
+
     return (
         <Table
             aria-label="Files"
@@ -70,7 +61,7 @@ export function AriaTable<T extends Record<string, string | number>>({
             className="w-full mt-4 text-sm text-left"
         >
             <TableHeader className="bg-gray-100 uppercase rounded-md">
-                {columnTable?.[indexType].map((valor, index) => (
+                {columnTable[indexType].map((valor, index) => (
                     <Column
                         key={index}
                         className="px-3 py-2 text-base font-medium"
@@ -85,7 +76,9 @@ export function AriaTable<T extends Record<string, string | number>>({
                         key={index}
                         onAction={() =>
                             router.push(
-                                `/updateTest?id=${item[columnData[indexType][0]]}`,
+                                tipo === 'area'
+                                    ? `/areaUpdate?id=${item[columnData[indexType][0]]}`
+                                    : `/updateTest?id=${item[columnData[indexType][0]]}`
                             )
                         }
                         className={
@@ -96,7 +89,7 @@ export function AriaTable<T extends Record<string, string | number>>({
                     >
                         {columnData[indexType].map((column, colIndex) => (
                             <Cell key={colIndex} className="px-3 py-2 text-sm">
-                                {item[column]}
+                                {String(item[column])}
                             </Cell>
                         ))}
                     </Row>
