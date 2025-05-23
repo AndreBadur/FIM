@@ -34,7 +34,10 @@ console.log(readAll)
 // )
 // console.log(update)
 
-// const readOneArea = await areaManagement.findUniqueAreaByAreaId('22', '3')
+// const readOneArea = await areaManagement.findUniqueAreaById({
+//     id_farm: '22',
+//     id_area: '2',
+// })
 // console.log(readOneArea)
 
 // const deleteArea = await areaManagement.deleteUniqueAreaByAreaId('22', '3')
@@ -65,7 +68,6 @@ export default function AreaControl() {
 
     const [farmId, setFarmId] = React.useState<Key | null>(null)
     const [typeAreaId, setTypeAreaId] = React.useState<Key | null>(null)
-    console.log(typeAreaId)
 
     return (
         <div>
@@ -91,8 +93,7 @@ export default function AreaControl() {
                             name: parseData.name,
                             status: true,
                         })
-                    }}
-                >
+                    }}>
                     <TextField name="name" isRequired>
                         <div className="flex flex-col">
                             <Label>Nome</Label>
@@ -106,8 +107,7 @@ export default function AreaControl() {
                             label="Fazenda da área"
                             defaultItems={FarmOptions}
                             onSelectionChange={setFarmId}
-                            allowsCustomValue
-                        >
+                            allowsCustomValue>
                             {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
                         </FimComboBox>
                         <FieldError />
@@ -139,8 +139,7 @@ export default function AreaControl() {
                             label="Tipo de área"
                             defaultItems={AreaOptions}
                             onSelectionChange={setTypeAreaId}
-                            allowsCustomValue
-                        >
+                            allowsCustomValue>
                             {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
                         </FimComboBox>
                         <FieldError />
