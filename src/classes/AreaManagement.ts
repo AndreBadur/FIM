@@ -1,4 +1,4 @@
-import {handleFormBodyRequest, verifyApiResponse} from '@/utils/verifications'
+import {verifyApiResponse} from '@/utils/verifications'
 
 export type areaType = {
     id_type_area?: number
@@ -10,28 +10,41 @@ export type areaType = {
     status?: boolean
 }
 
+type specificAreaRequest = {
+    id_farm: string
+    id_area: string
+}
+
 export class AreaManagement {
     constructor() {}
 
     public async createArea(
         bodyRequest: areaType,
     ): Promise<Response | undefined> {
-        const bodyData = handleFormBodyRequest<areaType>(bodyRequest)
+        const {
+            id_type_area,
+            id_farm,
+            name,
+            description,
+            features,
+            capacity,
+            status,
+        } = bodyRequest
 
         try {
-            const response = await fetch(`api/areas/${bodyData.id_farm}`, {
+            const response = await fetch(`api/areas/${id_farm}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    id_type_area: bodyData.id_type_area,
-                    id_farm: bodyData.id_farm,
-                    name: bodyData.description,
-                    description: bodyData.description,
-                    features: bodyData.features,
-                    capacity: bodyData.capacity,
-                    status: bodyData.status,
+                    id_type_area,
+                    id_farm,
+                    name,
+                    description,
+                    features,
+                    capacity,
+                    status,
                 }),
             })
 
@@ -90,7 +103,7 @@ export class AreaManagement {
             })
 
             verifyApiResponse(response)
-            return response
+            return response.json()
         } catch (error) {
             console.error(error)
             return undefined
@@ -98,12 +111,11 @@ export class AreaManagement {
     }
 
     public async findUniqueAreaById(
-        id_farm: string,
-        id_area: string,
+        bodyRequest: specificAreaRequest,
     ): Promise<areaType | undefined> {
         try {
             const response = await fetch(
-                `api/areas/${Number(id_farm)}/${Number(id_area)}`,
+                `api/areas/${bodyRequest.id_farm}/${bodyRequest.id_area}`,
                 {
                     method: 'GET',
                 },
@@ -118,12 +130,11 @@ export class AreaManagement {
     }
 
     public async deleteUniqueAreaById(
-        id_farm: string,
-        id_area: string,
+        bodyRequest: specificAreaRequest,
     ): Promise<areaType | undefined> {
         try {
             const response = await fetch(
-                `api/areas/${Number(id_farm)}/${Number(id_area)}`,
+                `api/areas/${bodyRequest.id_farm}/${bodyRequest.id_area}`,
                 {
                     method: 'DELETE',
                 },

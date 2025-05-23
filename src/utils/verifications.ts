@@ -19,7 +19,3 @@ export async function handleRequestJsonData<T>(request: NextRequest) {
     const data: T = await request.json()
     return data
 }
-
-export function handleFormBodyRequest<T>(data: T) {
-    return data
-}

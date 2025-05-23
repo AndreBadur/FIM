@@ -1,4 +1,4 @@
-import {handleFormBodyRequest, verifyApiResponse} from '@/utils/verifications'
+import {verifyApiResponse} from '@/utils/verifications'
 
 export enum machineryStatus {
     active = 'active',
@@ -16,31 +16,47 @@ export type machineryType = {
     last_maintenance_date: Date
 }
 
+type specificMachineryRequest = {
+    id_farm: string
+    id_machinery: string
+}
+
 export class MachineryManagement {
     constructor() {}
 
     public async createMachinery(
         bodyRequest: machineryType,
     ): Promise<Response | undefined> {
-        const bodyData = handleFormBodyRequest<machineryType>(bodyRequest)
-
+        const {
+            id_machinery_type,
+            id_farm,
+            name,
+            model,
+            status,
+            cost_per_hour,
+            maintenance_interval,
+            last_maintenance_date,
+        } = bodyRequest
         try {
-            const response = await fetch(`api/machinery/${bodyData.id_farm}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+            const response = await fetch(
+                `api/machinery/${bodyRequest.id_farm}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id_machinery_type,
+                        id_farm,
+                        name,
+                        model,
+                        status,
+                        cost_per_hour,
+                        maintenance_interval,
+                        last_maintenance_date,
+                    }),
                 },
-                body: JSON.stringify({
-                    id_machinery_type: bodyData.id_machinery_type,
-                    id_farm: bodyData.id_farm,
-                    name: bodyData.name,
-                    model: bodyData.model,
-                    status: bodyData.status,
-                    cost_per_hour: bodyData.cost_per_hour,
-                    maintenance_interval: bodyData.maintenance_interval,
-                    last_maintenance_date: bodyData.last_maintenance_date,
-                }),
-            })
+            )
 
             verifyApiResponse(response)
             return response
@@ -66,9 +82,83 @@ export class MachineryManagement {
         }
     }
 
-    public async updateMachineryById() {}
+    public async updateMachineryById(
+        bodyRequest: machineryType,
+        {id_machinery}: {id_machinery: string},
+    ): Promise<Response | undefined> {
+        const {
+            id_machinery_type,
+            id_farm,
+            name,
+            model,
+            status,
+            cost_per_hour,
+            maintenance_interval,
+            last_maintenance_date,
+        } = bodyRequest
+        try {
+            const response = await fetch(
+                `api/machinery/${id_farm}/${id_machinery}`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id_machinery_type,
+                        name,
+                        model,
+                        status,
+                        cost_per_hour,
+                        maintenance_interval,
+                        last_maintenance_date,
+                    }),
+                },
+            )
 
-    public async findMachineryById() {}
+            verifyApiResponse(response)
+            return response.json()
+        } catch (error) {
+            console.error(error)
+            return undefined
+        }
+    }
 
-    public async deleteUniqueMachineryId() {}
+    public async findMachineryById(
+        bodyRequest: specificMachineryRequest,
+    ): Promise<Response | undefined> {
+        try {
+            const response = await fetch(
+                `api/machinery/${bodyRequest.id_farm}/${bodyRequest.id_machinery}`,
+                {
+                    method: 'GET',
+                },
+            )
+
+            verifyApiResponse(response)
+            return response.json()
+        } catch (error) {
+            console.error(error)
+            return undefined
+        }
+    }
+
+    public async deleteUniqueMachineryId(
+        bodyRequest: specificMachineryRequest,
+    ): Promise<Response | undefined> {
+        try {
+            const response = await fetch(
+                `api/machinery/${bodyRequest.id_farm}/${bodyRequest.id_machinery}`,
+                {
+                    method: 'DELETE',
+                },
+            )
+
+            verifyApiResponse(response)
+            return response.json()
+        } catch (error) {
+            console.error(error)
+            return undefined
+        }
+    }
 }
