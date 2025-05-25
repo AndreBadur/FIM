@@ -145,12 +145,19 @@ export default function AreaControl() {
                         </FimComboBox>
                         <FieldError />
                     </TextField>
-                    <div className="flex justify-center">
-                        <div className="flex bg-green-300 rounded justify-center w-3/5 mt-4">
+                    <div className="flex justify-center space-x-4">
+                        <div className="flex bg-green-300 rounded justify-center space-x-4 w-3/5 mt-4">
                             <Button type="submit" className="w-full h-full">
-                                Salvar alterações
+                                Salvar
                             </Button>
                             {/* <Button type="reset">Reset</Button> */}
+                        </div>
+                        <div className="flex bg-red-300 rounded justify-center w-2/5 mt-4">
+                            <a href="/areaControl">
+                                <Button className="w-full h-full">
+                                    Cancelar
+                                </Button>
+                            </a>
                         </div>
                     </div>
                 </Form>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import {useRouter} from 'next/navigation'
 import React from 'react'
 import {
     Cell,
@@ -78,7 +78,7 @@ export function AriaTable<T extends Record<string, string | number | boolean>>({
                             router.push(
                                 tipo === 'area'
                                     ? `/areaUpdate?id=${item[columnData[indexType][0]]}`
-                                    : `/updateTest?id=${item[columnData[indexType][0]]}`
+                                    : `/updateTest?id=${item[columnData[indexType][0]]}`,
                             )
                         }
                         className={
