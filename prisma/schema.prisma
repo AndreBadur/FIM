@@ -153,34 +153,33 @@ model employee {
   @@index([id_farm], map: "fk_farm_employee_idx")
 }
 
-model equipament {
-  id_equipament         Int                @id @default(autoincrement())
-  id_equipament_type    Int?
+model machinery {
+  id_machinery          Int              @id @default(autoincrement())
+  id_machinery_type     Int?
   id_farm               Int?
-  name                  String?            @db.VarChar(45)
-  model                 String?            @db.VarChar(45)
-  status                equipament_status?
-  cost_per_hour         Decimal?           @db.Decimal(10, 0)
+  name                  String?          @db.VarChar(45)
+  model                 String?          @db.VarChar(45)
+  status                machinery_status @default(active)
+  cost_per_hour         Decimal?         @db.Decimal(10, 0)
   maintenance_interval  Int?
-  last_maintenance_date DateTime?          @db.DateTime(0)
-  created_at            DateTime?          @default(now()) @db.DateTime(0)
-  updated_at            DateTime?          @default(now()) @db.DateTime(0)
-  equipament_type       equipament_type?   @relation(fields: [id_equipament_type], references: [id_equipament_type], onDelete: NoAction, onUpdate: NoAction, map: "fk_equipamenttype_equipament")
-  farm                  farm?              @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_equipament")
+  last_maintenance_date DateTime?        @db.DateTime(0)
+  created_at            DateTime?        @default(now()) @db.DateTime(0)
+  updated_at            DateTime?        @default(now()) @db.DateTime(0)
+  machinery_type        machinery_type?  @relation(fields: [id_machinery_type], references: [id_machinery_type], onDelete: NoAction, onUpdate: NoAction, map: "fk_machinerytype_machinery")
+  farm                  farm?            @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_machinery")
   rent                  rent[]
   task                  task[]
 
-  @@index([id_equipament_type], map: "fk_equipamenttype_equipament_idx")
-  @@index([id_farm], map: "fk_farm_equipament_idx")
+  @@index([id_machinery_type], map: "fk_machinerytype_machinery_idx")
+  @@index([id_farm], map: "fk_farm_machinery_idx")
 }
 
-model equipament_type {
-  id_equipament_type Int                       @id @default(autoincrement())
-  name               String?                   @db.VarChar(45)
-  description        String?                   @db.VarChar(45)
-  category           equipament_type_category?
-  status             Int?                      @db.TinyInt
-  equipament         equipament[]
+model machinery_type {
+  id_machinery_type Int         @id @default(autoincrement())
+  name              String?     @db.VarChar(45)
+  description       String?     @db.VarChar(45)
+  status            Int?        @db.TinyInt
+  machinery         machinery[]
 }
 
 model farm {
@@ -194,7 +193,7 @@ model farm {
   area             area[]
   building         building[]
   employee         employee[]
-  equipament       equipament[]
+  machinery        machinery[]
   address          address?           @relation(fields: [id_address], references: [id_address], onDelete: Restrict, onUpdate: Restrict, map: "farm_address_FK")
   farmer           farmer?            @relation(fields: [id_farmer], references: [id_farmer], onDelete: NoAction, onUpdate: NoAction, map: "fk_farmer_farm")
   software_license software_license[]
@@ -240,17 +239,17 @@ model item_type {
 }
 
 model rent {
-  id_rent       Int         @id @default(autoincrement())
-  id_equipament Int?
-  date_payment  DateTime?   @db.DateTime(0)
-  start_date    DateTime?   @db.DateTime(0)
-  end_date      DateTime?   @db.DateTime(0)
-  rental_price  Decimal?    @db.Decimal(10, 0)
-  created_at    DateTime?   @default(now()) @db.DateTime(0)
-  updated_at    DateTime?   @default(now()) @db.DateTime(0)
-  equipament    equipament? @relation(fields: [id_equipament], references: [id_equipament], onDelete: NoAction, onUpdate: NoAction, map: "fk_equipament_rent")
+  id_rent      Int        @id @default(autoincrement())
+  id_machinery Int?
+  date_payment DateTime?  @db.DateTime(0)
+  start_date   DateTime?  @db.DateTime(0)
+  end_date     DateTime?  @db.DateTime(0)
+  rental_price Decimal?   @db.Decimal(10, 0)
+  created_at   DateTime?  @default(now()) @db.DateTime(0)
+  updated_at   DateTime?  @default(now()) @db.DateTime(0)
+  machinery    machinery? @relation(fields: [id_machinery], references: [id_machinery], onDelete: NoAction, onUpdate: NoAction, map: "fk_machinery_rent")
 
-  @@index([id_equipament], map: "fk_equipament_rent_idx")
+  @@index([id_machinery], map: "fk_machinery_rent_idx")
 }
 
 model software_license {
@@ -316,7 +315,7 @@ model task {
   id_task         Int          @id @default(autoincrement())
   id_farm         Int?
   id_employee     Int?
-  id_equipament   Int?
+  id_machinery    Int?
   id_supply       Int?
   supply_quantity Decimal?     @db.Decimal(10, 0)
   conclusion_date DateTime?    @db.DateTime(0)
@@ -324,12 +323,12 @@ model task {
   created_at      DateTime?    @default(now()) @db.DateTime(0)
   updated_at      DateTime?    @default(now()) @db.DateTime(0)
   employee        employee?    @relation(fields: [id_employee], references: [id_employee], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_task")
-  equipament      equipament?  @relation(fields: [id_equipament], references: [id_equipament], onDelete: NoAction, onUpdate: NoAction, map: "fk_equipament_task")
+  machinery       machinery?   @relation(fields: [id_machinery], references: [id_machinery], onDelete: NoAction, onUpdate: NoAction, map: "fk_machinery_task")
   farm            farm?        @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_task")
   supply          supply?      @relation(fields: [id_supply], references: [id_supply], onDelete: NoAction, onUpdate: NoAction, map: "fk_supply_task")
 
   @@index([id_employee], map: "fk_employee_task_idx")
-  @@index([id_equipament], map: "fk_equipament_task_idx")
+  @@index([id_machinery], map: "fk_machinery_task_idx")
   @@index([id_farm], map: "fk_farm_task_idx")
   @@index([id_supply], map: "fk_supply_task_idx")
 }
@@ -337,11 +336,6 @@ model task {
 enum area_type_category {
   Farm
   Site
-}
-
-enum equipament_type_category {
-  Machinary
-  Tool
 }
 
 enum software_license_status {
@@ -359,9 +353,10 @@ enum costumer_costumer_type {
   Reseller
 }
 
-enum equipament_status {
-  Active
+enum machinery_status {
+  active
   inactive
+  onMaintenance
 }
 
 enum task_status {

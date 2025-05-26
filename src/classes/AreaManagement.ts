@@ -10,6 +10,11 @@ export type areaType = {
     status?: boolean
 }
 
+type specificAreaRequest = {
+    id_farm: string
+    id_area: string
+}
+
 export class AreaManagement {
     constructor() {}
 
@@ -25,6 +30,7 @@ export class AreaManagement {
             capacity,
             status,
         } = bodyRequest
+
         try {
             const response = await fetch(`api/areas/${id_farm}`, {
                 method: 'POST',
@@ -66,7 +72,7 @@ export class AreaManagement {
         }
     }
 
-    public async updateArea(
+    public async updateAreaById(
         bodyRequest: areaType,
         {id_area}: {id_area: string},
     ): Promise<Response | undefined> {
@@ -97,20 +103,19 @@ export class AreaManagement {
             })
 
             verifyApiResponse(response)
-            return response
+            return response.json()
         } catch (error) {
             console.error(error)
             return undefined
         }
     }
 
-    public async findUniqueAreaByAreaId(
-        id_farm: string,
-        id_area: string,
+    public async findUniqueAreaById(
+        bodyRequest: specificAreaRequest,
     ): Promise<areaType | undefined> {
         try {
             const response = await fetch(
-                `api/areas/${Number(id_farm)}/${Number(id_area)}`,
+                `api/areas/${bodyRequest.id_farm}/${bodyRequest.id_area}`,
                 {
                     method: 'GET',
                 },
@@ -124,13 +129,12 @@ export class AreaManagement {
         }
     }
 
-    public async deleteUniqueAreaByAreaId(
-        id_farm: string,
-        id_area: string,
+    public async deleteUniqueAreaById(
+        bodyRequest: specificAreaRequest,
     ): Promise<areaType | undefined> {
         try {
             const response = await fetch(
-                `api/areas/${Number(id_farm)}/${Number(id_area)}`,
+                `api/areas/${bodyRequest.id_farm}/${bodyRequest.id_area}`,
                 {
                     method: 'DELETE',
                 },
