@@ -16,8 +16,7 @@ export default function Menu() {
                 </h1>
                 <Link
                     href="/"
-                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600"
-                >
+                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
                     <Image
                         src="/img/dashboard.png"
                         width={18}
@@ -29,8 +28,7 @@ export default function Menu() {
                 </Link>
                 <Link
                     href="/areaControl"
-                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600"
-                >
+                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
                     <Image
                         src="/img/location.png"
                         width={18}
@@ -42,8 +40,7 @@ export default function Menu() {
                 </Link>
                 <Link
                     href="/farmEmployeeControl"
-                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600"
-                >
+                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
                     <Image
                         src="/img/employees.png"
                         width={18}
@@ -55,8 +52,7 @@ export default function Menu() {
                 </Link>
                 <Link
                     href="/machineryControl"
-                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600"
-                >
+                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
                     <Image
                         src="/img/tractor.png"
                         width={18}
@@ -68,8 +64,7 @@ export default function Menu() {
                 </Link>
                 <Link
                     href="/resourseManagementControl"
-                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600"
-                >
+                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
                     <Image
                         src="/img/toDoList.png"
                         width={18}
@@ -86,8 +81,7 @@ export default function Menu() {
                 </h1>
                 <Link
                     href="/"
-                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600"
-                >
+                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
                     <Image
                         src="/img/setting.png"
                         width={18}
