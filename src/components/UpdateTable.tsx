@@ -50,8 +50,7 @@ export function FarmUpdate({farmerId, caseToUpdateId}: GeneralUpdateProps) {
                 justifyContent: 'center',
                 height: '40vh',
                 width: '82vw',
-            }}
-        >
+            }}>
             <Form
                 className="space-y-6 w-full max-w-md "
                 onSubmit={async (e) => {
@@ -75,8 +74,7 @@ export function FarmUpdate({farmerId, caseToUpdateId}: GeneralUpdateProps) {
 
                     router.push('/designTest')
                     router.refresh()
-                }}
-            >
+                }}>
                 <TextField name="corporate_name">
                     <Label className="block text-sm font-medium text-black-700 mb-1">
                         CORPORATE NAME
@@ -109,8 +107,7 @@ export function FarmUpdate({farmerId, caseToUpdateId}: GeneralUpdateProps) {
                 <div style={{display: 'flex', gap: 8}}>
                     <Button
                         type="submit"
-                        className="w-40 px-1 py-3 rounded-md shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold"
-                    >
+                        className="w-40 px-1 py-3 rounded-md shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
                         Submit
                     </Button>
                     <Button
@@ -123,8 +120,7 @@ export function FarmUpdate({farmerId, caseToUpdateId}: GeneralUpdateProps) {
                             )
                             router.push('/designTest')
                             router.refresh()
-                        }}
-                    >
+                        }}>
                         Delete
                     </Button>
                 </div>

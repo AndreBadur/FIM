@@ -64,14 +64,12 @@ export function AriaTable<T extends Record<string, string | number>>({
         <Table
             aria-label="Files"
             selectionMode="multiple"
-            className="w-full mt-4 text-sm text-left"
-        >
+            className="w-full mt-4 text-sm text-left">
             <TableHeader className="bg-gray-100 uppercase rounded-md">
                 {columnTable?.[indexType].map((valor, index) => (
                     <Column
                         key={index}
-                        className="px-3 py-2 text-base font-medium"
-                    >
+                        className="px-3 py-2 text-base font-medium">
                         {valor}
                     </Column>
                 ))}
@@ -89,8 +87,7 @@ export function AriaTable<T extends Record<string, string | number>>({
                             index % 2 === 0
                                 ? 'bg-white cursor-pointer hover:bg-green-500'
                                 : 'bg-gray-100 cursor-pointer hover:bg-green-500'
-                        }
-                    >
+                        }>
                         {columnData[indexType].map((column, colIndex) => (
                             <Cell key={colIndex} className="px-3 py-2 text-sm">
                                 {item[column]}
