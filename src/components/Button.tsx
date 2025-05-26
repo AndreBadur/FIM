@@ -16,8 +16,7 @@ export default function Button(props: Props) {
                         ? 'bg-[#328D66] hover:bg-green-800  dark:border-green-700 text-white font-medium py-2 px-4 rounded-xl transition duration-200'
                         : 'border hover:border-[#328D66] dark:border-green-700 text-black font-medium py-2 px-4 rounded-xl transition duration-200'
                 }
-                onClick={props.onClick || (() => {})}
-            >
+                onClick={props.onClick || (() => {})}>
                 {props.titulo}
             </button>
         </div>
