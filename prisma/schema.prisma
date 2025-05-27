@@ -145,12 +145,15 @@ model employee {
   name          String?   @db.VarChar(255)
   cost_per_hour Decimal?  @db.Decimal(10, 0)
   hours_worked  Decimal?  @db.Decimal(10, 0)
-  created_at    DateTime? @db.DateTime(0)
+  created_at    DateTime? @default(now()) @db.DateTime(0)
   updated_at    DateTime? @db.DateTime(0)
+  id_farmer     Int
   farm          farm?     @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_employee")
+  farmer        farmer    @relation(fields: [id_farmer], references: [id_farmer], onDelete: NoAction, onUpdate: NoAction, map: "fk_farmer_employee")
   task          task[]
 
   @@index([id_farm], map: "fk_farm_employee_idx")
+  @@index([id_farmer], map: "fk_farmer_employee")
 }
 
 model machinery {
@@ -165,8 +168,8 @@ model machinery {
   last_maintenance_date DateTime?        @db.DateTime(0)
   created_at            DateTime?        @default(now()) @db.DateTime(0)
   updated_at            DateTime?        @default(now()) @db.DateTime(0)
-  machinery_type        machinery_type?  @relation(fields: [id_machinery_type], references: [id_machinery_type], onDelete: NoAction, onUpdate: NoAction, map: "fk_machinerytype_machinery")
   farm                  farm?            @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_machinery")
+  machinery_type        machinery_type?  @relation(fields: [id_machinery_type], references: [id_machinery_type], onDelete: NoAction, onUpdate: NoAction, map: "fk_machinerytype_machinery")
   rent                  rent[]
   task                  task[]
 
@@ -193,9 +196,9 @@ model farm {
   area             area[]
   building         building[]
   employee         employee[]
-  machinery        machinery[]
   address          address?           @relation(fields: [id_address], references: [id_address], onDelete: Restrict, onUpdate: Restrict, map: "farm_address_FK")
   farmer           farmer?            @relation(fields: [id_farmer], references: [id_farmer], onDelete: NoAction, onUpdate: NoAction, map: "fk_farmer_farm")
+  machinery        machinery[]
   software_license software_license[]
   supply           supply[]
   task             task[]
@@ -208,6 +211,7 @@ model farmer {
   id_farmer        Int                @id
   created_at       DateTime?          @default(now()) @db.DateTime(0)
   updated_at       DateTime?          @default(now()) @db.DateTime(0)
+  employee         employee[]
   farm             farm[]
   software_license software_license[]
 }
@@ -240,13 +244,13 @@ model item_type {
 
 model rent {
   id_rent      Int        @id @default(autoincrement())
-  id_machinery Int?
   date_payment DateTime?  @db.DateTime(0)
   start_date   DateTime?  @db.DateTime(0)
   end_date     DateTime?  @db.DateTime(0)
   rental_price Decimal?   @db.Decimal(10, 0)
   created_at   DateTime?  @default(now()) @db.DateTime(0)
   updated_at   DateTime?  @default(now()) @db.DateTime(0)
+  id_machinery Int?
   machinery    machinery? @relation(fields: [id_machinery], references: [id_machinery], onDelete: NoAction, onUpdate: NoAction, map: "fk_machinery_rent")
 
   @@index([id_machinery], map: "fk_machinery_rent_idx")
@@ -315,16 +319,16 @@ model task {
   id_task         Int          @id @default(autoincrement())
   id_farm         Int?
   id_employee     Int?
-  id_machinery    Int?
   id_supply       Int?
   supply_quantity Decimal?     @db.Decimal(10, 0)
   conclusion_date DateTime?    @db.DateTime(0)
   status          task_status?
   created_at      DateTime?    @default(now()) @db.DateTime(0)
   updated_at      DateTime?    @default(now()) @db.DateTime(0)
+  id_machinery    Int?
   employee        employee?    @relation(fields: [id_employee], references: [id_employee], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_task")
-  machinery       machinery?   @relation(fields: [id_machinery], references: [id_machinery], onDelete: NoAction, onUpdate: NoAction, map: "fk_machinery_task")
   farm            farm?        @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_task")
+  machinery       machinery?   @relation(fields: [id_machinery], references: [id_machinery], onDelete: NoAction, onUpdate: NoAction, map: "fk_machinery_task")
   supply          supply?      @relation(fields: [id_supply], references: [id_supply], onDelete: NoAction, onUpdate: NoAction, map: "fk_supply_task")
 
   @@index([id_employee], map: "fk_employee_task_idx")

@@ -17,8 +17,8 @@ const areaManagement = new AreaManagement()
 // })
 // console.log(creation)
 
-const readAll = await areaManagement.listAllAreasByFarm('22')
-console.log(readAll)
+// const readAll = await areaManagement.listAllAreasByFarm('22')
+// console.log(readAll)
 
 // const update = await areaManagement.updateArea(
 //     {
