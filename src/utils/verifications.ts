@@ -19,3 +19,27 @@ export async function handleRequestJsonData<T>(request: NextRequest) {
     const data: T = await request.json()
     return data
 }
+
+function validarDatas() {
+    const start: Date = new Date()
+}
+
+type resource = {
+    farm: {
+        id: string
+        name: string
+    }
+    machinery: {
+        id: string
+        name: string
+    }
+    employee: {
+        id: string
+        name: string
+    }
+    supply: {
+        id: string
+        name: string
+        quantity: number
+    }
+}
