@@ -17,15 +17,15 @@ export const metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
     return (
         <html lang="en" className={poppins.variable}>
-            <body>
-                <div>
-                    <Navbar />
-                </div>
-                <div className="flex">
-                    <div>
-                        <Menu />
-                    </div>
-                    <main className="flex-1">{children}</main>
+            <body className="min-h-screen flex flex-col">
+                <Navbar />
+                <div className="flex flex-1 min-h-0">
+                    <Menu />
+                    <main className="flex-1 pt-7 pr-7 pl-7 pb-6">
+                        <div className="bg-white h-full rounded-lg shadow-md">
+                            <div className="pt-4">{children}</div>
+                        </div>
+                    </main>
                 </div>
             </body>
         </html>
