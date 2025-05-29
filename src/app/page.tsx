@@ -1,13 +1,9 @@
 export default function Index() {
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <center>
+            <div className="flex-1 justify-items-center pt-6">
                 <h1>PAGINA INDEX</h1>
-            </center>
+            </div>
         </div>
     )
 }
