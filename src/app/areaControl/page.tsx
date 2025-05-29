@@ -2,9 +2,10 @@
 
 import {AreaManagement} from '@/classes/AreaManagement'
 import {AriaTable} from '@/components/Table'
+import {verifyFarmbyId} from '@/utils/utilityFunctions'
 
 const areaManagement = new AreaManagement()
-const areaList = await areaManagement.listAllAreasByFarm('22')
+const areaList = await areaManagement.listAllAreasByFarm(verifyFarmbyId())
 
 export default function areaControl() {
     return (

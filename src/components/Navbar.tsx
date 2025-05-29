@@ -22,8 +22,7 @@ export default function Navbar() {
                 <FimComboBox
                     defaultItems={FarmOptions}
                     //onSelectionChange={setFarmId}
-                    allowsCustomValue
-                >
+                    allowsCustomValue>
                     {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
                 </FimComboBox>
             </div>

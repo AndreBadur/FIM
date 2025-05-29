@@ -66,10 +66,9 @@ type Props<T> = {
     dados: T[]
 }
 
-export function AriaTable<T extends Record<string, string | number | boolean>>({
-    tipo,
-    dados,
-}: Props<T>) {
+export function AriaTable<
+    T extends Record<string, string | number | boolean | Date>,
+>({tipo, dados}: Props<T>) {
     const router = useRouter()
 
     const indexType = (() => {

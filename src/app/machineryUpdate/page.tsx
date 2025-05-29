@@ -1,7 +1,7 @@
 'use client'
 
-import { MachineryManagement, machineryType } from '@/classes/MachineryManagement'
-import { FimComboBox } from '@/components/FimComboBox'
+import {MachineryManagement, machineryType} from '@/classes/MachineryManagement'
+import {FimComboBox} from '@/components/FimComboBox'
 import React from 'react'
 
 import {
@@ -19,19 +19,21 @@ const machineryManagement = new MachineryManagement()
 
 export default function MachineryControl() {
     const FarmOptions = [
-        { id: 60, name: 'Fazenda azul' },
-        { id: 61, name: 'Fazenda verde' },
-        { id: 62, name: 'Fazenda amarela' },
+        {id: 60, name: 'Fazenda azul'},
+        {id: 61, name: 'Fazenda verde'},
+        {id: 62, name: 'Fazenda amarela'},
     ]
 
     const MachineryTypeOptions = [
-        { id: 1, name: 'Ceifadeira' },
-        { id: 2, name: 'Regadora' },
-        { id: 3, name: 'Trator' },
+        {id: 1, name: 'Ceifadeira'},
+        {id: 2, name: 'Regadora'},
+        {id: 3, name: 'Trator'},
     ]
 
     const [farmId, setFarmId] = React.useState<Key | null>(null)
-    const [machineryTypeId, setMachineryTypeId] = React.useState<Key | null>(null)
+    const [machineryTypeId, setMachineryTypeId] = React.useState<Key | null>(
+        null,
+    )
 
     return (
         <div>
@@ -52,14 +54,17 @@ export default function MachineryControl() {
                             id_farm: Number(farmId),
                             id_machinery_type: Number(machineryTypeId),
                             cost_per_hour: Number(parseData.cost_per_hour),
-                            last_maintenance_date: new Date(parseData.last_maintenance_date),
-                            maintenance_interval: Number(parseData.maintenance_interval),
+                            last_maintenance_date: new Date(
+                                parseData.last_maintenance_date,
+                            ),
+                            maintenance_interval: Number(
+                                parseData.maintenance_interval,
+                            ),
                             model: parseData.model,
                             name: parseData.name,
-                            status: true, 
+                            status: true,
                         })
-                    }}
-                >
+                    }}>
                     <TextField name="name" isRequired>
                         <div className="flex flex-col">
                             <Label>Nome da Máquina</Label>
@@ -104,8 +109,7 @@ export default function MachineryControl() {
                         label="Fazenda"
                         defaultItems={FarmOptions}
                         onSelectionChange={setFarmId}
-                        allowsCustomValue={false}
-                    >
+                        allowsCustomValue={false}>
                         {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
                     </FimComboBox>
 
@@ -113,8 +117,7 @@ export default function MachineryControl() {
                         label="Tipo de Máquina"
                         defaultItems={MachineryTypeOptions}
                         onSelectionChange={setMachineryTypeId}
-                        allowsCustomValue={false}
-                    >
+                        allowsCustomValue={false}>
                         {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
                     </FimComboBox>
 

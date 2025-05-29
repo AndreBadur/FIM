@@ -1,10 +1,10 @@
 'use client'
 
-//import {MachineryManagement} from '@/classes/MachineryManagement'
-//import {AriaTable} from '@/components/Table'
+import {MachineryManagement} from '@/classes/MachineryManagement'
+import {AriaTable} from '@/components/Table'
 
-//const machineryManagement = new MachineryManagement()
-//const machineryList = await machineryManagement.listAllMachineriesByFarm('22')
+const machineryManagement = new MachineryManagement()
+const machineryList = await machineryManagement.listAllMachineriesByFarm('22')
 
 export default function MachineryControl() {
     return (
@@ -18,7 +18,7 @@ export default function MachineryControl() {
                         </button>
                     </a>
                 </div>
-                {/* <AriaTable tipo="machinery" dados={machineryList!} /> */}
+                <AriaTable tipo="machinery" dados={machineryList!} />
             </div>
         </div>
     )
