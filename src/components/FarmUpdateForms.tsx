@@ -67,7 +67,7 @@ export function FarmUpdateForms({
                     )
 
                     router.push('/designTest')
-                    router.refresh()
+                    window.location.href = '/designTest'
                 }}>
                 <TextField name="corporate_name">
                     <Label className="block text-sm font-medium text-black-700 mb-1">
@@ -108,7 +108,7 @@ export function FarmUpdateForms({
                                 farmId,
                             )
                             router.push('/manageFarmData')
-                            router.refresh()
+                            window.location.href = '/designTest'
                         }}>
                         Delete
                     </Button>

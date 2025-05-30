@@ -80,7 +80,7 @@ export function AriaTable<T extends Record<string, string | number>>({
                         key={index}
                         onAction={() =>
                             router.push(
-                                `/updateTest?id=${item[columnData[indexType][0]]}`,
+                                `/manageFarmData?id=${item[columnData[indexType][0]]}`,
                             )
                         }
                         className={
