@@ -70,9 +70,10 @@ export default function AreaControl() {
     const [typeAreaId, setTypeAreaId] = React.useState<Key | null>(null)
 
     return (
-        <div>
-            <div className="flex items-center justify-center flex-1 bg-gray-200 h-screen">
+        <div className="h-full">
+            <div className="flex items-center justify-center flex-1 h-full">
                 <Form
+                    className="w-96"
                     onSubmit={async (e) => {
                         e.preventDefault()
 
@@ -97,7 +98,7 @@ export default function AreaControl() {
                     <TextField name="name" isRequired>
                         <div className="flex flex-col">
                             <Label>Nome</Label>
-                            <Input />
+                            <Input className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent hover:border-green-500" />
                             <FieldError />
                         </div>
                     </TextField>
@@ -116,21 +117,21 @@ export default function AreaControl() {
                     <TextField name="description" isRequired>
                         <div className="flex flex-col">
                             <Label>Descrição</Label>
-                            <Input />
+                            <Input className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent hover:border-green-500" />
                             <FieldError />
                         </div>
                     </TextField>
                     <TextField name="capacity" isRequired>
                         <div className="flex flex-col">
                             <Label>Capacidade</Label>
-                            <Input />
+                            <Input className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent hover:border-green-500" />
                             <FieldError />
                         </div>
                     </TextField>
                     <TextField name="features" isRequired>
                         <div className="flex flex-col">
                             <Label>Características</Label>
-                            <Input />
+                            <Input className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent hover:border-green-500" />
                             <FieldError />
                         </div>
                     </TextField>
@@ -145,11 +146,12 @@ export default function AreaControl() {
                         <FieldError />
                     </TextField>
                     <div className="flex justify-center">
-                        <div className="flex bg-green-300 rounded justify-center w-1/5 mt-4">
-                            <Button type="submit" className="w-full h-full">
+                        <div className="flex bg-green-300 rounded justify-center mt-4">
+                            <Button
+                                type="submit"
+                                className="w-40 px-1 py-3 rounded-md shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
                                 Criar
                             </Button>
-                            {/* <Button type="reset">Reset</Button> */}
                         </div>
                     </div>
                 </Form>

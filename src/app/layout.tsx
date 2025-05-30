@@ -23,7 +23,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                     <Menu />
                     <main className="flex-1 pt-7 pr-7 pl-7 pb-6">
                         <div className="bg-white h-full rounded-lg shadow-md">
-                            <div>{children}</div>
+                            <div className="h-full">{children}</div>
                         </div>
                     </main>
                 </div>

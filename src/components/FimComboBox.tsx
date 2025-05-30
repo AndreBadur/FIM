@@ -32,8 +32,8 @@ export function FimComboBox<T extends object>({
     return (
         <ComboBox {...props}>
             <Label>{label}</Label>
-            <div className="my-combobox-container">
-                <Input />
+            <div className="my-combobox-container w-full flex">
+                <Input className="w-[97%] pl-3 py-2 border rounded-md shadow-sm focus:outline-none" />
                 <Button className="bg-white">▼</Button>
             </div>
             {description && <Text slot="description">{description}</Text>}
