@@ -31,4 +31,3 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         </html>
     )
 }
-/*<div className="bg-blue-400 w-32 h-32"></div>*/
