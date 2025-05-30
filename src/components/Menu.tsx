@@ -79,7 +79,7 @@ export default function Menu() {
                 <h1 className="text-gray-400 uppercase text-xs font-semibold px-4 py-2 mb-2">
                     FERRAMENTAS
                 </h1>
-                <div className="h-60">
+                <div className="h-[12rem]">
                     <div className="min-h-full flex flex-col justify-between">
                         <Link
                             href="/"
