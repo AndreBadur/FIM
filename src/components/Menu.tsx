@@ -5,12 +5,12 @@ import {Link} from 'react-aria-components'
 export default function Menu() {
     return (
         <div className="w-64 bg-gray-800 text-white flex flex-col shadow-lg">
-            <div className="p-6 text-center text-lg font-normal">
-                <h1 className="text-xl font-bold text-white font-inter">
+            <div className="pt-6 text-center font-normal">
+                <h1 className="text-lg font-bold text-white font-inter">
                     GERENCIAMENTO
                 </h1>
             </div>
-            <nav className="flex-2 p-4 pt-3 space-y-2">
+            <nav className="flex-2 p-4 space-y-2">
                 <h1 className="text-gray-400 uppercase text-xs font-semibold px-4 py-2 mb-2">
                     PRINCIPAL
                 </h1>
@@ -79,29 +79,33 @@ export default function Menu() {
                 <h1 className="text-gray-400 uppercase text-xs font-semibold px-4 py-2 mb-2">
                     FERRAMENTAS
                 </h1>
-                <Link
-                    href="/"
-                    className="flex items-center px-4 rounded-md transition-colors hover:bg-green-600">
-                    <Image
-                        src="/img/setting.png"
-                        width={18}
-                        height={18}
-                        alt="Configurações"
-                        className="mr-3"
-                    />
+                <div className="h-[12rem]">
+                    <div className="min-h-full flex flex-col justify-between">
+                        <Link
+                            href="/"
+                            className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
+                            <Image
+                                src="/img/setting.png"
+                                width={18}
+                                height={18}
+                                alt="Configurações"
+                                className="mr-3"
+                            />
 
-                    <span>Configurações</span>
-                </Link>
-                <button className="flex items-center px-4 pt-16 text-red-600">
-                    <Image
-                        src="/img/logOut.png"
-                        width={14}
-                        height={14}
-                        alt="Configurações"
-                        className="mr-3"
-                    />
-                    <span className="text-s">Sair</span>
-                </button>
+                            <span>Configurações</span>
+                        </Link>
+                        <button className="flex items-center px-4  text-red-600">
+                            <Image
+                                src="/img/logOut.png"
+                                width={14}
+                                height={14}
+                                alt="Configurações"
+                                className="mr-3"
+                            />
+                            <span className="text-s">Sair</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     )
