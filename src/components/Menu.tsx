@@ -5,18 +5,13 @@ import {Link} from 'react-aria-components'
 export default function Menu() {
     return (
         <div className="w-64 bg-gray-800 text-white flex flex-col shadow-lg">
-            <div className="pt-6 text-center font-normal">
-                <h1 className="text-lg font-bold text-white font-inter">
-                    GERENCIAMENTO
-                </h1>
-            </div>
             <nav className="flex-2 p-4 space-y-2">
                 <h1 className="text-gray-400 uppercase text-xs font-semibold px-4 py-2 mb-2">
                     PRINCIPAL
                 </h1>
                 <Link
                     href="/"
-                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
+                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-[#45c38c]">
                     <Image
                         src="/img/dashboard.png"
                         width={18}
@@ -28,7 +23,7 @@ export default function Menu() {
                 </Link>
                 <Link
                     href="/areaControl"
-                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
+                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-[#45c38c]">
                     <Image
                         src="/img/location.png"
                         width={18}
@@ -40,7 +35,7 @@ export default function Menu() {
                 </Link>
                 <Link
                     href="/farmEmployeeControl"
-                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
+                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-[#45c38c]">
                     <Image
                         src="/img/employees.png"
                         width={18}
@@ -52,7 +47,7 @@ export default function Menu() {
                 </Link>
                 <Link
                     href="/machineryControl"
-                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
+                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-[#45c38c]">
                     <Image
                         src="/img/tractor.png"
                         width={18}
@@ -64,7 +59,7 @@ export default function Menu() {
                 </Link>
                 <Link
                     href="/resourseManagementControl"
-                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
+                    className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-[#45c38c]">
                     <Image
                         src="/img/toDoList.png"
                         width={18}
@@ -83,7 +78,7 @@ export default function Menu() {
                     <div className="min-h-full flex flex-col justify-between">
                         <Link
                             href="/"
-                            className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-green-600">
+                            className="flex items-center px-4 py-3 rounded-md transition-colors hover:bg-[#45c38c]">
                             <Image
                                 src="/img/setting.png"
                                 width={18}

@@ -1,5 +1,6 @@
 import {
     Button,
+    // Button,
     ComboBox,
     Input,
     Label,
@@ -33,13 +34,17 @@ export function FimComboBox<T extends object>({
         <ComboBox {...props}>
             <Label>{label}</Label>
             <div className="my-combobox-container w-full flex">
-                <Input className="w-[97%] pl-3 py-2 border rounded-md shadow-sm focus:outline-none" />
-                <Button className="bg-white">▼</Button>
+                <div className="relative w-full mb-3">
+                    <Input className="w-full pl-3 pr-8 py-2 border rounded-md shadow-sm focus:outline-none" />
+                    <Button className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 focus:outline-none">
+                        ▼
+                    </Button>
+                </div>
             </div>
             {description && <Text slot="description">{description}</Text>}
             <FieldError>{errorMessage}</FieldError>
-            <Popover className="bg-gray-300">
-                <ListBox>{children}</ListBox>
+            <Popover className=" px-3 py-2 border rounded-md shadow-sm bg-white w-64 ">
+                <ListBox className="w-full">{children}</ListBox>
             </Popover>
         </ComboBox>
     )
