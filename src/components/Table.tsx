@@ -33,6 +33,7 @@ const columnTable = [
         'Name',
         'Status',
     ],
+    ['ID Employee', 'ID Farm', 'CPF', 'Name', 'Cost per Hour', 'Hours Worked', 'Created at', 'Updated at',],
 ]
 
 const columnData = [
@@ -57,9 +58,10 @@ const columnData = [
         'name',
         'status',
     ],
+    ['id_employee', 'id_farm', 'cpf', 'name', 'cost_per_hour', 'hours_worked', 'created_at', 'updated_at',],
 ]
 
-type TipoTabela = 'farm' | 'generalFarms' | 'area' | 'machinery'
+type TipoTabela = 'farm' | 'generalFarms' | 'area' | 'machinery' | 'employee'
 
 type Props<T> = {
     tipo: TipoTabela
@@ -81,6 +83,8 @@ export function AriaTable<
                 return 2
             case 'machinery':
                 return 3
+            case 'employee':
+                return 4
             default:
                 return 0
         }
@@ -110,7 +114,9 @@ export function AriaTable<
                                     ? `/areaUpdate?id=${item[columnData[indexType][0]]}`
                                     : tipo === 'machinery'
                                       ? `/machineryUpdate?id=${item[columnData[indexType][0]]}`
-                                      : `/updateTest?id=${item[columnData[indexType][0]]}`,
+                                      : tipo === 'employee'
+                                        ? `/machineryUpdate?id=${item[columnData[indexType][0]]}`
+                                        : `/updateTest?id=${item[columnData[indexType][0]]}`,
                             )
                         }
                         className={

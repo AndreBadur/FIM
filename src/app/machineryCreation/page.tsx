@@ -62,7 +62,7 @@ export default function MachineryControl() {
                             ),
                             model: parseData.model,
                             name: parseData.name,
-                            status: true,
+                            status: parseData.status,
                         })
                     }}>
                     <TextField name="name" isRequired>

@@ -11,8 +11,6 @@ export default function areaControl() {
     return (
         <div className="flex justify-center items-center">
             <div className="w-full max-w-4xl px-4">
-                {' '}
-                {/* 👈 padding lateral */}
                 <div className="flex justify-between items-center w-full">
                     <h1 className="text-xl font-bold">Lista de Áreas</h1>
                     <a href="/areaCreation">

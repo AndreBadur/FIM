@@ -1,10 +1,10 @@
-import {NextRequest, NextResponse} from 'next/server'
-import {PrismaClient} from '@prisma/client'
+import {employeeType} from '@/classes/EmployeeManagement'
 import {
     handleRequestJsonData,
     isDataNullOrUndefined,
 } from '@/utils/verifications'
-import {farmType} from '@/classes/FarmManagements'
+import {PrismaClient} from '@prisma/client'
+import {NextRequest, NextResponse} from 'next/server'
 
 const prisma = new PrismaClient()
 
@@ -15,9 +15,13 @@ export async function GET(
     try {
         const {id_farmer} = await params
 
-        const data = await prisma.farm.findMany({
-            where: {id_farmer: Number(id_farmer)},
-            orderBy: {id_farm: 'asc'},
+        const data = await prisma.employee.findMany({
+            where: {
+                id_farmer: Number(id_farmer),
+            },
+            orderBy: {
+                id_farm: 'asc',
+            },
         })
 
         isDataNullOrUndefined(data)
@@ -32,15 +36,19 @@ export async function POST(
     {params}: {params: Promise<{id_farmer: string}>},
 ) {
     try {
-        const bodyRequest = await handleRequestJsonData<farmType>(request)
+        const bodyRequest = await handleRequestJsonData<employeeType>(request)
         const {id_farmer} = await params
 
-        const data = await prisma.farm.create({
+        console.log(bodyRequest)
+
+        const data = await prisma.employee.create({
             data: {
                 id_farmer: Number(id_farmer),
-                id_address: bodyRequest.id_address,
-                cnpj: bodyRequest.cnpj,
-                corporate_name: bodyRequest.corporate_name,
+                cpf: bodyRequest.cpf,
+                name: bodyRequest.name,
+                cost_per_hour: bodyRequest.cost_per_hour,
+                hours_worked: bodyRequest.hours_worked,
+                id_farm: Number(bodyRequest.id_farm),
             },
         })
 

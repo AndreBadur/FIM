@@ -10,7 +10,7 @@ export type machineryType = {
     id_farm: number
     name: string
     model: string
-    status: machineryStatus | boolean
+    status: machineryStatus
     cost_per_hour: number
     maintenance_interval: number
     last_maintenance_date: Date

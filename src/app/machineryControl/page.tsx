@@ -2,9 +2,10 @@
 
 import {MachineryManagement} from '@/classes/MachineryManagement'
 import {AriaTable} from '@/components/Table'
+import { verifyFarmbyId } from '@/utils/utilityFunctions'
 
 const machineryManagement = new MachineryManagement()
-const machineryList = await machineryManagement.listAllMachineriesByFarm('22')
+const machineryList = await machineryManagement.listAllMachineriesByFarm(verifyFarmbyId())
 
 export default function MachineryControl() {
     return (
