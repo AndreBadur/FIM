@@ -11,7 +11,7 @@ import {
     Input,
     Form,
 } from 'react-aria-components'
-import Link from 'next/link'
+// import Link from 'next/link'
 
 const farmManagement = new FarmManagement()
 
@@ -65,9 +65,9 @@ export function FarmUpdateForms(bodyData: GeneralUpdateProps) {
                         bodyData.farmerId,
                         bodyData.farmId,
                     )
-                    router.push('/designTest')
+                    // router.push('/designTest')
                     setShouldReload(true)
-                    // window.location.href = '/designTest'
+                    window.location.href = '/designTest'
                 }}>
                 <TextField name="corporate_name">
                     <Label className="block text-sm font-medium text-black-700 mb-1">
@@ -107,17 +107,15 @@ export function FarmUpdateForms(bodyData: GeneralUpdateProps) {
                                 bodyData.farmerId,
                                 bodyData.farmId,
                             )
-                            router.push('/manageFarmData')
+                            router.push('/designTest')
                         }}>
                         Delete
                     </Button>
-                    <Link href="/designTest">
-                        <Button
-                            type="submit"
-                            className="w-full h-full px-1 py-1  rounded-md text-center shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
-                            Submit
-                        </Button>
-                    </Link>
+                    <Button
+                        type="submit"
+                        className="w-full h-full px-1 py-1  rounded-md text-center shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
+                        Submit
+                    </Button>
                 </div>
             </Form>
         </div>
