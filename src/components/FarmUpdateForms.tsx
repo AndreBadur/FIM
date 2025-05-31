@@ -11,6 +11,7 @@ import {
     Input,
     Form,
 } from 'react-aria-components'
+import Link from 'next/link'
 
 const farmManagement = new FarmManagement()
 
@@ -19,21 +20,20 @@ type GeneralUpdateProps = {
     farmId: string
 }
 
-export function FarmUpdateForms({
-    farmerId,
-    farmId: farmId,
-}: GeneralUpdateProps) {
+export function FarmUpdateForms(bodyData: GeneralUpdateProps) {
     const router = useRouter()
     const [farmData, setFormData] = useState({
         corporate_name: '',
         cnpj: '',
     })
 
+    const [shouldReload, setShouldReload] = useState<boolean>(false)
+
     useEffect(() => {
         const fetchFarm = async () => {
             const farm = await farmManagement.findUniqueFarmByFarmId(
-                farmerId,
-                farmId,
+                bodyData.farmerId,
+                bodyData.farmId,
             )
             if (farm) {
                 setFormData({
@@ -43,7 +43,7 @@ export function FarmUpdateForms({
             }
         }
         fetchFarm()
-    }, [farmerId, farmId])
+    }, [shouldReload])
 
     return (
         <div className="flex flex-row items-center justify-center h-full w-full">
@@ -62,12 +62,12 @@ export function FarmUpdateForms({
                             cnpj: parseData.cnpj,
                             corporate_name: parseData.corporate_name,
                         },
-                        farmerId,
-                        farmId,
+                        bodyData.farmerId,
+                        bodyData.farmId,
                     )
-
                     router.push('/designTest')
-                    window.location.href = '/designTest'
+                    setShouldReload(true)
+                    // window.location.href = '/designTest'
                 }}>
                 <TextField name="corporate_name">
                     <Label className="block text-sm font-medium text-black-700 mb-1">
@@ -104,19 +104,20 @@ export function FarmUpdateForms({
                         className="w-full h-full px-1 py-1 rounded-md shadow-md border border-red-600 hover:bg-red-700 hover:text-white text-red-600 font-semibold"
                         onPress={async () => {
                             await farmManagement.deleteFarmByFarmId(
-                                farmerId,
-                                farmId,
+                                bodyData.farmerId,
+                                bodyData.farmId,
                             )
                             router.push('/manageFarmData')
-                            window.location.href = '/designTest'
                         }}>
                         Delete
                     </Button>
-                    <Button
-                        type="submit"
-                        className="w-full h-full px-1 py-1  rounded-md text-center shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
-                        Submit
-                    </Button>
+                    <Link href="/designTest">
+                        <Button
+                            type="submit"
+                            className="w-full h-full px-1 py-1  rounded-md text-center shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
+                            Submit
+                        </Button>
+                    </Link>
                 </div>
             </Form>
         </div>
