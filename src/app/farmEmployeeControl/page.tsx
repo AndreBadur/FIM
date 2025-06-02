@@ -1,46 +1,32 @@
 'use client'
-// import {EmployeeManagement} from '@/classes/EmployeeManagement'
 
-// const employeeManagement = new EmployeeManagement()
+import {EmployeeManagement} from '@/classes/EmployeeManagement'
+import {AriaTable} from '@/components/Table'
+// import {verifyFarmbyId} from '@/utils/utilityFunctions'
 
-// const create = await employeeManagement.createEmployee(
-//     {
-//         cost_per_hour: 1,
-//         cpf: '1233322211',
-//         hours_worked: 40,
-//         id_farm: 22,
-//         name: 'Mithril',
-//     },
-//     '1',
-// )
-// console.log(await create)
-// await employeeManagement.updateEmployeeByEmployeeId(
-//     {
-//         cost_per_hour: 12,
-//         cpf: '1233322211',
-//         hours_worked: 40,
-//         id_farm: 22,
-//         name: 'Mithril',
-//     },
-//     '1',
-//     '7',
-// )
+const employeeManagement = new EmployeeManagement()
+const employeeList = await employeeManagement.listAllEmployeesByFarmer('1')
 
-// const employee = await employeeManagement.findUniqueEmployeeByEmployeeId('1', '7')
+// A listagem dos funcionários não estão sendo feitos por meio da farm, mas sim pelo id do fazendeiro
+// const employeeList = await employeeManagement.listAllEmployeesByFarmer(verifyFarmbyId())
 
-// await employeeManagement.deleteEmployeeByEmployeeId('1', '7')
-
-// FUNCIONANDO
-// console.log(await employeeManagement.listAllEmployeesByFarmer('1'))
-
-export default function FarmEmployeeControl() {
-    return (
-        <div>
-            <div className="flex">
-                <div className="flex items-center justify-center flex-1 bg-black h-screen">
-                    <h1 className="text-white text-2xl">Funcionários!</h1>
+export default function EmployeeControl() {
+    if (employeeList)
+        return (
+            <div className="flex justify-center items-center">
+                <div className="w-full max-w-4xl px-4">
+                    <div className="flex justify-between items-center w-full">
+                        <h1 className="text-xl font-bold">
+                            Lista de Funcionários
+                        </h1>
+                        <a href="/farmEmployeeCreation">
+                            <button className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 mt-2">
+                                CRIAR NOVA
+                            </button>
+                        </a>
+                    </div>
+                    <AriaTable tipo="employee" dados={employeeList} />
                 </div>
             </div>
-        </div>
-    )
+        )
 }

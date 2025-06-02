@@ -33,7 +33,16 @@ const columnTable = [
         'Name',
         'Status',
     ],
-    ['ID Employee', 'ID Farm', 'CPF', 'Name', 'Cost per Hour', 'Hours Worked', 'Created at', 'Updated at',],
+    [
+        'ID Employee',
+        'ID Farm',
+        'CPF',
+        'Name',
+        'Cost per Hour',
+        'Hours Worked',
+        'Created at',
+        'Updated at',
+    ],
 ]
 
 const columnData = [
@@ -58,7 +67,16 @@ const columnData = [
         'name',
         'status',
     ],
-    ['id_employee', 'id_farm', 'cpf', 'name', 'cost_per_hour', 'hours_worked', 'created_at', 'updated_at',],
+    [
+        'id_employee',
+        'id_farm',
+        'cpf',
+        'name',
+        'cost_per_hour',
+        'hours_worked',
+        'created_at',
+        'updated_at',
+    ],
 ]
 
 type TipoTabela = 'farm' | 'generalFarms' | 'area' | 'machinery' | 'employee'
