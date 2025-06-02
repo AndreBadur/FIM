@@ -1,7 +1,7 @@
 'use client'
 
 import {useEffect, useState} from 'react'
-import {useRouter} from 'next/navigation'
+// import {useRouter} from 'next/navigation'
 import {FarmManagement, farmType} from '../classes/FarmManagements'
 import {
     Button,
@@ -21,7 +21,7 @@ type GeneralUpdateProps = {
 }
 
 export function FarmUpdateForms(bodyData: GeneralUpdateProps) {
-    const router = useRouter()
+    // const router = useRouter()
     const [farmData, setFormData] = useState({
         corporate_name: '',
         cnpj: '',
@@ -107,7 +107,7 @@ export function FarmUpdateForms(bodyData: GeneralUpdateProps) {
                                 bodyData.farmerId,
                                 bodyData.farmId,
                             )
-                            router.push('/designTest')
+                            window.location.href = '/designTest'
                         }}>
                         Delete
                     </Button>
