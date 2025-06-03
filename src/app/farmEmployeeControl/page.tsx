@@ -2,10 +2,11 @@
 
 import {EmployeeManagement} from '@/classes/EmployeeManagement'
 import {AriaTable} from '@/components/Table'
-import { verifyFarmbyId } from '@/utils/utilityFunctions'
+import {verifyFarmbyId} from '@/utils/utilityFunctions'
 
 const employeeManagement = new EmployeeManagement()
-const employeeList = await employeeManagement.listAllEmployeesByFarmer(verifyFarmbyId())
+const employeeList =
+    await employeeManagement.listAllEmployeesByFarmer(verifyFarmbyId())
 
 export default function EmployeeControl() {
     return (
