@@ -10,7 +10,7 @@ function UpdateWrapper() {
 
     if (!idFarm) return <div>Erro: id não fornecido</div>
 
-    return <FarmUpdateForms farmerId="1" caseToUpdateId={idFarm} />
+    return <FarmUpdateForms farmerId="1" farmId={idFarm} />
 }
 
 export default function ManageFarmData() {
