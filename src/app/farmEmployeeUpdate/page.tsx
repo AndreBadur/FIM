@@ -50,7 +50,7 @@ export default function EmployeeControl() {
                                 cost_per_hour: Number(parseData.cost_per_hour),
                                 hours_worked: Number(parseData.hours_worked),
                             },
-                            verifyFarmbyId(), 
+                            verifyFarmbyId(),
                         )
                     }}>
                     <TextField name="name" isRequired>

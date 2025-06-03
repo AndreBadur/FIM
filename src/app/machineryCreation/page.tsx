@@ -25,7 +25,7 @@ export default function MachineryControl() {
     ]
 
     const MachineryTypeOptions = [
-        {id: 1, name: 'Ceifadeira'},
+        {id: 1, name: 'Ceifadeira'}, //Só a ceifadeira funciona. Provavelmente por não existir outros ids no banco de tipos de maquinários
         {id: 2, name: 'Regadora'},
         {id: 3, name: 'Trator'},
     ]
