@@ -25,7 +25,7 @@ export default function AreaControl() {
     ]
 
     const AreaOptions = [
-        {id: 1, name: 'Área de descanso'},
+        {id: 1, name: 'Área de descanso'}, // Só existe o primeiro
         {id: 2, name: 'Área de cultivo'},
         {id: 3, name: 'Área de estoque'},
     ]

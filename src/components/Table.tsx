@@ -129,7 +129,7 @@ export function AriaTable<
                         onAction={() =>
                             router.push(
                                 tipo === 'area'
-                                    ? `/areaUpdate?id=${item[columnData[indexType][0]]}`
+                                    ? `/areaUpdate?id=${item['id_area']}`
                                     : tipo === 'machinery'
                                       ? `/machineryUpdate?id=${item[columnData[indexType][0]]}`
                                       : tipo === 'employee'
