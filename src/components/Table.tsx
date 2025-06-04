@@ -134,7 +134,7 @@ export function AriaTable<
                                       ? `/machineryUpdate?id=${item[columnData[indexType][0]]}`
                                       : tipo === 'employee'
                                         ? `/machineryUpdate?id=${item[columnData[indexType][0]]}`
-                                        : `/updateTest?id=${item[columnData[indexType][0]]}`,
+                                        : `/farmsUpdate?id=${item[columnData[indexType][0]]}`,
                             )
                         }
                         className={

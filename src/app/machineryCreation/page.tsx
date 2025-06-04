@@ -20,8 +20,8 @@ const machineryManagement = new MachineryManagement()
 export default function MachineryControl() {
     const FarmOptions = [
         {id: 22, name: 'Fazenda azul'},
-        {id: 61, name: 'Fazenda verde'},
-        {id: 62, name: 'Fazenda amarela'},
+        {id: 87, name: 'Fazenda verde'},
+        {id: 88, name: 'Fazenda amarela'},
     ]
 
     const MachineryTypeOptions = [

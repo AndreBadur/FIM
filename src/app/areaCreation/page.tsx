@@ -19,9 +19,9 @@ import {
 
 export default function AreaControl() {
     const FarmOptions = [
-        {id: 22, name: 'Fazenda azul'}, // <- originalmente 60
-        {id: 61, name: 'Fazenda verde'},
-        {id: 62, name: 'Fazenda amarela'},
+        {id: 22, name: 'Fazenda azul'},
+        {id: 87, name: 'Fazenda verde'},
+        {id: 88, name: 'Fazenda amarela'},
     ]
 
     const AreaOptions = [

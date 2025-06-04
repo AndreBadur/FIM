@@ -21,8 +21,8 @@ const employeeManagement = new EmployeeManagement()
 export default function EmployeeControl() {
     const FarmOptions = [
         {id: 22, name: 'Fazenda azul'},
-        {id: 61, name: 'Fazenda verde'},
-        {id: 62, name: 'Fazenda amarela'},
+        {id: 87, name: 'Fazenda verde'},
+        {id: 88, name: 'Fazenda amarela'},
     ]
 
     const [farmId, setFarmId] = React.useState<Key | null>(null)

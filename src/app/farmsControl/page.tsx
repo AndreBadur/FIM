@@ -15,7 +15,9 @@ export default function designTest() {
                 <div className="flex justify-between items-center w-full mb-4 pt-4">
                     <h1 className="text-xl font-bold">Lista de Fazendas</h1>
                     <Button
-                        onPress={() => (window.location.href = '/createTest')}
+                        onPress={() =>
+                            (window.location.href = '/farmsCreation')
+                        }
                         className="w-40 px-1 py-3 rounded-md shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
                         Adicionar
                     </Button>

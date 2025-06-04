@@ -62,7 +62,7 @@ export default function CreateFormFarm() {
                     type="submit"
                     className="w-40 px-1 py-3 rounded-md shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold"
                     onPress={async () => {
-                        router.push('/designTest')
+                        router.push('/farmsControl')
                         router.refresh()
                     }}>
                     Submit

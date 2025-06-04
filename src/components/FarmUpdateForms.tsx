@@ -67,7 +67,7 @@ export function FarmUpdateForms(bodyData: GeneralUpdateProps) {
                     )
                     // router.push('/designTest')
                     setShouldReload(true)
-                    window.location.href = '/designTest'
+                    window.location.href = '/farmsControl'
                 }}>
                 <TextField name="corporate_name">
                     <Label className="block text-sm font-medium text-black-700 mb-1">
@@ -107,7 +107,7 @@ export function FarmUpdateForms(bodyData: GeneralUpdateProps) {
                                 bodyData.farmerId,
                                 bodyData.farmId,
                             )
-                            window.location.href = '/designTest'
+                            window.location.href = '/farmsControl'
                         }}>
                         Delete
                     </Button>
