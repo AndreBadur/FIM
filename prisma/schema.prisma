@@ -19,7 +19,7 @@ model address {
   updated_at  DateTime?  @default(now()) @db.Timestamp(0)
   created_at  DateTime?  @default(now()) @db.Timestamp(0)
   company     company[]
-  costumer    costumer[]
+  customer    customer[]
   farm        farm[]
 }
 
@@ -83,20 +83,6 @@ model company {
   supplier       supplier[]
 
   @@index([id_address], map: "fk_address_company_idx")
-}
-
-model costumer {
-  id_costumer        Int                     @id @default(autoincrement())
-  id_address         Int?
-  name               String?                 @db.VarChar(45)
-  email              String?                 @db.VarChar(255)
-  contact_number     String?                 @db.VarChar(45)
-  costumer_type      costumer_costumer_type?
-  last_purchase_date DateTime?               @db.DateTime(0)
-  is_active          Int?                    @db.TinyInt
-  address            address?                @relation(fields: [id_address], references: [id_address], onDelete: NoAction, onUpdate: NoAction, map: "fk_address_costumer")
-
-  @@index([id_address], map: "fk_address_costumer_idx")
 }
 
 model cultivation {
@@ -200,7 +186,7 @@ model farm {
   farmer           farmer?            @relation(fields: [id_farmer], references: [id_farmer], onDelete: NoAction, onUpdate: NoAction, map: "fk_farmer_farm")
   machinery        machinery[]
   software_license software_license[]
-  supply           supply[]
+  supplies         supplies[]
   task             task[]
 
   @@index([id_farmer], map: "fk_farmer_farm_idx")
@@ -280,39 +266,8 @@ model supplier {
   created_at  DateTime? @default(now()) @db.DateTime(0)
   updated_at  DateTime? @default(now()) @db.DateTime(0)
   company     company?  @relation(fields: [id_company], references: [id_company], onDelete: NoAction, onUpdate: NoAction, map: "fk_company_supplier")
-  supply      supply[]
 
   @@index([id_company], map: "fk_company_supplier_idx")
-}
-
-model supply {
-  id_supply       Int          @id @default(autoincrement())
-  id_supplier     Int?
-  id_suppply_type Int?
-  id_farm         Int?
-  barcode_ean     String?      @db.VarChar(45)
-  quantity        Int?
-  value           Decimal?     @db.Decimal(10, 0)
-  label           String?      @db.VarChar(45)
-  created_at      DateTime?    @default(now()) @db.DateTime(0)
-  updated_at      DateTime?    @default(now()) @db.DateTime(0)
-  farm            farm?        @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_supply")
-  supplier        supplier?    @relation(fields: [id_supplier], references: [id_supplier], onDelete: NoAction, onUpdate: NoAction, map: "fk_supplier_supply")
-  supply_type     supply_type? @relation(fields: [id_suppply_type], references: [id_supply_type], onDelete: NoAction, onUpdate: NoAction, map: "fk_supplytype_supply")
-  task            task[]
-
-  @@index([id_farm], map: "fk_farm_supply_idx")
-  @@index([id_supplier], map: "fk_supplier_supply_idx")
-  @@index([id_suppply_type], map: "fk_supplytype_supply_idx")
-}
-
-model supply_type {
-  id_supply_type Int      @id @default(autoincrement())
-  name           String?  @db.VarChar(45)
-  description    String?  @db.VarChar(255)
-  category       String?  @db.VarChar(255)
-  status         Int?     @db.TinyInt
-  supply         supply[]
 }
 
 model task {
@@ -329,12 +284,52 @@ model task {
   employee        employee?    @relation(fields: [id_employee], references: [id_employee], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_task")
   farm            farm?        @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_task")
   machinery       machinery?   @relation(fields: [id_machinery], references: [id_machinery], onDelete: NoAction, onUpdate: NoAction, map: "fk_machinery_task")
-  supply          supply?      @relation(fields: [id_supply], references: [id_supply], onDelete: NoAction, onUpdate: NoAction, map: "fk_supply_task")
+  supply          supplies?    @relation(fields: [id_supply], references: [supply_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_supply_task")
 
   @@index([id_employee], map: "fk_employee_task_idx")
   @@index([id_machinery], map: "fk_machinery_task_idx")
   @@index([id_farm], map: "fk_farm_task_idx")
   @@index([id_supply], map: "fk_supply_task_idx")
+}
+
+model customer {
+  id_customer        Int                     @id @default(autoincrement())
+  id_address         Int?
+  name               String?                 @db.VarChar(45)
+  email              String?                 @db.VarChar(255)
+  contact_number     String?                 @db.VarChar(45)
+  customer_type      customer_customer_type?
+  last_purchase_date DateTime?               @db.DateTime(0)
+  is_active          Int?                    @db.TinyInt
+  address            address?                @relation(fields: [id_address], references: [id_address], onDelete: NoAction, onUpdate: NoAction, map: "fk_address_costumer")
+
+  @@index([id_address], map: "fk_address_costumer_idx")
+}
+
+model supply_categories {
+  category_id          Int        @id @default(autoincrement())
+  category_name        String     @db.VarChar(45)
+  category_description String?    @db.VarChar(255)
+  is_active            Boolean?   @default(true)
+  created_at           DateTime?  @default(now()) @db.DateTime(0)
+  updated_at           DateTime?  @default(now()) @db.DateTime(0)
+  supplies             supplies[]
+}
+
+model supplies {
+  supply_id         Int                @id @default(autoincrement())
+  id_farm           Int?
+  supply_category   Int?
+  supply_quantity   Int?
+  supply_cost_price Decimal?           @db.Decimal(10, 0)
+  created_at        DateTime?          @default(now()) @db.DateTime(0)
+  updated_at        DateTime?          @default(now()) @db.DateTime(0)
+  farm              farm?              @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_supply")
+  supply_categories supply_categories? @relation(fields: [supply_category], references: [category_id], onDelete: Restrict, onUpdate: Restrict, map: "supplies_supply_categories_FK")
+  task              task[]
+
+  @@index([id_farm], map: "fk_farm_supply_idx")
+  @@index([supply_category], map: "supplies_supply_categories_FK")
 }
 
 enum area_type_category {
@@ -350,11 +345,6 @@ enum software_license_status {
 
 enum building_type {
   Truck
-}
-
-enum costumer_costumer_type {
-  Buyer
-  Reseller
 }
 
 enum machinery_status {
@@ -385,4 +375,9 @@ enum cultivation_status {
   wilted
   ready
   harvest_done @map("harvest done")
+}
+
+enum customer_customer_type {
+  Buyer
+  Reseller
 }

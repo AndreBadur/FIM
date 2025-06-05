@@ -6,6 +6,7 @@ export enum machineryStatus {
     onMaintenance = 'onMaintenance',
 }
 export type machineryType = {
+    id_machinery: string
     id_machinery_type: number
     id_farm: number
     name: string
@@ -126,7 +127,7 @@ export class MachineryManagement {
 
     public async findMachineryById(
         bodyRequest: specificMachineryRequest,
-    ): Promise<Response | undefined> {
+    ): Promise<machineryType | undefined> {
         try {
             const response = await fetch(
                 `api/machinery/${bodyRequest.id_farm}/${bodyRequest.id_machinery}`,

@@ -1,9 +1,9 @@
-import {machineryType} from '@/classes/MachineryManagement'
+import {supplyType} from '@/classes/SupplyManagement'
 import {
     fromRequestToGenericType,
     isDataNullOrUndefined,
 } from '@/utils/verifications'
-import {machinery_status, PrismaClient} from '@prisma/client'
+import {PrismaClient} from '@prisma/client'
 import {NextRequest, NextResponse} from 'next/server'
 
 const prisma = new PrismaClient()
@@ -15,9 +15,12 @@ export async function GET(
     const {id_farm} = await params
 
     try {
-        const data = await prisma.machinery.findMany({
+        const data = await prisma.supplies.findMany({
             where: {id_farm: Number(id_farm)},
             orderBy: {created_at: 'asc'},
+            include: {
+                supply_categories: true,
+            },
         })
 
         isDataNullOrUndefined(data)
@@ -28,19 +31,15 @@ export async function GET(
 }
 
 export async function POST(request: NextRequest) {
-    const body = await fromRequestToGenericType<machineryType>(request)
+    const body = await fromRequestToGenericType<supplyType>(request)
 
     try {
-        const data = await prisma.machinery.create({
+        const data = await prisma.supplies.create({
             data: {
-                id_machinery_type: body.id_machinery_type,
                 id_farm: body.id_farm,
-                name: body.name,
-                model: body.model,
-                status: machinery_status[body.status],
-                cost_per_hour: body.cost_per_hour,
-                maintenance_interval: body.maintenance_interval,
-                last_maintenance_date: body.last_maintenance_date,
+                supply_category: body.supply_category,
+                supply_cost_price: body.supply_cost_price,
+                supply_quantity: body.supply_quantity,
             },
         })
 

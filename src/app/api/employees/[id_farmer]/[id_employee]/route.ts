@@ -1,6 +1,6 @@
 import {employeeType} from '@/classes/EmployeeManagement'
 import {
-    handleRequestJsonData,
+    fromRequestToGenericType,
     isDataNullOrUndefined,
 } from '@/utils/verifications'
 import {PrismaClient} from '@prisma/client'
@@ -32,7 +32,7 @@ export async function PATCH(
     {params}: {params: Promise<{id_employee: string}>},
 ) {
     const {id_employee} = await params
-    const bodyRequest = await handleRequestJsonData<employeeType>(request)
+    const bodyRequest = await fromRequestToGenericType<employeeType>(request)
 
     try {
         const data = await prisma.employee.update({
