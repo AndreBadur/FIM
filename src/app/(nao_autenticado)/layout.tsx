@@ -1,0 +1,27 @@
+import '@/styles/globals.css'
+import Navbar from '@/components/Navbar'
+import {Poppins, Bebas_Neue} from 'next/font/google'
+
+const poppins = Poppins({
+    subsets: ['latin'],
+    weight: ['400', '500', '600', '700'],
+    variable: '--font-poppins',
+})
+const bebas = Bebas_Neue({
+    subsets: ['latin'],
+    weight: '400',
+    variable: '--font-bebas',
+})
+
+export default function HomeLayout({children}: {children: React.ReactNode}) {
+    return (
+        <html lang="en" className={`${poppins.variable} ${bebas.variable}`}>
+            <body className="min-h-screen flex flex-col">
+                <Navbar />
+                <div className="flex flex-1 min-h-0">
+                    <main className="flex-1 p-0 ">{children}</main>
+                </div>
+            </body>
+        </html>
+    )
+}
