@@ -1,6 +1,6 @@
 import {employeeType} from '@/classes/EmployeeManagement'
 import {
-    handleRequestJsonData,
+    fromRequestToGenericType,
     isDataNullOrUndefined,
 } from '@/utils/verifications'
 import {PrismaClient} from '@prisma/client'
@@ -36,7 +36,8 @@ export async function POST(
     {params}: {params: Promise<{id_farmer: string}>},
 ) {
     try {
-        const bodyRequest = await handleRequestJsonData<employeeType>(request)
+        const bodyRequest =
+            await fromRequestToGenericType<employeeType>(request)
         const {id_farmer} = await params
 
         console.log(bodyRequest)
