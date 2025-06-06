@@ -15,7 +15,7 @@ export function isDataNullOrUndefined(data: any) {
     throw Error
 }
 
-export async function handleRequestJsonData<T>(request: NextRequest) {
+export async function fromRequestToGenericType<T>(request: NextRequest) {
     const data: T = await request.json()
     return data
 }

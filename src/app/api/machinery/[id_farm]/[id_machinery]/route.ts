@@ -1,6 +1,6 @@
 import {machineryType} from '@/classes/MachineryManagement'
 import {
-    handleRequestJsonData,
+    fromRequestToGenericType,
     isDataNullOrUndefined,
 } from '@/utils/verifications'
 import {PrismaClient} from '@prisma/client'
@@ -32,7 +32,7 @@ export async function PATCH(
     request: NextRequest,
     {params}: {params: Promise<{id_machinery: string}>},
 ) {
-    const body = await handleRequestJsonData<machineryType>(request)
+    const body = await fromRequestToGenericType<machineryType>(request)
     const {id_machinery} = await params
 
     try {

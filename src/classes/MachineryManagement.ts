@@ -6,6 +6,7 @@ export enum machineryStatus {
     onMaintenance = 'onMaintenance',
 }
 export type machineryType = {
+    id_machinery: string
     id_machinery_type: number
     id_farm: number
     name: string

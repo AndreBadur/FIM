@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server'
 import {PrismaClient} from '@prisma/client'
 import {
-    handleRequestJsonData,
+    fromRequestToGenericType,
     isDataNullOrUndefined,
 } from '@/utils/verifications'
 import {farmType} from '@/classes/FarmManagements'
@@ -32,7 +32,7 @@ export async function POST(
     {params}: {params: Promise<{id_farmer: string}>},
 ) {
     try {
-        const bodyRequest = await handleRequestJsonData<farmType>(request)
+        const bodyRequest = await fromRequestToGenericType<farmType>(request)
         const {id_farmer} = await params
 
         const data = await prisma.farm.create({
