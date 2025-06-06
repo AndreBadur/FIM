@@ -1,14 +1,26 @@
 'use client'
 
-import {MachineryManagement} from '@/classes/MachineryManagement'
+import {useEffect, useState} from 'react'
+import {MachineryManagement, machineryType} from '@/classes/MachineryManagement'
 import {AriaTable} from '@/components/Table'
 import {verifyFarmbyId} from '@/utils/utilityFunctions'
 
-const machineryManagement = new MachineryManagement()
-const machineryList =
-    await machineryManagement.listAllMachineriesByFarm(verifyFarmbyId())
-
 export default function MachineryControl() {
+    const [machineryList, setMachineryList] = useState<machineryType[]>([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const machineryManagement = new MachineryManagement()
+            const list =
+                await machineryManagement.listAllMachineriesByFarm(
+                    verifyFarmbyId(),
+                )
+            setMachineryList(list ?? [])
+        }
+
+        fetchData()
+    }, [])
+
     return (
         <div className="flex justify-center items-center">
             <div className="w-full max-w-4xl px-4">
@@ -20,7 +32,7 @@ export default function MachineryControl() {
                         </button>
                     </a>
                 </div>
-                <AriaTable tipo="machinery" dados={machineryList!} />
+                <AriaTable tipo="machinery" dados={machineryList} />
             </div>
         </div>
     )

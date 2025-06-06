@@ -1,17 +1,26 @@
 'use client'
 
-import {FarmManagement} from '@/classes/FarmManagements'
+import {useEffect, useState} from 'react'
+import {FarmManagement, farmType} from '@/classes/FarmManagements'
 import {AriaTable} from '@/components/Table'
 import {Button} from 'react-aria-components'
 
-const farmManagement = new FarmManagement()
-const farmList = await farmManagement.listAllFarmsByFarmer('1')
+export default function DesignTest() {
+    const [farmList, setFarmList] = useState<farmType[]>([])
 
-export default function designTest() {
+    useEffect(() => {
+        const fetchData = async () => {
+            const farmManagement = new FarmManagement()
+            const farms = await farmManagement.listAllFarmsByFarmer('1')
+            setFarmList(farms ?? [])
+        }
+
+        fetchData()
+    }, [])
+
     return (
         <div className="flex justify-center items-center">
             <div>
-                {/* Container com justify-between e largura total */}
                 <div className="flex justify-between items-center w-full mb-4 pt-4">
                     <h1 className="text-xl font-bold">Lista de Fazendas</h1>
                     <Button
@@ -23,7 +32,7 @@ export default function designTest() {
                     </Button>
                 </div>
 
-                <AriaTable tipo="farm" dados={farmList!}></AriaTable>
+                <AriaTable tipo="farm" dados={farmList} />
             </div>
         </div>
     )
