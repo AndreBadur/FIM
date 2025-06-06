@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react'
 import {FarmManagement, farmType} from '@/classes/FarmManagements'
 import {AriaTable} from '@/components/Table'
 import {Button} from 'react-aria-components'
+import {verificarFazendeiro} from '@/utils/utilityFunctions'
 
 export default function DesignTest() {
     const [farmList, setFarmList] = useState<farmType[]>([])
@@ -11,7 +12,9 @@ export default function DesignTest() {
     useEffect(() => {
         const fetchData = async () => {
             const farmManagement = new FarmManagement()
-            const farms = await farmManagement.listAllFarmsByFarmer('1')
+            const farms = await farmManagement.listAllFarmsByFarmer(
+                verificarFazendeiro(),
+            )
             setFarmList(farms ?? [])
         }
 

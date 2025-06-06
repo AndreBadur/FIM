@@ -1,7 +1,7 @@
 export function verifyFarmbyId() {
-    const temporaryId: string = '22'
+    const idFazendaAtual = String(localStorage.getItem('fazenda_atual'))
 
-    return temporaryId
+    return idFazendaAtual
 }
 
 export function verificarFazendeiro() {
