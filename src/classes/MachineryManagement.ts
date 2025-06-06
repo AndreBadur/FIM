@@ -6,7 +6,7 @@ export enum machineryStatus {
     onMaintenance = 'onMaintenance',
 }
 export type machineryType = {
-    id_machinery: string
+    id_machinery?: string
     id_machinery_type: number
     id_farm: number
     name: string
@@ -40,7 +40,7 @@ export class MachineryManagement {
         } = bodyRequest
         try {
             const response = await fetch(
-                `api/machinery/${bodyRequest.id_farm}`,
+                `/api/machinery/${bodyRequest.id_farm}`,
                 {
                     method: 'POST',
                     headers: {
@@ -71,7 +71,7 @@ export class MachineryManagement {
         id_farm: string,
     ): Promise<machineryType[] | undefined> {
         try {
-            const response = await fetch(`api/machinery/${id_farm}`, {
+            const response = await fetch(`/api/machinery/${id_farm}`, {
                 method: 'GET',
             })
 
@@ -99,7 +99,7 @@ export class MachineryManagement {
         } = bodyRequest
         try {
             const response = await fetch(
-                `api/machinery/${id_farm}/${id_machinery}`,
+                `/api/machinery/${id_farm}/${id_machinery}`,
                 {
                     method: 'PATCH',
                     headers: {
@@ -130,7 +130,7 @@ export class MachineryManagement {
     ): Promise<machineryType | undefined> {
         try {
             const response = await fetch(
-                `api/machinery/${bodyRequest.id_farm}/${bodyRequest.id_machinery}`,
+                `/api/machinery/${bodyRequest.id_farm}/${bodyRequest.id_machinery}`,
                 {
                     method: 'GET',
                 },
@@ -149,7 +149,7 @@ export class MachineryManagement {
     ): Promise<Response | undefined> {
         try {
             const response = await fetch(
-                `api/machinery/${bodyRequest.id_farm}/${bodyRequest.id_machinery}`,
+                `/api/machinery/${bodyRequest.id_farm}/${bodyRequest.id_machinery}`,
                 {
                     method: 'DELETE',
                 },
