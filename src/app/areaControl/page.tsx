@@ -3,11 +3,30 @@
 import {AreaManagement} from '@/classes/AreaManagement'
 import {AriaTable} from '@/components/Table'
 import {verifyFarmbyId} from '@/utils/utilityFunctions'
+import React from 'react'
 
 const areaManagement = new AreaManagement()
+
 const areaList = await areaManagement.listAllAreasByFarm(verifyFarmbyId())
 
-export default function areaControl() {
+import {Key} from 'react-aria-components'
+
+export default function AreaControl() {
+    const FarmOptions = [
+        {id: 60, name: 'Fazenda azul'},
+        {id: 61, name: 'Fazenda verde'},
+        {id: 62, name: 'Fazenda amarela'},
+    ]
+
+    const AreaOptions = [
+        {id: 1, name: 'Área de descanso'},
+        {id: 2, name: 'Área de cultivo'},
+        {id: 3, name: 'Área de estoque'},
+    ]
+
+    const [farmId, setFarmId] = React.useState<Key | null>(null)
+    const [typeAreaId, setTypeAreaId] = React.useState<Key | null>(null)
+
     return (
         <div className="flex justify-center items-center">
             <div className="w-full max-w-4xl px-4">
