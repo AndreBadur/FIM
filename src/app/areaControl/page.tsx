@@ -1,13 +1,24 @@
 'use client'
 
-import {AreaManagement} from '@/classes/AreaManagement'
+import {useEffect, useState} from 'react'
+import {AreaManagement, areaType} from '@/classes/AreaManagement'
 import {AriaTable} from '@/components/Table'
 import {verifyFarmbyId} from '@/utils/utilityFunctions'
 
-const areaManagement = new AreaManagement()
-const areaList = await areaManagement.listAllAreasByFarm(verifyFarmbyId())
+export default function AreaControl() {
+    const [areaList, setAreaList] = useState<areaType[]>([])
 
-export default function areaControl() {
+    useEffect(() => {
+        const fetchAreas = async () => {
+            const areaManagement = new AreaManagement()
+            const farmId = verifyFarmbyId()
+            const areas = await areaManagement.listAllAreasByFarm(farmId)
+            setAreaList(areas ?? [])
+        }
+
+        fetchAreas()
+    }, [])
+
     return (
         <div className="flex justify-center items-center">
             <div className="w-full max-w-4xl px-4">
@@ -19,7 +30,7 @@ export default function areaControl() {
                         </button>
                     </a>
                 </div>
-                <AriaTable tipo="area" dados={areaList!} />
+                <AriaTable tipo="area" dados={areaList} />
             </div>
         </div>
     )
