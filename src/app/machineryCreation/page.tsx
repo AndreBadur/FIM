@@ -19,13 +19,13 @@ const machineryManagement = new MachineryManagement()
 
 export default function MachineryControl() {
     const FarmOptions = [
-        {id: 60, name: 'Fazenda azul'},
-        {id: 61, name: 'Fazenda verde'},
-        {id: 62, name: 'Fazenda amarela'},
+        {id: 22, name: 'Fazenda azul'},
+        {id: 87, name: 'Fazenda verde'},
+        {id: 88, name: 'Fazenda amarela'},
     ]
 
     const MachineryTypeOptions = [
-        {id: 1, name: 'Ceifadeira'},
+        {id: 1, name: 'Ceifadeira'}, //Só a ceifadeira funciona. Provavelmente por não existir outros ids no banco de tipos de maquinários
         {id: 2, name: 'Regadora'},
         {id: 3, name: 'Trator'},
     ]

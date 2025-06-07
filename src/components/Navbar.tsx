@@ -70,6 +70,18 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
+            <button
+                className="flex items-center px-4 text-red-600"
+                onClick={() => router.push('/')}>
+                <Image
+                    src="/img/logOut.png"
+                    width={14}
+                    height={14}
+                    alt="Sair"
+                    className="mr-3"
+                />
+                <span className="text-s">Sair</span>
+            </button>
         </div>
     )
 }

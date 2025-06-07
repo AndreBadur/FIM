@@ -3,3 +3,9 @@ export function verifyFarmbyId() {
 
     return temporaryId
 }
+
+export function verificarFazendeiro() {
+    const idTemprario: string = '1'
+
+    return idTemprario
+}

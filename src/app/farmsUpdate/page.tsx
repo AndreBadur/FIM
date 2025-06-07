@@ -1,36 +1,37 @@
 'use client'
 
-import {useEffect, useState} from 'react'
-import {useRouter} from 'next/navigation'
-import {FarmManagement, farmType} from '../classes/FarmManagements'
+import {FarmManagement, farmType} from '@/classes/FarmManagements'
+import {useSearchParams} from 'next/navigation'
+import {Suspense, useEffect, useState} from 'react'
 import {
     Button,
     FieldError,
+    Form,
+    Input,
     Label,
     TextField,
-    Input,
-    Form,
 } from 'react-aria-components'
 
 const farmManagement = new FarmManagement()
 
-type GeneralUpdateProps = {
-    farmerId: string
-    caseToUpdateId: string
-}
+function UpdateWrapper() {
+    const searchParams = useSearchParams()
+    const idFarm = searchParams.get('id')
+    const farmerId = '1'
 
-export function FarmUpdate({farmerId, caseToUpdateId}: GeneralUpdateProps) {
-    const router = useRouter()
     const [farmData, setFormData] = useState({
         corporate_name: '',
         cnpj: '',
     })
 
+    const [shouldReload, setShouldReload] = useState(false)
+
     useEffect(() => {
         const fetchFarm = async () => {
+            if (!idFarm) return
             const farm = await farmManagement.findUniqueFarmByFarmId(
                 farmerId,
-                caseToUpdateId,
+                idFarm,
             )
             if (farm) {
                 setFormData({
@@ -40,19 +41,14 @@ export function FarmUpdate({farmerId, caseToUpdateId}: GeneralUpdateProps) {
             }
         }
         fetchFarm()
-    }, [farmerId, caseToUpdateId])
+    }, [shouldReload, idFarm])
+
+    if (!idFarm) return <div>Erro: id não fornecido</div>
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '40vh',
-                width: '82vw',
-            }}>
+        <div className="flex flex-row items-center justify-center h-full w-full">
             <Form
-                className="space-y-6 w-full max-w-md "
+                className="w-[320px] rounded-md p-4 shadow-xl"
                 onSubmit={async (e) => {
                     e.preventDefault()
                     const data = JSON.stringify(
@@ -60,20 +56,17 @@ export function FarmUpdate({farmerId, caseToUpdateId}: GeneralUpdateProps) {
                     )
                     const parseData: farmType = JSON.parse(data)
 
-                    const teste = await farmManagement.updateFarmByFarmId(
+                    await farmManagement.updateFarmByFarmId(
                         {
                             id_address: Number(parseData.id_address),
                             cnpj: parseData.cnpj,
                             corporate_name: parseData.corporate_name,
                         },
                         farmerId,
-                        caseToUpdateId,
+                        idFarm,
                     )
-
-                    console.log(teste)
-
-                    router.push('/designTest')
-                    router.refresh()
+                    setShouldReload(true)
+                    window.location.href = '/farmsControl'
                 }}>
                 <TextField name="corporate_name">
                     <Label className="block text-sm font-medium text-black-700 mb-1">
@@ -91,7 +84,7 @@ export function FarmUpdate({farmerId, caseToUpdateId}: GeneralUpdateProps) {
                     />
                     <FieldError />
                 </TextField>
-                <TextField name="cnpj">
+                <TextField name="cnpj" className="mt-3">
                     <Label className="block text-sm font-medium text-black-700 mb-1">
                         CNPJ
                     </Label>
@@ -104,27 +97,43 @@ export function FarmUpdate({farmerId, caseToUpdateId}: GeneralUpdateProps) {
                     />
                     <FieldError />
                 </TextField>
-                <div style={{display: 'flex', gap: 8}}>
-                    <Button
-                        type="submit"
-                        className="w-40 px-1 py-3 rounded-md shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
-                        Submit
-                    </Button>
+                <div className="flex w-1/2 justify-self-end mt-3 gap-2">
                     <Button
                         type="button"
-                        className="w-40 px-1 py-3 rounded-md shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold"
+                        className="w-full h-full px-1 py-1 rounded-md shadow-md border border-red-600 hover:bg-red-700 hover:text-white text-red-600 font-semibold"
                         onPress={async () => {
                             await farmManagement.deleteFarmByFarmId(
                                 farmerId,
-                                caseToUpdateId,
+                                idFarm,
                             )
-                            router.push('/designTest')
-                            router.refresh()
+                            window.location.href = '/farmsControl'
                         }}>
                         Delete
+                    </Button>
+                    <Button
+                        type="submit"
+                        className="w-full h-full px-1 py-1  rounded-md text-center shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
+                        Submit
                     </Button>
                 </div>
             </Form>
         </div>
+    )
+}
+
+// function UpdateWrapper() {
+//     const searchParams = useSearchParams()
+//     const idFarm = searchParams.get('id')
+
+//     if (!idFarm) return <div>Erro: id não fornecido</div>
+
+//     return <FarmUpdateForms farmerId="1" farmId={idFarm} />
+// }
+
+export default function UpdateTest() {
+    return (
+        <Suspense fallback={<div>Carregando...</div>}>
+            <UpdateWrapper />
+        </Suspense>
     )
 }

@@ -1,48 +1,25 @@
 'use client'
 
-import {EmployeeManagement} from '@/classes/EmployeeManagement'
+import {useEffect, useState} from 'react'
+import {EmployeeManagement, employeeType} from '@/classes/EmployeeManagement'
 import {AriaTable} from '@/components/Table'
-import {verifyFarmbyId} from '@/utils/utilityFunctions'
-
-const employeeManagement = new EmployeeManagement()
-const employeeList =
-    await employeeManagement.listAllEmployeesByFarmer(verifyFarmbyId())
-
-// import {EmployeeManagement} from '@/classes/EmployeeManagement'
-
-// const employeeManagement = new EmployeeManagement()
-
-// const create = await employeeManagement.createEmployee(
-//     {
-//         cost_per_hour: 1,
-//         cpf: '1233322211',
-//         hours_worked: 40,
-//         id_farm: 22,
-//         name: 'Mithril',
-//     },
-//     '1',
-// )
-// console.log(await create)
-// await employeeManagement.updateEmployeeByEmployeeId(
-//     {
-//         cost_per_hour: 12,
-//         cpf: '1233322211',
-//         hours_worked: 40,
-//         id_farm: 22,
-//         name: 'Mithril',
-//     },
-//     '1',
-//     '7',
-// )
-
-// const employee = await employeeManagement.findUniqueEmployeeByEmployeeId('1', '7')
-
-// await employeeManagement.deleteEmployeeByEmployeeId('1', '7')
-
-// FUNCIONANDO
-// console.log(await employeeManagement.listAllEmployeesByFarmer('1'))
+import {verificarFazendeiro} from '@/utils/utilityFunctions'
 
 export default function EmployeeControl() {
+    const [employeeList, setEmployeeList] = useState<employeeType[]>([])
+
+    useEffect(() => {
+        const fetchEmployees = async () => {
+            const employeeManagement = new EmployeeManagement()
+            const farmId = verificarFazendeiro()
+            const employees =
+                await employeeManagement.listAllEmployeesByFarmer(farmId)
+            setEmployeeList(employees ?? [])
+        }
+
+        fetchEmployees()
+    }, [])
+
     return (
         <div className="flex justify-center items-center">
             <div className="w-full max-w-4xl px-4">
@@ -54,7 +31,7 @@ export default function EmployeeControl() {
                         </button>
                     </a>
                 </div>
-                <AriaTable tipo="employee" dados={employeeList!} />
+                <AriaTable tipo="employee" dados={employeeList} />
             </div>
         </div>
     )

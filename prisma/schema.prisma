@@ -186,7 +186,7 @@ model farm {
   farmer           farmer?            @relation(fields: [id_farmer], references: [id_farmer], onDelete: NoAction, onUpdate: NoAction, map: "fk_farmer_farm")
   machinery        machinery[]
   software_license software_license[]
-  supply           supply[]
+  supplies         supplies[]
   task             task[]
 
   @@index([id_farmer], map: "fk_farmer_farm_idx")
@@ -270,6 +270,7 @@ model supplier {
   @@index([id_company], map: "fk_company_supplier_idx")
 }
 
+<<<<<<< HEAD
 model supply {
   id_supply       Int                @id @default(autoincrement())
   id_suppply_type Int?
@@ -286,6 +287,8 @@ model supply {
   @@index([id_suppply_type], map: "fk_supplytype_supply_idx")
 }
 
+=======
+>>>>>>> 31643068618777e4bc1135dd45691cec96fb4a4a
 model task {
   id_task         Int          @id @default(autoincrement())
   id_farm         Int?
@@ -300,7 +303,7 @@ model task {
   employee        employee?    @relation(fields: [id_employee], references: [id_employee], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_task")
   farm            farm?        @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_task")
   machinery       machinery?   @relation(fields: [id_machinery], references: [id_machinery], onDelete: NoAction, onUpdate: NoAction, map: "fk_machinery_task")
-  supply          supply?      @relation(fields: [id_supply], references: [id_supply], onDelete: NoAction, onUpdate: NoAction, map: "fk_supply_task")
+  supply          supplies?    @relation(fields: [id_supply], references: [supply_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_supply_task")
 
   @@index([id_employee], map: "fk_employee_task_idx")
   @@index([id_machinery], map: "fk_machinery_task_idx")
@@ -323,6 +326,7 @@ model customer {
 }
 
 model supply_categories {
+<<<<<<< HEAD
   category_id          Int       @id @default(autoincrement())
   category_name        String    @db.VarChar(45)
   category_description String?   @db.VarChar(255)
@@ -330,6 +334,31 @@ model supply_categories {
   created_at           DateTime? @default(now()) @db.DateTime(0)
   updated_at           DateTime? @default(now()) @db.DateTime(0)
   supply               supply[]
+=======
+  category_id          Int        @id @default(autoincrement())
+  category_name        String     @db.VarChar(45)
+  category_description String?    @db.VarChar(255)
+  is_active            Boolean?   @default(true)
+  created_at           DateTime?  @default(now()) @db.DateTime(0)
+  updated_at           DateTime?  @default(now()) @db.DateTime(0)
+  supplies             supplies[]
+}
+
+model supplies {
+  supply_id         Int                @id @default(autoincrement())
+  id_farm           Int?
+  supply_category   Int?
+  supply_quantity   Int?
+  supply_cost_price Decimal?           @db.Decimal(10, 0)
+  created_at        DateTime?          @default(now()) @db.DateTime(0)
+  updated_at        DateTime?          @default(now()) @db.DateTime(0)
+  farm              farm?              @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_supply")
+  supply_categories supply_categories? @relation(fields: [supply_category], references: [category_id], onDelete: Restrict, onUpdate: Restrict, map: "supplies_supply_categories_FK")
+  task              task[]
+
+  @@index([id_farm], map: "fk_farm_supply_idx")
+  @@index([supply_category], map: "supplies_supply_categories_FK")
+>>>>>>> 31643068618777e4bc1135dd45691cec96fb4a4a
 }
 
 enum area_type_category {

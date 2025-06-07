@@ -2,9 +2,8 @@
 
 import {EmployeeManagement, employeeType} from '@/classes/EmployeeManagement'
 import {FimComboBox} from '@/components/FimComboBox'
-import {verifyFarmbyId} from '@/utils/utilityFunctions'
-import React from 'react'
-
+import {useSearchParams} from 'next/navigation'
+import {Suspense, useEffect, useState} from 'react'
 import {
     Button,
     FieldError,
@@ -18,97 +17,192 @@ import {
 
 const employeeManagement = new EmployeeManagement()
 
-export default function EmployeeControl() {
+function UpdateWrapper() {
+    const searchParams = useSearchParams()
+    const id_employee = searchParams.get('id')
+    const id_farmer = '22'
+
+    const [employeeData, setEmployeeData] = useState({
+        name: '',
+        cpf: '',
+        cost_per_hour: '',
+        hours_worked: '',
+        id_farm: null as Key | null,
+    })
+
+    useEffect(() => {
+        const fetchEmployee = async () => {
+            if (!id_employee) return
+
+            const employee =
+                await employeeManagement.findUniqueEmployeeByEmployeeId(
+                    id_farmer,
+                    id_employee,
+                )
+
+            if (employee) {
+                setEmployeeData({
+                    name: employee.name ?? '',
+                    cpf: employee.cpf ?? '',
+                    cost_per_hour: employee.cost_per_hour?.toString() ?? '',
+                    hours_worked: employee.hours_worked?.toString() ?? '',
+                    id_farm: employee.id_farm?.toString() ?? null,
+                })
+            }
+        }
+
+        fetchEmployee()
+    }, [id_employee])
+
+    if (!id_employee) return <div>Erro: id não fornecido</div>
+
     const FarmOptions = [
-        {id: 60, name: 'Fazenda azul'},
+        {id: 22, name: 'Fazenda azul'},
         {id: 61, name: 'Fazenda verde'},
         {id: 62, name: 'Fazenda amarela'},
     ]
 
-    const [farmId, setFarmId] = React.useState<Key | null>(null)
+    const handleUpdate = async () => {
+        const infoData: employeeType = {
+            name: employeeData.name,
+            cpf: employeeData.cpf,
+            cost_per_hour: Number(employeeData.cost_per_hour),
+            hours_worked: Number(employeeData.hours_worked),
+            id_farm: Number(employeeData.id_farm),
+        }
+
+        await employeeManagement.updateEmployeeByEmployeeId(
+            infoData,
+            id_farmer,
+            id_employee,
+        )
+        window.location.href = '/farmEmployeeControl'
+    }
+
+    const handleDelete = async () => {
+        await employeeManagement.deleteEmployeeByEmployeeId(
+            id_farmer,
+            id_employee,
+        )
+        window.location.href = '/farmEmployeeControl'
+    }
 
     return (
-        <div>
-            <div className="flex items-center justify-center flex-1 bg-gray-200 h-screen">
-                <Form
-                    onSubmit={async (e) => {
-                        e.preventDefault()
+        <div className="flex flex-row items-center justify-center h-full w-full">
+            <Form
+                className="w-[320px] rounded-md p-4 shadow-xl"
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    handleUpdate()
+                }}>
+                <TextField name="name">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Nome
+                    </Label>
+                    <Input
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={employeeData.name}
+                        onChange={(e) =>
+                            setEmployeeData({
+                                ...employeeData,
+                                name: e.target.value,
+                            })
+                        }
+                    />
+                    <FieldError />
+                </TextField>
 
-                        const data = JSON.stringify(
-                            Object.fromEntries(new FormData(e.currentTarget)),
-                        )
+                <TextField name="cpf" className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        CPF
+                    </Label>
+                    <Input
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={employeeData.cpf}
+                        onChange={(e) =>
+                            setEmployeeData({
+                                ...employeeData,
+                                cpf: e.target.value,
+                            })
+                        }
+                    />
+                    <FieldError />
+                </TextField>
 
-                        console.log(data)
+                <TextField name="cost_per_hour" className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Custo por hora
+                    </Label>
+                    <Input
+                        type="number"
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={employeeData.cost_per_hour}
+                        onChange={(e) =>
+                            setEmployeeData({
+                                ...employeeData,
+                                cost_per_hour: e.target.value,
+                            })
+                        }
+                    />
+                    <FieldError />
+                </TextField>
 
-                        const parseData: employeeType = JSON.parse(data)
+                <TextField name="hours_worked" className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Horas trabalhadas
+                    </Label>
+                    <Input
+                        type="number"
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={employeeData.hours_worked}
+                        onChange={(e) =>
+                            setEmployeeData({
+                                ...employeeData,
+                                hours_worked: e.target.value,
+                            })
+                        }
+                    />
+                    <FieldError />
+                </TextField>
 
-                        await employeeManagement.createEmployee(
-                            {
-                                id_farm: Number(farmId),
-                                cpf: parseData.cpf,
-                                name: parseData.name,
-                                cost_per_hour: Number(parseData.cost_per_hour),
-                                hours_worked: Number(parseData.hours_worked),
-                            },
-                            verifyFarmbyId(),
-                        )
-                    }}>
-                    <TextField name="name" isRequired>
-                        <div className="flex flex-col">
-                            <Label>Nome do Funcionário</Label>
-                            <Input />
-                            <FieldError />
-                        </div>
-                    </TextField>
-
-                    <TextField name="cpf" isRequired>
-                        <div className="flex flex-col">
-                            <Label>CPF</Label>
-                            <Input />
-                            <FieldError />
-                        </div>
-                    </TextField>
-
-                    <TextField name="cost_per_hour" isRequired>
-                        <div className="flex flex-col">
-                            <Label>Custo por Hora</Label>
-                            <Input type="number" min={0} />
-                            <FieldError />
-                        </div>
-                    </TextField>
-
-                    <TextField name="hours_worked" isRequired>
-                        <div className="flex flex-col">
-                            <Label>Horas Trabalhadas</Label>
-                            <Input type="number" min={0} />
-                            <FieldError />
-                        </div>
-                    </TextField>
-
+                <TextField name="id_farm" className="mt-3">
                     <FimComboBox
                         label="Fazenda"
                         defaultItems={FarmOptions}
-                        onSelectionChange={setFarmId}
-                        allowsCustomValue={false}>
+                        selectedKey={employeeData.id_farm}
+                        onSelectionChange={(key) =>
+                            setEmployeeData({
+                                ...employeeData,
+                                id_farm: key,
+                            })
+                        }>
                         {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
                     </FimComboBox>
+                    <FieldError />
+                </TextField>
 
-                    <div className="flex justify-center space-x-4">
-                        <div className="flex bg-green-300 rounded justify-center w-1/5 mt-4">
-                            <Button type="submit" className="w-full h-full">
-                                Criar
-                            </Button>
-                        </div>
-                        <div className="flex bg-red-300 rounded justify-center w-2/5 mt-4">
-                            <a href="/farmEmployeeControl">
-                                <Button className="w-full h-full">
-                                    Cancelar
-                                </Button>
-                            </a>
-                        </div>
-                    </div>
-                </Form>
-            </div>
+                <div className="flex w-1/2 justify-self-end mt-4 gap-2">
+                    <Button
+                        type="button"
+                        className="w-full h-full px-1 py-1 rounded-md shadow-md border border-red-600 hover:bg-red-700 hover:text-white text-red-600 font-semibold"
+                        onPress={handleDelete}>
+                        Deletar
+                    </Button>
+                    <Button
+                        type="submit"
+                        className="w-full h-full px-1 py-1 rounded-md text-center shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
+                        Salvar
+                    </Button>
+                </div>
+            </Form>
         </div>
+    )
+}
+
+export default function EmployeeUpdate() {
+    return (
+        <Suspense fallback={<div>Carregando...</div>}>
+            <UpdateWrapper />
+        </Suspense>
     )
 }

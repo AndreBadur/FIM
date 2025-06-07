@@ -19,13 +19,13 @@ import {
 
 export default function AreaControl() {
     const FarmOptions = [
-        {id: 60, name: 'Fazenda azul'},
-        {id: 61, name: 'Fazenda verde'},
-        {id: 62, name: 'Fazenda amarela'},
+        {id: 22, name: 'Fazenda azul'},
+        {id: 87, name: 'Fazenda verde'},
+        {id: 88, name: 'Fazenda amarela'},
     ]
 
     const AreaOptions = [
-        {id: 1, name: 'Área de descanso'},
+        {id: 1, name: 'Área de descanso'}, // Só existe o primeiro
         {id: 2, name: 'Área de cultivo'},
         {id: 3, name: 'Área de estoque'},
     ]
@@ -66,8 +66,7 @@ export default function AreaControl() {
                             <FieldError />
                         </div>
                     </TextField>
-
-                    <TextField name="id_farm" isRequired>
+                    <TextField>
                         <FimComboBox
                             label="Fazenda da área"
                             defaultItems={FarmOptions}
@@ -99,7 +98,7 @@ export default function AreaControl() {
                             <FieldError />
                         </div>
                     </TextField>
-                    <TextField name="id_type_area" isRequired>
+                    <TextField>
                         <FimComboBox
                             label="Tipo de área"
                             defaultItems={AreaOptions}

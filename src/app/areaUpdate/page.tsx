@@ -2,7 +2,8 @@
 
 import {AreaManagement, areaType} from '@/classes/AreaManagement'
 import {FimComboBox} from '@/components/FimComboBox'
-import React, {useState} from 'react'
+import {useSearchParams} from 'next/navigation'
+import {Suspense, useEffect, useState} from 'react'
 import {
     Button,
     FieldError,
@@ -16,7 +17,48 @@ import {
 
 const areaManagement = new AreaManagement()
 
-export default function AreaControl() {
+function UpdateWrapper() {
+    const searchParams = useSearchParams()
+    const id_area = searchParams.get('id')
+    const id_farm = '22'
+
+    const [areaData, setAreaData] = useState({
+        name: '',
+        description: '',
+        capacity: '',
+        features: '',
+        id_farm: null as Key | null,
+        id_type_area: null as Key | null,
+    })
+
+    const [shouldReload, setShouldReload] = useState(false)
+
+    useEffect(() => {
+        const fetchArea = async () => {
+            if (!id_area) return
+
+            const area = await areaManagement.findUniqueAreaById({
+                id_farm,
+                id_area,
+            })
+
+            if (area) {
+                setAreaData({
+                    name: area.name ?? '',
+                    description: area.description ?? '',
+                    capacity: area.capacity?.toString() ?? '',
+                    features: area.features ?? '',
+                    id_farm: area.id_farm?.toString() ?? null,
+                    id_type_area: area.id_type_area?.toString() ?? null,
+                })
+            }
+        }
+
+        fetchArea()
+    }, [id_area, shouldReload])
+
+    if (!id_area) return <div>Erro: id não fornecido</div>
+
     const FarmOptions = [
         {id: 60, name: 'Fazenda azul'},
         {id: 61, name: 'Fazenda verde'},
@@ -29,109 +71,145 @@ export default function AreaControl() {
         {id: 3, name: 'Área de estoque'},
     ]
 
-    const [farmId, setFarmId] = useState<Key | null>(null)
-    const [typeAreaId, setTypeAreaId] = useState<Key | null>(null)
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-
-        if (!farmId || !typeAreaId) {
-            alert('Por favor, selecione a Fazenda e o Tipo de Área.')
-            return
-        }
-
-        const formData = new FormData(e.currentTarget)
-        const formEntries = Object.fromEntries(formData.entries())
-
-        const id_area = formEntries.id_area as string
-        if (!id_area) {
-            alert('Por favor, informe o ID da área.')
-            return
-        }
-
-        const areaData: areaType = {
-            name: formEntries.name as string,
-            description: formEntries.description as string,
-            capacity: Number(formEntries.capacity),
-            features: formEntries.features as string,
-            id_farm: Number(farmId),
-            id_type_area: Number(typeAreaId),
+    const handleUpdate = async () => {
+        const infoData: areaType = {
+            name: areaData.name,
+            description: areaData.description,
+            capacity: areaData.capacity ? Number(areaData.capacity) : undefined,
+            features: areaData.features,
+            id_farm: areaData.id_farm ? Number(areaData.id_farm) : undefined,
+            id_type_area: areaData.id_type_area
+                ? Number(areaData.id_type_area)
+                : undefined,
             status: true,
         }
 
-        console.log('Dados enviados:', areaData, {id_area})
+        await areaManagement.updateAreaById(infoData, {id_area})
+        setShouldReload(true)
+        window.location.href = '/areaControl'
+    }
 
-        await areaManagement.updateAreaById(areaData, {id_area})
+    const handleDelete = async () => {
+        await areaManagement.deleteUniqueAreaById({id_farm, id_area})
+        window.location.href = '/areaControl'
     }
 
     return (
-        <div className="flex items-center justify-center flex-1 bg-gray-200 h-screen">
+        <div className="flex flex-row items-center justify-center h-full w-full">
             <Form
-                onSubmit={handleSubmit}>
-                <TextField name="name" isRequired>
-                    <div className="flex flex-col">
-                        <Label>Nome</Label>
-                        <Input />
-                        <FieldError />
-                    </div>
+                className="w-[320px] rounded-md p-4 shadow-xl"
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    handleUpdate()
+                }}>
+                <TextField name="name">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Nome
+                    </Label>
+                    <Input
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={areaData.name}
+                        onChange={(e) =>
+                            setAreaData({...areaData, name: e.target.value})
+                        }
+                    />
+                    <FieldError />
                 </TextField>
 
-                <TextField name="id_farm" isRequired>
+                <TextField name="description" className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Descrição
+                    </Label>
+                    <Input
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={areaData.description}
+                        onChange={(e) =>
+                            setAreaData({
+                                ...areaData,
+                                description: e.target.value,
+                            })
+                        }
+                    />
+                    <FieldError />
+                </TextField>
+
+                <TextField name="capacity" className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Capacidade
+                    </Label>
+                    <Input
+                        type="number"
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={areaData.capacity}
+                        onChange={(e) =>
+                            setAreaData({...areaData, capacity: e.target.value})
+                        }
+                    />
+                    <FieldError />
+                </TextField>
+
+                <TextField name="features" className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Características
+                    </Label>
+                    <Input
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={areaData.features}
+                        onChange={(e) =>
+                            setAreaData({...areaData, features: e.target.value})
+                        }
+                    />
+                    <FieldError />
+                </TextField>
+
+                <TextField name="id_farm" className="mt-3">
                     <FimComboBox
                         label="Fazenda da área"
                         defaultItems={FarmOptions}
-                        onSelectionChange={setFarmId}
-                        allowsCustomValue>
+                        selectedKey={areaData.id_farm}
+                        onSelectionChange={(key) =>
+                            setAreaData({...areaData, id_farm: key})
+                        }>
                         {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
                     </FimComboBox>
                     <FieldError />
                 </TextField>
 
-                <TextField name="description" isRequired>
-                    <div className="flex flex-col">
-                        <Label>Descrição</Label>
-                        <Input />
-                        <FieldError />
-                    </div>
-                </TextField>
-                <TextField name="capacity" isRequired>
-                    <div className="flex flex-col">
-                        <Label>Capacidade</Label>
-                        <Input />
-                        <FieldError />
-                    </div>
-                </TextField>
-                <TextField name="features" isRequired>
-                    <div className="flex flex-col">
-                        <Label>Características</Label>
-                        <Input />
-                        <FieldError />
-                    </div>
-                </TextField>
-                <TextField name="id_type_area" isRequired>
+                <TextField name="id_type_area" className="mt-3">
                     <FimComboBox
                         label="Tipo de área"
                         defaultItems={AreaOptions}
-                        onSelectionChange={setTypeAreaId}
-                        allowsCustomValue>
+                        selectedKey={areaData.id_type_area}
+                        onSelectionChange={(key) =>
+                            setAreaData({...areaData, id_type_area: key})
+                        }>
                         {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
                     </FimComboBox>
                     <FieldError />
                 </TextField>
-                <div className="flex justify-center space-x-4">
-                    <div className="flex bg-green-300 rounded justify-center space-x-4 w-3/5 mt-4">
-                        <Button type="submit" className="w-full h-full">
-                            Salvar
-                        </Button>
-                        {/* <Button type="reset">Reset</Button> */}
-                    </div>
-                    <div className="flex bg-red-300 rounded justify-center w-2/5 mt-4">
-                        <a href="/areaControl">
-                            <Button className="w-full h-full">Cancelar</Button>
-                        </a>
-                    </div>
+
+                <div className="flex w-1/2 justify-self-end mt-4 gap-2">
+                    <Button
+                        type="button"
+                        className="w-full h-full px-1 py-1 rounded-md shadow-md border border-red-600 hover:bg-red-700 hover:text-white text-red-600 font-semibold"
+                        onPress={handleDelete}>
+                        Deletar
+                    </Button>
+                    <Button
+                        type="submit"
+                        className="w-full h-full px-1 py-1 rounded-md text-center shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
+                        Salvar
+                    </Button>
                 </div>
             </Form>
         </div>
+    )
+}
+
+export default function AreaUpdate() {
+    return (
+        <Suspense fallback={<div>Carregando...</div>}>
+            <UpdateWrapper />
+        </Suspense>
     )
 }

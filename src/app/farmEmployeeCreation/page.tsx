@@ -2,7 +2,7 @@
 
 import {EmployeeManagement, employeeType} from '@/classes/EmployeeManagement'
 import {FimComboBox} from '@/components/FimComboBox'
-import {verifyFarmbyId} from '@/utils/utilityFunctions'
+// import {verifyFarmbyId} from '@/utils/utilityFunctions'
 import React from 'react'
 
 import {
@@ -20,9 +20,9 @@ const employeeManagement = new EmployeeManagement()
 
 export default function EmployeeControl() {
     const FarmOptions = [
-        {id: 60, name: 'Fazenda azul'},
-        {id: 61, name: 'Fazenda verde'},
-        {id: 62, name: 'Fazenda amarela'},
+        {id: 22, name: 'Fazenda azul'},
+        {id: 87, name: 'Fazenda verde'},
+        {id: 88, name: 'Fazenda amarela'},
     ]
 
     const [farmId, setFarmId] = React.useState<Key | null>(null)
@@ -50,7 +50,8 @@ export default function EmployeeControl() {
                                 cost_per_hour: Number(parseData.cost_per_hour),
                                 hours_worked: Number(parseData.hours_worked),
                             },
-                            verifyFarmbyId(),
+                            '1',
+                            // verifyFarmbyId(),
                         )
                     }}>
                     <TextField name="name" isRequired>

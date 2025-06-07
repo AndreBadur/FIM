@@ -1,9 +1,13 @@
 'use client'
 
-import {MachineryManagement, machineryType} from '@/classes/MachineryManagement'
+import {
+    MachineryManagement,
+    machineryStatus,
+    machineryType,
+} from '@/classes/MachineryManagement'
 import {FimComboBox} from '@/components/FimComboBox'
-import React from 'react'
-
+import {useSearchParams} from 'next/navigation'
+import {Suspense, useEffect, useState} from 'react'
 import {
     Button,
     FieldError,
@@ -17,126 +21,240 @@ import {
 
 const machineryManagement = new MachineryManagement()
 
-export default function MachineryControl() {
-    const FarmOptions = [
-        {id: 60, name: 'Fazenda azul'},
-        {id: 61, name: 'Fazenda verde'},
-        {id: 62, name: 'Fazenda amarela'},
-    ]
+function UpdateWrapper() {
+    const searchParams = useSearchParams()
+    const id_machinery = searchParams.get('id')
+    const id_farm = '22'
+
+    const [machineryData, setMachineryData] = useState({
+        name: '',
+        model: '',
+        cost_per_hour: '',
+        maintenance_interval: '',
+        last_maintenance_date: '',
+        status: null as Key | null,
+        id_machinery_type: null as Key | null,
+    })
+
+    useEffect(() => {
+        const fetchMachinery = async () => {
+            if (!id_machinery) return
+
+            const machinery = await machineryManagement.findMachineryById({
+                id_farm,
+                id_machinery,
+            })
+
+            if (machinery) {
+                setMachineryData({
+                    name: machinery.name ?? '',
+                    model: machinery.model ?? '',
+                    cost_per_hour: machinery.cost_per_hour?.toString() ?? '',
+                    maintenance_interval:
+                        machinery.maintenance_interval?.toString() ?? '',
+                    last_maintenance_date:
+                        machinery.last_maintenance_date
+                            ?.toString()
+                            .split('T')[0] ?? '',
+                    status: machinery.status ?? null,
+                    id_machinery_type:
+                        machinery.id_machinery_type?.toString() ?? null,
+                })
+            }
+        }
+
+        fetchMachinery()
+    }, [id_machinery])
+
+    if (!id_machinery) return <div>Erro: id não fornecido</div>
 
     const MachineryTypeOptions = [
-        {id: 1, name: 'Ceifadeira'},
-        {id: 2, name: 'Regadora'},
-        {id: 3, name: 'Trator'},
+        {id: 1, name: 'Trator'},
+        {id: 2, name: 'Colheitadeira'},
+        {id: 3, name: 'Plantadeira'},
     ]
 
-    const [farmId, setFarmId] = React.useState<Key | null>(null)
-    const [machineryTypeId, setMachineryTypeId] = React.useState<Key | null>(
-        null,
-    )
+    const StatusOptions = [
+        {id: machineryStatus.active, name: 'Ativo'},
+        {id: machineryStatus.inactive, name: 'Inativo'},
+        {id: machineryStatus.onMaintenance, name: 'Em manutenção'},
+    ]
+
+    const handleUpdate = async () => {
+        const payload: machineryType = {
+            name: machineryData.name,
+            model: machineryData.model,
+            cost_per_hour: Number(machineryData.cost_per_hour),
+            maintenance_interval: Number(machineryData.maintenance_interval),
+            last_maintenance_date: new Date(
+                machineryData.last_maintenance_date,
+            ),
+            id_farm: Number(id_farm),
+            id_machinery_type: machineryData.id_machinery_type
+                ? Number(machineryData.id_machinery_type)
+                : 0,
+            status: machineryData.status as machineryStatus,
+        }
+
+        await machineryManagement.updateMachineryById(payload, {id_machinery})
+        window.location.href = '/machineryControl'
+    }
+
+    const handleDelete = async () => {
+        await machineryManagement.deleteUniqueMachineryId({
+            id_farm,
+            id_machinery,
+        })
+        window.location.href = '/machineryControl'
+    }
 
     return (
-        <div>
-            <div className="flex items-center justify-center flex-1 bg-gray-200 h-screen">
-                <Form
-                    onSubmit={async (e) => {
-                        e.preventDefault()
+        <div className="flex flex-row items-center justify-center h-full w-full">
+            <Form
+                className="w-[320px] rounded-md p-4 shadow-xl"
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    handleUpdate()
+                }}>
+                <TextField name="name">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Nome
+                    </Label>
+                    <Input
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={machineryData.name}
+                        onChange={(e) =>
+                            setMachineryData({
+                                ...machineryData,
+                                name: e.target.value,
+                            })
+                        }
+                    />
+                    <FieldError />
+                </TextField>
 
-                        const data = JSON.stringify(
-                            Object.fromEntries(new FormData(e.currentTarget)),
-                        )
+                <TextField name="model" className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Modelo
+                    </Label>
+                    <Input
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={machineryData.model}
+                        onChange={(e) =>
+                            setMachineryData({
+                                ...machineryData,
+                                model: e.target.value,
+                            })
+                        }
+                    />
+                    <FieldError />
+                </TextField>
 
-                        console.log(data)
+                <TextField name="cost_per_hour" className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Custo por hora
+                    </Label>
+                    <Input
+                        type="number"
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={machineryData.cost_per_hour}
+                        onChange={(e) =>
+                            setMachineryData({
+                                ...machineryData,
+                                cost_per_hour: e.target.value,
+                            })
+                        }
+                    />
+                    <FieldError />
+                </TextField>
 
-                        const parseData: machineryType = JSON.parse(data)
+                <TextField name="maintenance_interval" className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Intervalo de manutenção (dias)
+                    </Label>
+                    <Input
+                        type="number"
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={machineryData.maintenance_interval}
+                        onChange={(e) =>
+                            setMachineryData({
+                                ...machineryData,
+                                maintenance_interval: e.target.value,
+                            })
+                        }
+                    />
+                    <FieldError />
+                </TextField>
 
-                        return await machineryManagement.createMachinery({
-                            id_farm: Number(farmId),
-                            id_machinery_type: Number(machineryTypeId),
-                            cost_per_hour: Number(parseData.cost_per_hour),
-                            last_maintenance_date: new Date(
-                                parseData.last_maintenance_date,
-                            ),
-                            maintenance_interval: Number(
-                                parseData.maintenance_interval,
-                            ),
-                            model: parseData.model,
-                            name: parseData.name,
-                            status: parseData.status,
-                        })
-                    }}>
-                    <TextField name="name" isRequired>
-                        <div className="flex flex-col">
-                            <Label>Nome da Máquina</Label>
-                            <Input />
-                            <FieldError />
-                        </div>
-                    </TextField>
+                <TextField name="last_maintenance_date" className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Última manutenção
+                    </Label>
+                    <Input
+                        type="date"
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        value={machineryData.last_maintenance_date}
+                        onChange={(e) =>
+                            setMachineryData({
+                                ...machineryData,
+                                last_maintenance_date: e.target.value,
+                            })
+                        }
+                    />
+                    <FieldError />
+                </TextField>
 
-                    <TextField name="model" isRequired>
-                        <div className="flex flex-col">
-                            <Label>Modelo</Label>
-                            <Input />
-                            <FieldError />
-                        </div>
-                    </TextField>
-
-                    <TextField name="cost_per_hour" isRequired>
-                        <div className="flex flex-col">
-                            <Label>Custo por Hora</Label>
-                            <Input type="number" min={0} />
-                            <FieldError />
-                        </div>
-                    </TextField>
-
-                    <TextField name="maintenance_interval" isRequired>
-                        <div className="flex flex-col">
-                            <Label>Intervalo de Manutenção (dias)</Label>
-                            <Input type="number" min={0} />
-                            <FieldError />
-                        </div>
-                    </TextField>
-
-                    <TextField name="last_maintenance_date" isRequired>
-                        <div className="flex flex-col">
-                            <Label>Última Manutenção</Label>
-                            <Input type="date" />
-                            <FieldError />
-                        </div>
-                    </TextField>
-
+                <TextField name="id_machinery_type" className="mt-3">
                     <FimComboBox
-                        label="Fazenda"
-                        defaultItems={FarmOptions}
-                        onSelectionChange={setFarmId}
-                        allowsCustomValue={false}>
-                        {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
-                    </FimComboBox>
-
-                    <FimComboBox
-                        label="Tipo de Máquina"
+                        label="Tipo de máquina"
                         defaultItems={MachineryTypeOptions}
-                        onSelectionChange={setMachineryTypeId}
-                        allowsCustomValue={false}>
+                        selectedKey={machineryData.id_machinery_type}
+                        onSelectionChange={(key) =>
+                            setMachineryData({
+                                ...machineryData,
+                                id_machinery_type: key,
+                            })
+                        }>
                         {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
                     </FimComboBox>
+                    <FieldError />
+                </TextField>
 
-                    <div className="flex justify-center space-x-4">
-                        <div className="flex bg-green-300 rounded justify-center w-1/5 mt-4">
-                            <Button type="submit" className="w-full h-full">
-                                Salvar
-                            </Button>
-                        </div>
-                        <div className="flex bg-red-300 rounded justify-center w-2/5 mt-4">
-                            <a href="/machineryControl">
-                                <Button className="w-full h-full">
-                                    Cancelar
-                                </Button>
-                            </a>
-                        </div>
-                    </div>
-                </Form>
-            </div>
+                <TextField name="status" className="mt-3">
+                    <FimComboBox
+                        label="Status"
+                        defaultItems={StatusOptions}
+                        selectedKey={machineryData.status}
+                        onSelectionChange={(key) =>
+                            setMachineryData({...machineryData, status: key})
+                        }>
+                        {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
+                    </FimComboBox>
+                    <FieldError />
+                </TextField>
+
+                <div className="flex w-1/2 justify-self-end mt-4 gap-2">
+                    <Button
+                        type="button"
+                        className="w-full h-full px-1 py-1 rounded-md shadow-md border border-red-600 hover:bg-red-700 hover:text-white text-red-600 font-semibold"
+                        onPress={handleDelete}>
+                        Deletar
+                    </Button>
+                    <Button
+                        type="submit"
+                        className="w-full h-full px-1 py-1 rounded-md text-center shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
+                        Salvar
+                    </Button>
+                </div>
+            </Form>
         </div>
+    )
+}
+
+export default function MachineryUpdate() {
+    return (
+        <Suspense fallback={<div>Carregando...</div>}>
+            <UpdateWrapper />
+        </Suspense>
     )
 }
