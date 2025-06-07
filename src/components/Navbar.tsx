@@ -51,6 +51,7 @@ export default function Navbar() {
                                 router.push('/farmsControl')
                             } else {
                                 setSelected(value)
+                                window.location.reload()
                             }
                         }}
                         className="border border-black bg-green-500 text-white px-4 py-2 pr-10 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-green-500">

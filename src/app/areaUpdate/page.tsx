@@ -1,7 +1,9 @@
 'use client'
 
 import {AreaManagement, areaType} from '@/classes/AreaManagement'
+import {FarmManagement} from '@/classes/FarmManagements'
 import {FimComboBox} from '@/components/FimComboBox'
+import {verificarFazendeiro, verifyFarmbyId} from '@/utils/utilityFunctions'
 import {useSearchParams} from 'next/navigation'
 import {Suspense, useEffect, useState} from 'react'
 import {
@@ -16,11 +18,12 @@ import {
 } from 'react-aria-components'
 
 const areaManagement = new AreaManagement()
+const farmManagement = new FarmManagement()
 
 function UpdateWrapper() {
     const searchParams = useSearchParams()
     const id_area = searchParams.get('id')
-    const id_farm = '22'
+    const id_farm = verifyFarmbyId()
 
     const [areaData, setAreaData] = useState({
         name: '',
@@ -32,6 +35,27 @@ function UpdateWrapper() {
     })
 
     const [shouldReload, setShouldReload] = useState(false)
+
+    const [farmOptions, setFarmOptions] = useState<
+        {id: number; name: string}[]
+    >([])
+
+    useEffect(() => {
+        const fetchFarms = async () => {
+            const farms = await farmManagement.listAllFarmsByFarmer(
+                verificarFazendeiro(),
+            )
+            if (farms) {
+                const options = farms.map((farm) => ({
+                    id: farm.id_farm,
+                    name: farm.corporate_name,
+                }))
+                setFarmOptions(options)
+            }
+        }
+
+        fetchFarms()
+    }, [])
 
     useEffect(() => {
         const fetchArea = async () => {
@@ -59,12 +83,6 @@ function UpdateWrapper() {
 
     if (!id_area) return <div>Erro: id não fornecido</div>
 
-    const FarmOptions = [
-        {id: 60, name: 'Fazenda azul'},
-        {id: 61, name: 'Fazenda verde'},
-        {id: 62, name: 'Fazenda amarela'},
-    ]
-
     const AreaOptions = [
         {id: 1, name: 'Área de descanso'},
         {id: 2, name: 'Área de cultivo'},
@@ -84,6 +102,10 @@ function UpdateWrapper() {
             status: true,
         }
 
+        console.log(infoData)
+        console.log(areaData.id_farm)
+        console.log(typeof areaData.id_farm)
+        console.log(typeof id_area)
         await areaManagement.updateAreaById(infoData, {id_area})
         setShouldReload(true)
         window.location.href = '/areaControl'
@@ -162,18 +184,53 @@ function UpdateWrapper() {
                     <FieldError />
                 </TextField>
 
-                <TextField name="id_farm" className="mt-3">
-                    <FimComboBox
-                        label="Fazenda da área"
-                        defaultItems={FarmOptions}
-                        selectedKey={areaData.id_farm}
-                        onSelectionChange={(key) =>
-                            setAreaData({...areaData, id_farm: key})
-                        }>
-                        {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
-                    </FimComboBox>
-                    <FieldError />
-                </TextField>
+                <div className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Fazenda da área
+                    </Label>
+                    <select
+                        value={areaData.id_farm ?? ''}
+                        onChange={(e) =>
+                            setAreaData({
+                                ...areaData,
+                                id_farm: e.target.value
+                                    ? Number(e.target.value)
+                                    : null,
+                            })
+                        }
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="">Selecione uma fazenda</option>
+                        {farmOptions.map((farm) => (
+                            <option key={farm.id} value={farm.id}>
+                                {farm.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Tipo de área
+                    </Label>
+                    <select
+                        value={areaData.id_type_area ?? ''}
+                        onChange={(e) =>
+                            setAreaData({
+                                ...areaData,
+                                id_type_area: e.target.value
+                                    ? Number(e.target.value)
+                                    : null,
+                            })
+                        }
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="">Selecione uma área</option>
+                        {AreaOptions.map((areas) => (
+                            <option key={areas.id} value={areas.id}>
+                                {areas.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
                 <TextField name="id_type_area" className="mt-3">
                     <FimComboBox

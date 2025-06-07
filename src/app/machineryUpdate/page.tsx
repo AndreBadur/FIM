@@ -5,7 +5,7 @@ import {
     machineryStatus,
     machineryType,
 } from '@/classes/MachineryManagement'
-import {FimComboBox} from '@/components/FimComboBox'
+import {verifyFarmbyId} from '@/utils/utilityFunctions'
 import {useSearchParams} from 'next/navigation'
 import {Suspense, useEffect, useState} from 'react'
 import {
@@ -15,7 +15,6 @@ import {
     Input,
     Label,
     TextField,
-    ListBoxItem,
     Key,
 } from 'react-aria-components'
 
@@ -24,7 +23,7 @@ const machineryManagement = new MachineryManagement()
 function UpdateWrapper() {
     const searchParams = useSearchParams()
     const id_machinery = searchParams.get('id')
-    const id_farm = '22'
+    const id_farm = verifyFarmbyId()
 
     const [machineryData, setMachineryData] = useState({
         name: '',
@@ -204,34 +203,51 @@ function UpdateWrapper() {
                     <FieldError />
                 </TextField>
 
-                <TextField name="id_machinery_type" className="mt-3">
-                    <FimComboBox
-                        label="Tipo de máquina"
-                        defaultItems={MachineryTypeOptions}
-                        selectedKey={machineryData.id_machinery_type}
-                        onSelectionChange={(key) =>
+                <div className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Tipo de máquina
+                    </Label>
+                    <select
+                        value={machineryData.id_machinery_type ?? ''}
+                        onChange={(e) =>
                             setMachineryData({
                                 ...machineryData,
-                                id_machinery_type: key,
+                                id_machinery_type: e.target.value
+                                    ? Number(e.target.value)
+                                    : null,
                             })
-                        }>
-                        {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
-                    </FimComboBox>
-                    <FieldError />
-                </TextField>
+                        }
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="">Selecione uma área</option>
+                        {MachineryTypeOptions.map((tipos) => (
+                            <option key={tipos.id} value={tipos.id}>
+                                {tipos.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-                <TextField name="status" className="mt-3">
-                    <FimComboBox
-                        label="Status"
-                        defaultItems={StatusOptions}
-                        selectedKey={machineryData.status}
-                        onSelectionChange={(key) =>
-                            setMachineryData({...machineryData, status: key})
-                        }>
-                        {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
-                    </FimComboBox>
-                    <FieldError />
-                </TextField>
+                <div className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Status
+                    </Label>
+                    <select
+                        value={machineryData.status ?? ''}
+                        onChange={(e) =>
+                            setMachineryData({
+                                ...machineryData,
+                                status: e.target.value,
+                            })
+                        }
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="">Selecione uma área</option>
+                        {StatusOptions.map((status) => (
+                            <option key={status.id} value={status.id}>
+                                {status.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
                 <div className="flex w-1/2 justify-self-end mt-4 gap-2">
                     <Button

@@ -2,6 +2,7 @@
 
 import {MachineryManagement, machineryType} from '@/classes/MachineryManagement'
 import {FimComboBox} from '@/components/FimComboBox'
+import {verifyFarmbyId} from '@/utils/utilityFunctions'
 import React from 'react'
 
 import {
@@ -18,19 +19,12 @@ import {
 const machineryManagement = new MachineryManagement()
 
 export default function MachineryControl() {
-    const FarmOptions = [
-        {id: 22, name: 'Fazenda azul'},
-        {id: 87, name: 'Fazenda verde'},
-        {id: 88, name: 'Fazenda amarela'},
-    ]
-
     const MachineryTypeOptions = [
         {id: 1, name: 'Ceifadeira'}, //Só a ceifadeira funciona. Provavelmente por não existir outros ids no banco de tipos de maquinários
         {id: 2, name: 'Regadora'},
         {id: 3, name: 'Trator'},
     ]
 
-    const [farmId, setFarmId] = React.useState<Key | null>(null)
     const [machineryTypeId, setMachineryTypeId] = React.useState<Key | null>(
         null,
     )
@@ -51,7 +45,7 @@ export default function MachineryControl() {
                         const parseData: machineryType = JSON.parse(data)
 
                         return await machineryManagement.createMachinery({
-                            id_farm: Number(farmId),
+                            id_farm: Number(verifyFarmbyId()),
                             id_machinery_type: Number(machineryTypeId),
                             cost_per_hour: Number(parseData.cost_per_hour),
                             last_maintenance_date: new Date(
@@ -104,14 +98,6 @@ export default function MachineryControl() {
                             <FieldError />
                         </div>
                     </TextField>
-
-                    <FimComboBox
-                        label="Fazenda"
-                        defaultItems={FarmOptions}
-                        onSelectionChange={setFarmId}
-                        allowsCustomValue={false}>
-                        {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
-                    </FimComboBox>
 
                     <FimComboBox
                         label="Tipo de Máquina"
