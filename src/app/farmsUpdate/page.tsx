@@ -1,6 +1,7 @@
 'use client'
 
 import {FarmManagement, farmType} from '@/classes/FarmManagements'
+import ErrorScreen from '@/components/ErrorScreen'
 import {useSearchParams} from 'next/navigation'
 import {Suspense, useEffect, useState} from 'react'
 import {
@@ -43,8 +44,7 @@ function UpdateWrapper() {
         fetchFarm()
     }, [shouldReload, idFarm])
 
-    if (!idFarm) return <div>Erro: id não fornecido</div>
-
+    if (!idFarm) return <ErrorScreen />
     return (
         <div className="flex flex-row items-center justify-center h-full w-full">
             <Form
