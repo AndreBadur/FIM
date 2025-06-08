@@ -116,6 +116,7 @@ export function AriaTable<
             <TableHeader className="bg-gray-100 uppercase rounded-md">
                 {columnTable[indexType].map((valor, index) => (
                     <Column
+                        isRowHeader
                         key={index}
                         className="px-3 py-2 text-base font-medium">
                         {valor}

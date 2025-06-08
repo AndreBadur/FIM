@@ -2,7 +2,6 @@
 
 import {AreaManagement, areaType} from '@/classes/AreaManagement'
 import {FarmManagement} from '@/classes/FarmManagements'
-import {FimComboBox} from '@/components/FimComboBox'
 import {verificarFazendeiro, verifyFarmbyId} from '@/utils/utilityFunctions'
 import {useSearchParams} from 'next/navigation'
 import {Suspense, useEffect, useState} from 'react'
@@ -13,7 +12,6 @@ import {
     Input,
     Label,
     TextField,
-    ListBoxItem,
     Key,
 } from 'react-aria-components'
 
@@ -231,19 +229,6 @@ function UpdateWrapper() {
                         ))}
                     </select>
                 </div>
-
-                <TextField name="id_type_area" className="mt-3">
-                    <FimComboBox
-                        label="Tipo de área"
-                        defaultItems={AreaOptions}
-                        selectedKey={areaData.id_type_area}
-                        onSelectionChange={(key) =>
-                            setAreaData({...areaData, id_type_area: key})
-                        }>
-                        {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
-                    </FimComboBox>
-                    <FieldError />
-                </TextField>
 
                 <div className="flex w-1/2 justify-self-end mt-4 gap-2">
                     <Button
