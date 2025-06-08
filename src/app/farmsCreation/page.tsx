@@ -1,7 +1,6 @@
 'use client'
 
 import {FarmManagement, farmType} from '@/classes/FarmManagements'
-import {useRouter} from 'next/navigation'
 import {
     Button,
     FieldError,
@@ -14,12 +13,10 @@ import {
 const farmManagement = new FarmManagement()
 
 export default function CreateFormFarm() {
-    const router = useRouter()
-
     return (
-        <div className="flex justify-center items-center">
+        <div className="flex flex-row items-center justify-center h-full w-full">
             <Form
-                className="space-y-6 w-full max-w-md mt-5"
+                className="w-[320px] rounded-md p-4 shadow-xl"
                 onSubmit={async (e) => {
                     e.preventDefault()
                     const data = JSON.stringify(
@@ -38,9 +35,7 @@ export default function CreateFormFarm() {
                         )
                         console.log('Fazenda criada:', createdFarm)
 
-                        // ✅ Redireciona após sucesso
-                        router.push('/farmsControl')
-                        router.refresh()
+                        window.location.href = '/farmsControl'
                     } catch (error) {
                         console.error('Erro ao criar fazenda:', error)
                     }
@@ -53,23 +48,23 @@ export default function CreateFormFarm() {
                     <FieldError />
                 </TextField>
                 <TextField name="cnpj" isRequired>
-                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                    <Label className="block text-sm font-medium text-black-700 mb-1 mt-2">
                         CNPJ
                     </Label>
                     <Input className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" />
                     <FieldError />
                 </TextField>
                 <TextField name="corporate_name" isRequired>
-                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                    <Label className="block text-sm font-medium text-black-700 mb-1 mt-2">
                         CORPORATE NAME
                     </Label>
                     <Input className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" />
                     <FieldError />
                 </TextField>
-                <div className="flex justify-end">
+                <div className="flex w-1/2 justify-self-end mt-4 gap-2">
                     <Button
                         type="submit"
-                        className="w-40 px-1 py-3 rounded-md shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
+                        className="w-full h-full px-1 py-1 rounded-md text-center shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
                         Submit
                     </Button>
                 </div>
