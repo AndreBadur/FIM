@@ -1,7 +1,8 @@
 'use client'
 
 import {EmployeeManagement, employeeType} from '@/classes/EmployeeManagement'
-import {FimComboBox} from '@/components/FimComboBox'
+import {FarmManagement} from '@/classes/FarmManagements'
+import {verificarFazendeiro} from '@/utils/utilityFunctions'
 import {useSearchParams} from 'next/navigation'
 import {Suspense, useEffect, useState} from 'react'
 import {
@@ -11,16 +12,16 @@ import {
     Input,
     Label,
     TextField,
-    ListBoxItem,
     Key,
 } from 'react-aria-components'
 
 const employeeManagement = new EmployeeManagement()
+const farmManagement = new FarmManagement()
 
 function UpdateWrapper() {
     const searchParams = useSearchParams()
     const id_employee = searchParams.get('id')
-    const id_farmer = '22'
+    const id_farmer = verificarFazendeiro()
 
     const [employeeData, setEmployeeData] = useState({
         name: '',
@@ -29,6 +30,27 @@ function UpdateWrapper() {
         hours_worked: '',
         id_farm: null as Key | null,
     })
+
+    const [farmOptions, setFarmOptions] = useState<
+        {id: number; name: string}[]
+    >([])
+
+    useEffect(() => {
+        const fetchFarms = async () => {
+            const farms = await farmManagement.listAllFarmsByFarmer(
+                verificarFazendeiro(),
+            )
+            if (farms) {
+                const options = farms.map((farm) => ({
+                    id: farm.id_farm,
+                    name: farm.corporate_name,
+                }))
+                setFarmOptions(options)
+            }
+        }
+
+        fetchFarms()
+    }, [])
 
     useEffect(() => {
         const fetchEmployee = async () => {
@@ -55,12 +77,6 @@ function UpdateWrapper() {
     }, [id_employee])
 
     if (!id_employee) return <div>Erro: id não fornecido</div>
-
-    const FarmOptions = [
-        {id: 22, name: 'Fazenda azul'},
-        {id: 61, name: 'Fazenda verde'},
-        {id: 62, name: 'Fazenda amarela'},
-    ]
 
     const handleUpdate = async () => {
         const infoData: employeeType = {
@@ -165,21 +181,29 @@ function UpdateWrapper() {
                     <FieldError />
                 </TextField>
 
-                <TextField name="id_farm" className="mt-3">
-                    <FimComboBox
-                        label="Fazenda"
-                        defaultItems={FarmOptions}
-                        selectedKey={employeeData.id_farm}
-                        onSelectionChange={(key) =>
+                <div className="mt-3">
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Fazenda
+                    </Label>
+                    <select
+                        value={employeeData.id_farm ?? ''}
+                        onChange={(e) =>
                             setEmployeeData({
                                 ...employeeData,
-                                id_farm: key,
+                                id_farm: e.target.value
+                                    ? Number(e.target.value)
+                                    : null,
                             })
-                        }>
-                        {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
-                    </FimComboBox>
-                    <FieldError />
-                </TextField>
+                        }
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="">Selecione uma fazenda</option>
+                        {farmOptions.map((farm) => (
+                            <option key={farm.id} value={farm.id}>
+                                {farm.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
                 <div className="flex w-1/2 justify-self-end mt-4 gap-2">
                     <Button

@@ -1,7 +1,7 @@
 'use client'
 
 import {EmployeeManagement, employeeType} from '@/classes/EmployeeManagement'
-import {FimComboBox} from '@/components/FimComboBox'
+import {verifyFarmbyId} from '@/utils/utilityFunctions'
 // import {verifyFarmbyId} from '@/utils/utilityFunctions'
 import React from 'react'
 
@@ -12,21 +12,11 @@ import {
     Input,
     Label,
     TextField,
-    ListBoxItem,
-    Key,
 } from 'react-aria-components'
 
 const employeeManagement = new EmployeeManagement()
 
 export default function EmployeeControl() {
-    const FarmOptions = [
-        {id: 22, name: 'Fazenda azul'},
-        {id: 87, name: 'Fazenda verde'},
-        {id: 88, name: 'Fazenda amarela'},
-    ]
-
-    const [farmId, setFarmId] = React.useState<Key | null>(null)
-
     return (
         <div>
             <div className="flex items-center justify-center flex-1 bg-gray-200 h-screen">
@@ -44,7 +34,7 @@ export default function EmployeeControl() {
 
                         await employeeManagement.createEmployee(
                             {
-                                id_farm: Number(farmId),
+                                id_farm: Number(verifyFarmbyId()),
                                 cpf: parseData.cpf,
                                 name: parseData.name,
                                 cost_per_hour: Number(parseData.cost_per_hour),
@@ -85,14 +75,6 @@ export default function EmployeeControl() {
                             <FieldError />
                         </div>
                     </TextField>
-
-                    <FimComboBox
-                        label="Fazenda"
-                        defaultItems={FarmOptions}
-                        onSelectionChange={setFarmId}
-                        allowsCustomValue={false}>
-                        {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
-                    </FimComboBox>
 
                     <div className="flex justify-center space-x-4">
                         <div className="flex bg-green-300 rounded justify-center w-1/5 mt-4">

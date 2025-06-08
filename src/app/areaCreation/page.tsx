@@ -2,6 +2,7 @@
 
 import {AreaManagement, areaType} from '@/classes/AreaManagement'
 import {FimComboBox} from '@/components/FimComboBox'
+import {verifyFarmbyId} from '@/utils/utilityFunctions'
 import React from 'react'
 
 const areaManagement = new AreaManagement()
@@ -18,19 +19,13 @@ import {
 } from 'react-aria-components'
 
 export default function AreaControl() {
-    const FarmOptions = [
-        {id: 22, name: 'Fazenda azul'},
-        {id: 87, name: 'Fazenda verde'},
-        {id: 88, name: 'Fazenda amarela'},
-    ]
-
+    // Area optitons provisório
     const AreaOptions = [
-        {id: 1, name: 'Área de descanso'}, // Só existe o primeiro
+        {id: 1, name: 'Área de descanso'},
         {id: 2, name: 'Área de cultivo'},
         {id: 3, name: 'Área de estoque'},
     ]
 
-    const [farmId, setFarmId] = React.useState<Key | null>(null)
     const [typeAreaId, setTypeAreaId] = React.useState<Key | null>(null)
     console.log(typeAreaId)
 
@@ -53,7 +48,7 @@ export default function AreaControl() {
                             description: parseData.description,
                             capacity: parseData.capacity,
                             features: parseData.features,
-                            id_farm: Number(farmId),
+                            id_farm: Number(verifyFarmbyId()),
                             id_type_area: Number(typeAreaId),
                             name: parseData.name,
                             status: true,
@@ -66,17 +61,6 @@ export default function AreaControl() {
                             <FieldError />
                         </div>
                     </TextField>
-                    <TextField>
-                        <FimComboBox
-                            label="Fazenda da área"
-                            defaultItems={FarmOptions}
-                            onSelectionChange={setFarmId}
-                            allowsCustomValue>
-                            {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
-                        </FimComboBox>
-                        <FieldError />
-                    </TextField>
-
                     <TextField name="description" isRequired>
                         <div className="flex flex-col">
                             <Label>Descrição</Label>
