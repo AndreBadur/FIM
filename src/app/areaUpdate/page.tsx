@@ -100,10 +100,6 @@ function UpdateWrapper() {
             status: true,
         }
 
-        console.log(infoData)
-        console.log(areaData.id_farm)
-        console.log(typeof areaData.id_farm)
-        console.log(typeof id_area)
         await areaManagement.updateAreaById(infoData, {id_area})
         setShouldReload(true)
         window.location.href = '/areaControl'
