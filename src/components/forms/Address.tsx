@@ -15,6 +15,17 @@ import {
     TextField,
 } from 'react-aria-components'
 
+const columnsName = {
+    id_address: 'id',
+    street: 'rua',
+    number: 'numero',
+    state: 'estado',
+    country: 'pais',
+    postal_code: 'cep',
+    created_at: 'criado em',
+    updated_at: 'ultima atualização',
+}
+
 export function CreateAddressForms() {
     return (
         <Form
@@ -160,7 +171,9 @@ export function ListAddressAlterations() {
     ]
 
     //pega o nome das chaves de um dicionario e transforma em uma array
-    const columns = Object.keys(listAddressTest[0])
+
+    const columnsData = Object.keys(listAddressTest[0])
+
     return (
         <div>
             <Table
@@ -168,12 +181,12 @@ export function ListAddressAlterations() {
                 selectionMode="multiple"
                 className="w-full mt-4 text-sm text-left rounded-xl border">
                 <TableHeader className="bg-gray-100 uppercase rounded-xl">
-                    {columns.map((valor, index) => (
+                    {columnsData.map((valor, index) => (
                         <Column
                             key={index}
                             isRowHeader={true}
                             className="px-3 py-2 text-base font-medium">
-                            {valor}
+                            {columnsName[valor as keyof typeof columnsName]}
                         </Column>
                     ))}
                 </TableHeader>
@@ -186,7 +199,7 @@ export function ListAddressAlterations() {
                                     ? 'bg-white cursor-pointer hover:bg-green-600'
                                     : 'bg-gray-100 cursor-pointer hover:bg-green-600'
                             }>
-                            {columns.map((column, colIndex) => (
+                            {columnsData.map((column, colIndex) => (
                                 <Cell
                                     key={colIndex}
                                     className="px-3 py-2 text-sm">
