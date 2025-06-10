@@ -50,7 +50,7 @@ export class SupplyManagement {
             )
 
             verifyApiResponse(response)
-            return response
+            return response.json()
         } catch (error) {
             console.error(error)
             return undefined

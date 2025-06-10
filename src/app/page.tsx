@@ -1,7 +1,5 @@
 'use client'
 
-import {Checkbox} from 'react-aria-components'
-
 export default function Index() {
     return (
         <div>
