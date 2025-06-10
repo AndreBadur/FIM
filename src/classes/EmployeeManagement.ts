@@ -19,7 +19,7 @@ export class EmployeeManagement {
         id_farmer: string,
     ): Promise<Response | undefined> {
         try {
-            const response = await fetch(`api/employees/${id_farmer}`, {
+            const response = await fetch(`/api/employees/${id_farmer}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export class EmployeeManagement {
         id_farmer: string,
     ): Promise<employeeType[] | undefined> {
         try {
-            const response = await fetch(`api/employees/${id_farmer}`, {
+            const response = await fetch(`/api/employees/${id_farmer}`, {
                 method: 'GET',
             })
 
@@ -65,7 +65,7 @@ export class EmployeeManagement {
     ): Promise<Response | undefined> {
         try {
             const response = await fetch(
-                `api/employees/${id_farmer}/${id_employee}`,
+                `/api/employees/${id_farmer}/${id_employee}`,
                 {
                     method: 'PATCH',
                     headers: {
@@ -95,7 +95,7 @@ export class EmployeeManagement {
     ): Promise<employeeType | undefined> {
         try {
             const response = await fetch(
-                `api/employees/${id_farmer}/${id_employee}`,
+                `/api/employees/${id_farmer}/${id_employee}`,
                 {
                     method: 'GET',
                 },
@@ -115,7 +115,7 @@ export class EmployeeManagement {
     ): Promise<Response | undefined> {
         try {
             const response = await fetch(
-                `api/employees/${id_farmer}/${id_employee}`,
+                `/api/employees/${id_farmer}/${id_employee}`,
                 {
                     method: 'DELETE',
                 },

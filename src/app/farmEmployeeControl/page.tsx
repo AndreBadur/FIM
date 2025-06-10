@@ -1,45 +1,37 @@
 'use client'
-// import {EmployeeManagement} from '@/classes/EmployeeManagement'
 
-// const employeeManagement = new EmployeeManagement()
+import {useEffect, useState} from 'react'
+import {EmployeeManagement, employeeType} from '@/classes/EmployeeManagement'
+import {AriaTable} from '@/components/Table'
+import {verificarFazendeiro} from '@/utils/utilityFunctions'
 
-// const create = await employeeManagement.createEmployee(
-//     {
-//         cost_per_hour: 1,
-//         cpf: '1233322211',
-//         hours_worked: 40,
-//         id_farm: 22,
-//         name: 'Mithril',
-//     },
-//     '1',
-// )
-// console.log(await create)
-// await employeeManagement.updateEmployeeByEmployeeId(
-//     {
-//         cost_per_hour: 12,
-//         cpf: '1233322211',
-//         hours_worked: 40,
-//         id_farm: 22,
-//         name: 'Mithril',
-//     },
-//     '1',
-//     '7',
-// )
+export default function EmployeeControl() {
+    const [employeeList, setEmployeeList] = useState<employeeType[]>([])
 
-// const employee = await employeeManagement.findUniqueEmployeeByEmployeeId('1', '7')
+    useEffect(() => {
+        const fetchEmployees = async () => {
+            const employeeManagement = new EmployeeManagement()
+            const farmId = verificarFazendeiro()
+            const employees =
+                await employeeManagement.listAllEmployeesByFarmer(farmId)
+            setEmployeeList(employees ?? [])
+        }
 
-// await employeeManagement.deleteEmployeeByEmployeeId('1', '7')
+        fetchEmployees()
+    }, [])
 
-// FUNCIONANDO
-// console.log(await employeeManagement.listAllEmployeesByFarmer('1'))
-
-export default function FarmEmployeeControl() {
     return (
-        <div>
-            <div className="flex">
-                <div className="flex items-center justify-center flex-1 bg-black h-screen">
-                    <h1 className="text-white text-2xl">Funcionários!</h1>
+        <div className="flex justify-center items-center">
+            <div className="w-full max-w-4xl px-4">
+                <div className="flex justify-between items-center w-full">
+                    <h1 className="text-xl font-bold">Lista de Funcionários</h1>
+                    <a href="/farmEmployeeCreation">
+                        <button className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 mt-2">
+                            CRIAR NOVA
+                        </button>
+                    </a>
                 </div>
+                <AriaTable tipo="employee" dados={employeeList} />
             </div>
         </div>
     )

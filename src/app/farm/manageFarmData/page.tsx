@@ -1,6 +1,6 @@
 'use client'
 
-import {FarmUpdate} from '@/components/UpdateTable'
+import {FarmUpdateForms} from '@/components/FarmUpdateForms'
 import {useSearchParams} from 'next/navigation'
 import {Suspense} from 'react'
 
@@ -10,10 +10,10 @@ function UpdateWrapper() {
 
     if (!idFarm) return <div>Erro: id não fornecido</div>
 
-    return <FarmUpdate farmerId="1" caseToUpdateId={idFarm} />
+    return <FarmUpdateForms farmerId="1" farmId={idFarm} />
 }
 
-export default function UpdateTest() {
+export default function ManageFarmData() {
     return (
         <Suspense fallback={<div>Carregando...</div>}>
             <UpdateWrapper />
