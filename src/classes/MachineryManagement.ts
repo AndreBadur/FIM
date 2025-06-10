@@ -144,7 +144,7 @@ export class MachineryManagement {
         }
     }
 
-    public async deleteUniqueMachineryId(
+    public async deleteUniqueMachineryById(
         bodyRequest: specificMachineryRequest,
     ): Promise<Response | undefined> {
         try {
