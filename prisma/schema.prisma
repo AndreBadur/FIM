@@ -9,7 +9,7 @@ datasource db {
 }
 
 model address {
-  id_address  Int        @id @default(autoincrement())
+  id_address  Int        @id @unique(map: "id_address_UNIQUE") @default(autoincrement())
   street      String?    @db.VarChar(255)
   number      String?    @db.VarChar(255)
   city        String?    @db.VarChar(255)
