@@ -1,11 +1,10 @@
 'use client'
 import Image from 'next/image'
 import {Link} from 'react-aria-components'
-import {useRouter, usePathname} from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import {useState, useEffect} from 'react'
 
 export default function Menu() {
-    const router = useRouter()
     const pathname = usePathname()
 
     const [selected, setSelected] = useState<string>('')
@@ -26,7 +25,7 @@ export default function Menu() {
                     PRINCIPAL
                 </h1>
 
-                <Link
+                {/* <Link
                     href="/"
                     className={linkClasses('/')}
                     onPress={() => setSelected('/')}>
@@ -52,7 +51,7 @@ export default function Menu() {
                         className="mr-3"
                     />
                     <span>Tarefas</span>
-                </Link>
+                </Link> */}
 
                 <Link
                     href="/areaControl"
@@ -130,19 +129,6 @@ export default function Menu() {
                             />
                             <span>Configurações</span>
                         </Link>
-
-                        <button
-                            className="flex items-center px-4 text-red-600"
-                            onClick={() => router.push('/home')}>
-                            <Image
-                                src="/img/logOut.png"
-                                width={14}
-                                height={14}
-                                alt="Sair"
-                                className="mr-3"
-                            />
-                            <span className="text-s">Sair</span>
-                        </button>
                     </div>
                 </div>
             </div>

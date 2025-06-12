@@ -40,7 +40,7 @@
 // const getSupplyCategory = await supplyManagement.getAllSupplyCategories()
 // console.log(getSupplyCategory)
 
-export default function SupplyControl() {
+export default function SupplyUpdate() {
     return (
         <div className="bg-yellow-600">
             <h1>FIND SUPPLY</h1>
