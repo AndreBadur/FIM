@@ -178,7 +178,7 @@ function UpdateWrapper() {
                     <FieldError />
                 </TextField>
 
-                <div className="mt-3">
+                <div className="mt-3 visibility: hidden">
                     <Label className="block text-sm font-medium text-black-700 mb-1">
                         Fazenda da área
                     </Label>
