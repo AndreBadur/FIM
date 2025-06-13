@@ -22,6 +22,9 @@ export async function GET(
             orderBy: {
                 id_farm: 'asc',
             },
+            include: {
+                farm: true,
+            },
         })
 
         isDataNullOrUndefined(data)
