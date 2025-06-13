@@ -1,4 +1,5 @@
 import {verifyApiResponse} from '@/utils/verifications'
+import {farmType} from './FarmManagements'
 
 export type employeeType = {
     id_employee?: number
@@ -9,6 +10,7 @@ export type employeeType = {
     hours_worked: number
     created_at?: Date
     updated_at?: Date
+    farm: farmType
 }
 
 export class EmployeeManagement {
