@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import {Link} from 'react-aria-components'
-import { usePathname } from 'next/navigation'
+import {usePathname} from 'next/navigation'
 import {useState, useEffect} from 'react'
 
 export default function Menu() {
