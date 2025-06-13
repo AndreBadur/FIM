@@ -43,6 +43,7 @@ const columnTable = [
         'Created at',
         'Updated at',
     ],
+    ['ID Farm', 'Supply Category', 'Supply Cost Price', 'Supply Quantity',]
 ]
 
 const columnData = [
@@ -77,9 +78,10 @@ const columnData = [
         'created_at',
         'updated_at',
     ],
+    ['id_farm', 'supply_category', 'supply_cost_price', 'supply_quantity',]
 ]
 
-type TipoTabela = 'farm' | 'generalFarms' | 'area' | 'machinery' | 'employee'
+type TipoTabela = 'farm' | 'generalFarms' | 'area' | 'machinery' | 'employee' | 'supply'
 
 type Props<T> = {
     tipo: TipoTabela
@@ -87,7 +89,7 @@ type Props<T> = {
 }
 
 export function AriaTable<
-    T extends Record<string, string | number | boolean | Date>,
+    T extends Record<string, string | number | boolean | Date | any>,
 >({tipo, dados}: Props<T>) {
     const router = useRouter()
 
@@ -103,6 +105,8 @@ export function AriaTable<
                 return 3
             case 'employee':
                 return 4
+            case 'supply':
+                return 5
             default:
                 return 0
         }
@@ -135,7 +139,9 @@ export function AriaTable<
                                       ? `/machineryUpdate?id=${item['id_machinery']}`
                                       : tipo === 'employee'
                                         ? `/farmEmployeeUpdate?id=${item[columnData[indexType][0]]}`
-                                        : `/farmsUpdate?id=${item[columnData[indexType][0]]}`,
+                                        : tipo === 'supply'
+                                        ? `/supplyUpdate?id=${item['id_supply']}`
+                                            : `/farmsUpdate?id=${item[columnData[indexType][0]]}`,
                             )
                         }
                         className={

@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import {Link} from 'react-aria-components'
-import { usePathname } from 'next/navigation'
+import {usePathname} from 'next/navigation'
 import {useState, useEffect} from 'react'
 
 export default function Menu() {
@@ -107,6 +107,20 @@ export default function Menu() {
                         className="mr-3"
                     />
                     <span>Fazendas</span>
+                </Link>
+
+                <Link
+                    href="/supplyControl"
+                    className={linkClasses('/supplyControl')}
+                    onPress={() => setSelected('/supplyControl')}>
+                    <Image
+                        src="/img/farmIcon.png"
+                        width={18}
+                        height={18}
+                        alt="Fazendas"
+                        className="mr-3"
+                    />
+                    <span>Insumos</span>
                 </Link>
             </nav>
 
