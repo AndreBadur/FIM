@@ -1,49 +1,98 @@
 'use client'
 
-// import {SupplyManagement} from '@/classes/SupplyManagement'
+import {SupplyManagement, supplyType} from '@/classes/SupplyManagement'
+import { FimComboBox } from '@/components/FimComboBox'
+import {verifyFarmbyId} from '@/utils/utilityFunctions'
+import React from 'react'
 
-// const supplyManagement = new SupplyManagement()
+import {
+    Button,
+    FieldError,
+    Form,
+    Input,
+    Key,
+    Label,
+    ListBoxItem,
+    TextField,
+} from 'react-aria-components'
 
-// const creation = await supplyManagement.createSupply({
-//     id_farm: 22,
-//     supply_category: 1,
-//     supply_cost_price: 101,
-//     supply_quantity: 5,
-// })
-
-// const update = await supplyManagement.updateSupplyById(
-//     {
-//         supply_cost_price: 20,
-//     },
-//     {
-//         id_farm: '22',
-//         supply_id: '12',
-//     },
-// )
-
-// const result = await supplyManagement.findSupplyById({
-//     id_farm: '22',
-//     supply_id: '4',
-// })
-// console.log(result?.supply_id)
-// console.log(result?.supply_cost_price)
-// console.log(result?.supply_categories.category_name)
-
-// const deleteUnique = await supplyManagement.deleteUniqueSupplyId({
-//     id_farm: '22',
-//     supply_id: '10',
-// })
-
-// const resultAll = await supplyManagement.listAllSuppliesByFarm('22')
-// console.log(resultAll)
-
-// const getSupplyCategory = await supplyManagement.getAllSupplyCategories()
-// console.log(getSupplyCategory)
+const supplyManagement = new SupplyManagement()
 
 export default function SupplyCreation() {
+
+    const SupplyTypeOptions = [
+        {id: 1, name: 'Café'}, 
+        {id: 2, name: 'Trigo'},
+    ]
+
+    const [supplyTypeId, setSupplyTypeId] = React.useState<Key | null>(
+            null,
+        )
+
     return (
-        <div className="bg-yellow-600">
-            <h1>FIND SUPPLY</h1>
+        <div>
+            <div className="flex items-center justify-center flex-1 bg-gray-200 h-screen">
+                <Form
+                    onSubmit={async (e) => {
+                        e.preventDefault()
+
+                        const data = JSON.stringify(
+                            Object.fromEntries(new FormData(e.currentTarget)),
+                        )
+
+                        console.log(data)
+
+                        const parseData: supplyType = JSON.parse(data)
+
+                        return await supplyManagement.createSupply({
+                            id_farm: Number(verifyFarmbyId()),
+                            supply_category: Number(supplyTypeId),
+                            supply_cost_price: Number(
+                                parseData.supply_cost_price,
+                            ),
+                            supply_quantity: Number(parseData.supply_quantity),
+                        })
+                    }}>
+                    <FimComboBox
+                        label="Tipo de Máquina"
+                        defaultItems={SupplyTypeOptions}
+                        onSelectionChange={setSupplyTypeId}
+                        allowsCustomValue={false}>
+                        {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
+                    </FimComboBox>
+
+                    <TextField name="supply_cost_price" isRequired>
+                        <div className="flex flex-col">
+                            <Label>Custo</Label>
+                            <Input />
+                            <FieldError />
+                        </div>
+                    </TextField>
+
+                    <TextField name="supply_quantity" isRequired>
+                        <div className="flex flex-col">
+                            <Label>Quantidade</Label>
+                            <Input />
+                            <FieldError />
+                        </div>
+                    </TextField>
+
+                    <div className="flex justify-center space-x-4">
+                        <div className="flex bg-green-300 rounded justify-center w-1/5 mt-4">
+                            <Button type="submit" className="w-full h-full">
+                                Criar
+                            </Button>
+                        </div>
+                        <div className="flex bg-red-300 rounded justify-center w-2/5 mt-4">
+                            <a href="/machineryControl">
+                                <Button className="w-full h-full">
+                                    Cancelar
+                                </Button>
+                            </a>
+                        </div>
+                    </div>
+                </Form>
+            </div>
         </div>
     )
 }

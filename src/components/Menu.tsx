@@ -108,6 +108,20 @@ export default function Menu() {
                     />
                     <span>Fazendas</span>
                 </Link>
+
+                <Link
+                    href="/supplyControl"
+                    className={linkClasses('/supplyControl')}
+                    onPress={() => setSelected('/supplyControl')}>
+                    <Image
+                        src="/img/farmIcon.png"
+                        width={18}
+                        height={18}
+                        alt="Fazendas"
+                        className="mr-3"
+                    />
+                    <span>Insumos</span>
+                </Link>
             </nav>
 
             <div className="p-4 border-t border-gray-700 space-y-2">
