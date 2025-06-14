@@ -157,7 +157,7 @@ export function AriaTable<T extends Record<string, unknown>>({
                                       : tipo === 'employee'
                                         ? `/farmEmployeeUpdate?id=${item[columnData[indexType][0]]}`
                                         : tipo === 'supply'
-                                          ? `/supplyUpdate?id=${item['id_supply']}`
+                                          ? `/supplyUpdate?id=${item['supply_id']}`
                                           : `/farmsUpdate?id=${item[columnData[indexType][0]]}`,
                             )
                         }

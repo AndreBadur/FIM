@@ -44,7 +44,7 @@ import {Button} from 'react-aria-components'
 // console.log(getSupplyCategory)
 
 export default function SupplyControl() {
-     const [supplyList, setSupplyList] = useState<supplyType[]>([])
+    const [supplyList, setSupplyList] = useState<supplyType[]>([])
 
     useEffect(() => {
         const fetchSupplies = async () => {
