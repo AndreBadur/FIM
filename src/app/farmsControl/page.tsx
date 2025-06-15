@@ -22,17 +22,17 @@ export default function DesignTest() {
     }, [])
 
     return (
-        <div className="flex justify-center items-center">
+        <div className="min-h-screen flex justify-center items-start bg-white">
             <div>
                 <div className="flex justify-between items-center w-full mb-4 pt-4">
                     <h1 className="text-xl font-bold">Lista de Fazendas</h1>
                     <Button
-                            onPress={() =>
-                                (window.location.href = '/farmsCreation')
-                            }
-                            className="px-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 mt-2">
-                            Adicionar
-                        </Button>
+                        onPress={() =>
+                            (window.location.href = '/farmsCreation')
+                        }
+                        className="px-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 mt-2">
+                        Adicionar
+                    </Button>
                 </div>
 
                 <AriaTable tipo="farm" dados={farmList} />

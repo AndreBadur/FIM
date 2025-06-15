@@ -59,7 +59,7 @@ export default function SupplyControl() {
     }, [])
 
     return (
-        <div className="flex justify-center items-center">
+        <div className="min-h-screen flex justify-center items-start bg-white">
             <div className="w-full max-w-4xl px-4">
                 <div className="flex justify-between items-center w-full">
                     <h1 className="text-xl font-bold">Lista de Insumos</h1>

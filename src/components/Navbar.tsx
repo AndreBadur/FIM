@@ -25,7 +25,7 @@ export default function Navbar() {
         if (saved) {
             setSelected(saved)
         } else if (fazendas.length > 0) {
-            setSelected('option1')
+            setSelected(fazendas[0].id_farm.toString())
         }
     }, [fazendas])
 
@@ -37,11 +37,14 @@ export default function Navbar() {
 
     return (
         <div className="bg-green-900 flex items-center justify-between h-14 px-4">
+            {/* Logo */}
             <button onClick={() => router.push('/home')}>
                 <Image src="/img/logo.png" width={80} height={80} alt="Logo" />
             </button>
+
+            {/* Select de Fazendas */}
             <div className="flex-1 text-center">
-                <div className="relative inline-block">
+                <div className="relative inline-block group">
                     <select
                         value={selected}
                         onChange={(e) => {
@@ -53,7 +56,8 @@ export default function Navbar() {
                                 window.location.reload()
                             }
                         }}
-                        className="border border-black bg-white text-black px-4 py-2 pr-10 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-green-500">
+                        className="border border-black bg-white text-black px-4 py-2 pr-10 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    >
                         {selected === '' && (
                             <option value="" disabled>
                                 ...
@@ -69,21 +73,26 @@ export default function Navbar() {
                         <option value="add">+ Gerenciar fazendas</option>
                     </select>
 
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-green-500">
+                    {/* Ícone de seta */}
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-black group-focus-within:text-green-500">
                         <svg
                             className="w-4 h-4"
                             fill="none"
                             stroke="currentColor"
                             strokeWidth="2"
-                            viewBox="0 0 24 24">
+                            viewBox="0 0 24 24"
+                        >
                             <path d="M19 9l-7 7-7-7" />
                         </svg>
                     </div>
                 </div>
             </div>
+
+            {/* Botão de Sair */}
             <button
                 className="flex items-center px-4 text-red-600"
-                onClick={() => router.push('/')}>
+                onClick={() => router.push('/')}
+            >
                 <Image
                     src="/img/logOut.png"
                     width={14}
@@ -91,7 +100,7 @@ export default function Navbar() {
                     alt="Sair"
                     className="mr-3"
                 />
-                <span className="text-s">Sair</span>
+                <span className="text-sm">Sair</span>
             </button>
         </div>
     )

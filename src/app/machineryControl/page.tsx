@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react'
 import {MachineryManagement, machineryType} from '@/classes/MachineryManagement'
 import {AriaTable} from '@/components/Table'
 import {verifyFarmbyId} from '@/utils/utilityFunctions'
-import { Button } from 'react-aria-components'
+import {Button} from 'react-aria-components'
 
 export default function MachineryControl() {
     const [machineryList, setMachineryList] = useState<machineryType[]>([])
@@ -23,7 +23,7 @@ export default function MachineryControl() {
     }, [])
 
     return (
-        <div className="flex justify-center items-center">
+        <div className="min-h-screen flex justify-center items-start bg-white">
             <div className="w-full max-w-4xl px-4">
                 <div className="flex justify-between items-center w-full">
                     <h1 className="text-xl font-bold">Lista de Maquinários</h1>

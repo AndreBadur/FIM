@@ -38,11 +38,11 @@ export default function Menu() {
                     />
                     <span>Dashboard</span>
                 </Link>
-
+                */}
                 <Link
-                    href="/resourseManagementControl"
-                    className={linkClasses('/resourseManagementControl')}
-                    onPress={() => setSelected('/resourseManagementControl')}>
+                    href="/taskControl"
+                    className={linkClasses('/taskControl')}
+                    onPress={() => setSelected('/taskControl')}>
                     <Image
                         src="/img/toDoList.png"
                         width={18}
@@ -51,7 +51,7 @@ export default function Menu() {
                         className="mr-3"
                     />
                     <span>Tarefas</span>
-                </Link> */}
+                </Link> 
 
                 <Link
                     href="/areaControl"
