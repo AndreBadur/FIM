@@ -10,7 +10,7 @@ export type employeeType = {
     hours_worked: number
     created_at?: Date
     updated_at?: Date
-    farm: farmType
+    farm?: farmType
 }
 
 export class EmployeeManagement {
