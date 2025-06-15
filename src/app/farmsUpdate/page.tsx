@@ -46,9 +46,9 @@ function UpdateWrapper() {
 
     if (!idFarm) return <ErrorScreen />
     return (
-        <div className="flex flex-row items-center justify-center h-full w-full">
+        <div className="flex flex-row items-center justify-center h-full w-full bg-white">
             <Form
-                className="w-[320px] rounded-md p-4 shadow-xl"
+                className="w-[320px] rounded-md p-4 shadow-xl bg-green-300"
                 onSubmit={async (e) => {
                     e.preventDefault()
                     const data = JSON.stringify(

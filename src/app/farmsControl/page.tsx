@@ -27,12 +27,12 @@ export default function DesignTest() {
                 <div className="flex justify-between items-center w-full mb-4 pt-4">
                     <h1 className="text-xl font-bold">Lista de Fazendas</h1>
                     <Button
-                        onPress={() =>
-                            (window.location.href = '/farmsCreation')
-                        }
-                        className="w-40 px-1 py-3 rounded-md shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
-                        Adicionar
-                    </Button>
+                            onPress={() =>
+                                (window.location.href = '/farmsCreation')
+                            }
+                            className="px-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 mt-2">
+                            Adicionar
+                        </Button>
                 </div>
 
                 <AriaTable tipo="farm" dados={farmList} />

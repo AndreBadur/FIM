@@ -68,7 +68,7 @@ export default function SupplyControl() {
                             onPress={() =>
                                 (window.location.href = '/supplyCreation')
                             }
-                            className="w-40 px-1 py-3 rounded-md shadow-md bg-green-600 hover:bg-green-700 text-white font-semibold">
+                            className="px-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 mt-2">
                             Adicionar
                         </Button>
                     </a>

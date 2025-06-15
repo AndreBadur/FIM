@@ -34,7 +34,7 @@ export default function Login() {
     }
 
     return (
-        <div className={`flex justify-between w-[100%] relative`}>
+        <div className={`flex justify-between w-[100%] relative bg-green-100`}>
             <button
                 onClick={handleBack}
                 className="absolute top-4 left-4 bg-green-500 hover:bg-green-600 text-white font-bebasNeue py-2 px-4 rounded shadow"

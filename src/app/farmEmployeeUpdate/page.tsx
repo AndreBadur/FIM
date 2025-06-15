@@ -104,9 +104,9 @@ function UpdateWrapper() {
     }
 
     return (
-        <div className="flex flex-row items-center justify-center h-full w-full">
+        <div className="flex flex-row items-center justify-center h-full w-full bg-white">
             <Form
-                className="w-[320px] rounded-md p-4 shadow-xl"
+                className="w-[320px] rounded-md p-4 shadow-xl bg-green-300"
                 onSubmit={(e) => {
                     e.preventDefault()
                     handleUpdate()
@@ -151,6 +151,7 @@ function UpdateWrapper() {
                     </Label>
                     <Input
                         type="number"
+                        min={0}
                         className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         value={employeeData.cost_per_hour}
                         onChange={(e) =>
@@ -169,6 +170,7 @@ function UpdateWrapper() {
                     </Label>
                     <Input
                         type="number"
+                        min={0}
                         className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         value={employeeData.hours_worked}
                         onChange={(e) =>

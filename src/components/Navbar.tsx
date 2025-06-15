@@ -36,7 +36,7 @@ export default function Navbar() {
     }, [selected])
 
     return (
-        <div className="bg-gray-700 flex items-center justify-between h-14 px-4">
+        <div className="bg-green-900 flex items-center justify-between h-14 px-4">
             <button onClick={() => router.push('/home')}>
                 <Image src="/img/logo.png" width={80} height={80} alt="Logo" />
             </button>
@@ -53,7 +53,7 @@ export default function Navbar() {
                                 window.location.reload()
                             }
                         }}
-                        className="border border-black bg-green-500 text-white px-4 py-2 pr-10 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-green-500">
+                        className="border border-black bg-white text-black px-4 py-2 pr-10 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-green-500">
                         {selected === '' && (
                             <option value="" disabled>
                                 ...
@@ -69,7 +69,7 @@ export default function Navbar() {
                         <option value="add">+ Gerenciar fazendas</option>
                     </select>
 
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-green-500">
                         <svg
                             className="w-4 h-4"
                             fill="none"

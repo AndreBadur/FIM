@@ -19,7 +19,7 @@ export default function Menu() {
         }`
 
     return (
-        <div className="w-64 bg-gray-800 text-white flex flex-col shadow-lg">
+        <div className="w-62 bg-green-800 text-white flex flex-col shadow-lg">
             <nav className="flex-2 p-4 space-y-2">
                 <h1 className="text-gray-400 uppercase text-xs font-semibold px-4 py-2 mb-2">
                     PRINCIPAL
