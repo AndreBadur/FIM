@@ -1,5 +1,3 @@
-'use client'
-
 import {useState} from 'react'
 import {FarmManagement, farmType} from '../classes/FarmManagements'
 import {useRouter} from 'next/navigation'

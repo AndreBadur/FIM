@@ -1,7 +1,7 @@
 'use client'
-import {TaskManagement, taskStatus} from '@/classes/TaskManagement'
+// import {TaskManagement, taskStatus} from '@/classes/TaskManagement'
 
-const taskManagement = new TaskManagement()
+// const taskManagement = new TaskManagement()
 
 // const createTask = taskManagemente.createTask({
 //     id_farm: 22,

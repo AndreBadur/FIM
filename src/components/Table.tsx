@@ -43,6 +43,7 @@ const columnTable = [
         'Created at',
         'Updated at',
     ],
+    ['ID Farm', 'Supply Category', 'Supply Cost Price', 'Supply Quantity'],
 ]
 
 const columnData = [
@@ -77,18 +78,36 @@ const columnData = [
         'created_at',
         'updated_at',
     ],
+    ['id_farm', 'supply_category', 'supply_cost_price', 'supply_quantity'],
 ]
 
-type TipoTabela = 'farm' | 'generalFarms' | 'area' | 'machinery' | 'employee'
+type TipoTabela =
+    | 'farm'
+    | 'generalFarms'
+    | 'area'
+    | 'machinery'
+    | 'employee'
+    | 'supply'
+    | 'supplyCategories'
 
 type Props<T> = {
     tipo: TipoTabela
     dados: T[]
 }
 
-export function AriaTable<
-    T extends Record<string, string | number | boolean | Date>,
->({tipo, dados}: Props<T>) {
+function getNestedValue<T>(obj: T, path: string): unknown {
+    return path.split('.').reduce((acc: unknown, part) => {
+        if (typeof acc === 'object' && acc !== null && part in acc) {
+            return (acc as Record<string, unknown>)[part]
+        }
+        return undefined
+    }, obj)
+}
+
+export function AriaTable<T extends Record<string, unknown>>({
+    tipo,
+    dados,
+}: Props<T>) {
     const router = useRouter()
 
     const indexType = (() => {
@@ -103,6 +122,8 @@ export function AriaTable<
                 return 3
             case 'employee':
                 return 4
+            case 'supply':
+                return 5
             default:
                 return 0
         }
@@ -135,7 +156,9 @@ export function AriaTable<
                                       ? `/machineryUpdate?id=${item['id_machinery']}`
                                       : tipo === 'employee'
                                         ? `/farmEmployeeUpdate?id=${item[columnData[indexType][0]]}`
-                                        : `/farmsUpdate?id=${item[columnData[indexType][0]]}`,
+                                        : tipo === 'supply'
+                                          ? `/supplyUpdate?id=${item['supply_id']}`
+                                          : `/farmsUpdate?id=${item[columnData[indexType][0]]}`,
                             )
                         }
                         className={
@@ -145,7 +168,7 @@ export function AriaTable<
                         }>
                         {columnData[indexType].map((column, colIndex) => (
                             <Cell key={colIndex} className="px-3 py-2 text-sm">
-                                {String(item[column])}
+                                {String(getNestedValue(item, column))}
                             </Cell>
                         ))}
                     </Row>

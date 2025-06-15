@@ -40,7 +40,6 @@ export default function Navbar() {
             <button onClick={() => router.push('/home')}>
                 <Image src="/img/logo.png" width={80} height={80} alt="Logo" />
             </button>
-
             <div className="flex-1 text-center">
                 <div className="relative inline-block">
                     <select
@@ -82,6 +81,18 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
+            <button
+                className="flex items-center px-4 text-red-600"
+                onClick={() => router.push('/')}>
+                <Image
+                    src="/img/logOut.png"
+                    width={14}
+                    height={14}
+                    alt="Sair"
+                    className="mr-3"
+                />
+                <span className="text-s">Sair</span>
+            </button>
         </div>
     )
 }

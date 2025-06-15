@@ -1,4 +1,4 @@
-import {supplyType} from '@/classes/SupplyManagement'
+// import {supplyType} from '@/classes/SupplyManagement'
 import {taskType} from '@/classes/TaskManagement'
 import {
     fromRequestToGenericType,

@@ -100,7 +100,7 @@ function UpdateWrapper() {
     }
 
     const handleDelete = async () => {
-        await machineryManagement.deleteUniqueMachineryId({
+        await machineryManagement.deleteUniqueMachineryById({
             id_farm,
             id_machinery,
         })

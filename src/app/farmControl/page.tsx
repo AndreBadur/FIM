@@ -1,3 +1,4 @@
+'use client'
 import FarmCreation from '@/components/FarmCreation'
 
 export default function Home() {
