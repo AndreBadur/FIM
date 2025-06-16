@@ -1,7 +1,7 @@
 'use client'
-
 import {MachineryManagement, machineryType} from '@/classes/MachineryManagement'
 import {FimComboBox} from '@/components/FimComboBox'
+import {CreateMachinaryForms} from '@/components/forms/machinary'
 import {verifyFarmbyId} from '@/utils/utilityFunctions'
 import React from 'react'
 
@@ -31,6 +31,9 @@ export default function MachineryControl() {
 
     return (
         <div>
+            <div>
+                <CreateMachinaryForms />
+            </div>
             <div className="flex items-center justify-center flex-1 bg-gray-200 h-screen">
                 <Form
                     onSubmit={async (e) => {
