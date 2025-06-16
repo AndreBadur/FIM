@@ -1,4 +1,11 @@
 'use client'
+
+import { TaskManagement, taskType } from "@/classes/TaskManagement"
+import { AriaTable } from "@/components/Table"
+import { verifyFarmbyId } from "@/utils/utilityFunctions"
+import { useEffect, useState } from "react"
+import { Button } from "react-aria-components"
+
 // import {TaskManagement, taskStatus} from '@/classes/TaskManagement'
 
 // const taskManagement = new TaskManagement()
@@ -35,13 +42,37 @@
 
 // console.log(getOneTask)
 
-export default function ResourceManagementControl() {
+export default function TaskControl() {
+    const [taskList, setTaskList] = useState<taskType[]>([])
+
+    useEffect(() => {
+        const fetchSupplies = async () => {
+            const taskManagement = new TaskManagement()
+            const farmId = verifyFarmbyId()
+            const tasks =
+                await taskManagement.listAllTasksByFarm(farmId)
+            setTaskList(tasks ?? [])
+        }
+
+        fetchSupplies()
+    }, [])
+
     return (
-        <div>
-            <div className="flex">
-                <div className="flex items-center justify-center flex-1 bg-black h-screen">
-                    <h1 className="text-white text-2xl">Tarefas!</h1>
+        <div className="min-h-screen flex justify-center items-start bg-white">
+            <div className="w-full max-w-4xl px-4">
+                <div className="flex justify-between items-center w-full">
+                    <h1 className="text-xl font-bold">Lista de Tarefas</h1>
+                    <a href="/taskCreation">
+                        <Button
+                            onPress={() =>
+                                (window.location.href = '/taskCreation')
+                            }
+                            className="px-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 mt-2">
+                            Adicionar
+                        </Button>
+                    </a>
                 </div>
+                <AriaTable tipo="task" dados={taskList} />
             </div>
         </div>
     )

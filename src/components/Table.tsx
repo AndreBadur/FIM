@@ -44,6 +44,7 @@ const columnTable = [
         'Updated at',
     ],
     ['ID Farm', 'Supply Category', 'Supply Cost Price', 'Supply Quantity'],
+    ['ID Farm', 'ID Employee', 'ID Supply', 'ID Machinery', 'Supply Quantity', 'Conclusion Date', 'Status'],
 ]
 
 const columnData = [
@@ -79,6 +80,7 @@ const columnData = [
         'updated_at',
     ],
     ['id_farm', 'supply_category', 'supply_cost_price', 'supply_quantity'],
+    ['id_farm', 'id_employee', 'id_supply', 'id_machinery', 'supply_quantity', 'conclusion_date', 'status'],
 ]
 
 type TipoTabela =
@@ -89,6 +91,7 @@ type TipoTabela =
     | 'employee'
     | 'supply'
     | 'supplyCategories'
+    | 'task'
 
 type Props<T> = {
     tipo: TipoTabela
@@ -124,6 +127,8 @@ export function AriaTable<T extends Record<string, unknown>>({
                 return 4
             case 'supply':
                 return 5
+            case 'task':
+                return 6
             default:
                 return 0
         }
@@ -133,13 +138,15 @@ export function AriaTable<T extends Record<string, unknown>>({
         <Table
             aria-label="Files"
             selectionMode="multiple"
-            className="w-full mt-4 text-sm text-left">
-            <TableHeader className="bg-gray-100 uppercase rounded-md">
+            className="w-full mt-4 text-sm text-left border border-gray-300 border-collapse"
+        >
+            <TableHeader className="bg-green-300 uppercase">
                 {columnTable[indexType].map((valor, index) => (
                     <Column
                         isRowHeader
                         key={index}
-                        className="px-3 py-2 text-base font-medium">
+                        className="px-3 py-2 text-base font-medium border border-gray-300"
+                    >
                         {valor}
                     </Column>
                 ))}
@@ -158,16 +165,18 @@ export function AriaTable<T extends Record<string, unknown>>({
                                         ? `/farmEmployeeUpdate?id=${item[columnData[indexType][0]]}`
                                         : tipo === 'supply'
                                           ? `/supplyUpdate?id=${item['supply_id']}`
+                                          : tipo === 'task'
+                                          ? `/taskUpdate?id=${item['task_id']}`
                                           : `/farmsUpdate?id=${item[columnData[indexType][0]]}`,
                             )
                         }
                         className={
                             index % 2 === 0
                                 ? 'bg-white cursor-pointer hover:bg-green-500'
-                                : 'bg-gray-100 cursor-pointer hover:bg-green-500'
+                                : 'bg-green-100 cursor-pointer hover:bg-green-500'
                         }>
                         {columnData[indexType].map((column, colIndex) => (
-                            <Cell key={colIndex} className="px-3 py-2 text-sm">
+                            <Cell key={colIndex} className="px-3 py-2 text-sm border border-gray-300">
                                 {String(getNestedValue(item, column))}
                             </Cell>
                         ))}
