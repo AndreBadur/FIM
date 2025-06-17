@@ -48,7 +48,7 @@ function UpdateWrapper() {
                 verificarFazendeiro(),
                 id_task,
             )
-
+            console.log('Task carregada:', task)
             if (task) {
                 setTaskData({
                     id_farm: task.id_farm,
@@ -99,7 +99,7 @@ function UpdateWrapper() {
     // }, [])
 
     const SupplyTypeOptions = [
-        {id: 1, name: 'Café'},
+        {id: 15, name: 'Café'},
         {id: 2, name: 'Trigo'},
     ]
 
@@ -173,7 +173,7 @@ function UpdateWrapper() {
                         Insumo
                     </Label>
                     <select
-                        value={taskData.id_supply}
+                        value={taskData.id_supply?.toString() ?? ''}
                         onChange={(e) =>
                             setTaskData({
                                 ...taskData,
@@ -185,7 +185,7 @@ function UpdateWrapper() {
                         className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         <option value="">Selecione um Insumo</option>
                         {SupplyTypeOptions.map((sup) => (
-                            <option key={sup.id} value={sup.id}>
+                            <option key={sup.id} value={sup.id.toString()}>
                                 {sup.name}
                             </option>
                         ))}
