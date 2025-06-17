@@ -1,10 +1,10 @@
 'use client'
 
-import { TaskManagement, taskType } from "@/classes/TaskManagement"
-import { AriaTable } from "@/components/Table"
-import { verifyFarmbyId } from "@/utils/utilityFunctions"
-import { useEffect, useState } from "react"
-import { Button } from "react-aria-components"
+import {TaskManagement, taskType} from '@/classes/TaskManagement'
+import {AriaTable} from '@/components/Table'
+import {verifyFarmbyId} from '@/utils/utilityFunctions'
+import {useEffect, useState} from 'react'
+import {Button} from 'react-aria-components'
 
 // import {TaskManagement, taskStatus} from '@/classes/TaskManagement'
 
@@ -49,8 +49,7 @@ export default function TaskControl() {
         const fetchSupplies = async () => {
             const taskManagement = new TaskManagement()
             const farmId = verifyFarmbyId()
-            const tasks =
-                await taskManagement.listAllTasksByFarm(farmId)
+            const tasks = await taskManagement.listAllTasksByFarm(farmId)
             setTaskList(tasks ?? [])
         }
 
