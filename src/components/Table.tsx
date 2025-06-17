@@ -44,7 +44,15 @@ const columnTable = [
         'Updated at',
     ],
     ['ID Farm', 'Supply Category', 'Supply Cost Price', 'Supply Quantity'],
-    ['ID Farm', 'ID Employee', 'ID Supply', 'ID Machinery', 'Supply Quantity', 'Conclusion Date', 'Status'],
+    [
+        'ID Farm',
+        'ID Employee',
+        'ID Supply',
+        'ID Machinery',
+        'Supply Quantity',
+        'Conclusion Date',
+        'Status',
+    ],
 ]
 
 const columnData = [
@@ -80,7 +88,15 @@ const columnData = [
         'updated_at',
     ],
     ['id_farm', 'supply_category', 'supply_cost_price', 'supply_quantity'],
-    ['id_farm', 'id_employee', 'id_supply', 'id_machinery', 'supply_quantity', 'conclusion_date', 'status'],
+    [
+        'id_farm',
+        'id_employee',
+        'id_supply',
+        'id_machinery',
+        'supply_quantity',
+        'conclusion_date',
+        'status',
+    ],
 ]
 
 type TipoTabela =
@@ -138,15 +154,13 @@ export function AriaTable<T extends Record<string, unknown>>({
         <Table
             aria-label="Files"
             selectionMode="multiple"
-            className="w-full mt-4 text-sm text-left border border-gray-300 border-collapse"
-        >
+            className="w-full mt-4 text-sm text-left border border-gray-300 border-collapse">
             <TableHeader className="bg-green-300 uppercase">
                 {columnTable[indexType].map((valor, index) => (
                     <Column
                         isRowHeader
                         key={index}
-                        className="px-3 py-2 text-base font-medium border border-gray-300"
-                    >
+                        className="px-3 py-2 text-base font-medium border border-gray-300">
                         {valor}
                     </Column>
                 ))}
@@ -166,8 +180,8 @@ export function AriaTable<T extends Record<string, unknown>>({
                                         : tipo === 'supply'
                                           ? `/supplyUpdate?id=${item['supply_id']}`
                                           : tipo === 'task'
-                                          ? `/taskUpdate?id=${item['task_id']}`
-                                          : `/farmsUpdate?id=${item[columnData[indexType][0]]}`,
+                                            ? `/taskUpdate?id=${item['id_task']}`
+                                            : `/farmsUpdate?id=${item[columnData[indexType][0]]}`,
                             )
                         }
                         className={
@@ -176,7 +190,9 @@ export function AriaTable<T extends Record<string, unknown>>({
                                 : 'bg-green-100 cursor-pointer hover:bg-green-500'
                         }>
                         {columnData[indexType].map((column, colIndex) => (
-                            <Cell key={colIndex} className="px-3 py-2 text-sm border border-gray-300">
+                            <Cell
+                                key={colIndex}
+                                className="px-3 py-2 text-sm border border-gray-300">
                                 {String(getNestedValue(item, column))}
                             </Cell>
                         ))}

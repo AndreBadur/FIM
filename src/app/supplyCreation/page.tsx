@@ -68,7 +68,7 @@ export default function SupplyCreation() {
                             })
                         }
                         className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
-                        <option value="">Selecione uma área</option>
+                        <option value="">Selecione uma suprimento</option>
                         {SupplyTypeOptions.map((types) => (
                             <option key={types.id} value={types.id}>
                                 {types.name}
