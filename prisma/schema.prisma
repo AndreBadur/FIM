@@ -270,25 +270,6 @@ model supplier {
   @@index([id_company], map: "fk_company_supplier_idx")
 }
 
-<<<<<<< HEAD
-model supply {
-  id_supply       Int                @id @default(autoincrement())
-  id_suppply_type Int?
-  id_farm         Int?
-  quantity        Int?
-  cost_price      Decimal?           @db.Decimal(10, 0)
-  created_at      DateTime?          @default(now()) @db.DateTime(0)
-  updated_at      DateTime?          @default(now()) @db.DateTime(0)
-  farm            farm?              @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_supply")
-  supply_type     supply_categories? @relation(fields: [id_suppply_type], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_supplytype_supply")
-  task            task[]
-
-  @@index([id_farm], map: "fk_farm_supply_idx")
-  @@index([id_suppply_type], map: "fk_supplytype_supply_idx")
-}
-
-=======
->>>>>>> 31643068618777e4bc1135dd45691cec96fb4a4a
 model task {
   id_task         Int          @id @default(autoincrement())
   id_farm         Int?
@@ -300,6 +281,7 @@ model task {
   created_at      DateTime?    @default(now()) @db.DateTime(0)
   updated_at      DateTime?    @default(now()) @db.DateTime(0)
   id_machinery    Int?
+  supplyId_supply Int?
   employee        employee?    @relation(fields: [id_employee], references: [id_employee], onDelete: NoAction, onUpdate: NoAction, map: "fk_employee_task")
   farm            farm?        @relation(fields: [id_farm], references: [id_farm], onDelete: NoAction, onUpdate: NoAction, map: "fk_farm_task")
   machinery       machinery?   @relation(fields: [id_machinery], references: [id_machinery], onDelete: NoAction, onUpdate: NoAction, map: "fk_machinery_task")
@@ -326,15 +308,6 @@ model customer {
 }
 
 model supply_categories {
-<<<<<<< HEAD
-  category_id          Int       @id @default(autoincrement())
-  category_name        String    @db.VarChar(45)
-  category_description String?   @db.VarChar(255)
-  is_active            Boolean?  @default(true)
-  created_at           DateTime? @default(now()) @db.DateTime(0)
-  updated_at           DateTime? @default(now()) @db.DateTime(0)
-  supply               supply[]
-=======
   category_id          Int        @id @default(autoincrement())
   category_name        String     @db.VarChar(45)
   category_description String?    @db.VarChar(255)
@@ -358,7 +331,6 @@ model supplies {
 
   @@index([id_farm], map: "fk_farm_supply_idx")
   @@index([supply_category], map: "supplies_supply_categories_FK")
->>>>>>> 31643068618777e4bc1135dd45691cec96fb4a4a
 }
 
 enum area_type_category {
