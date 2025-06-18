@@ -24,7 +24,19 @@ export default function Menu() {
                 <h1 className="text-gray-400 uppercase text-xs font-semibold px-4 py-2 mb-2">
                     PRINCIPAL
                 </h1>
-
+                <Link
+                    href="/farmsControl"
+                    className={linkClasses('/farmsControl')}
+                    onPress={() => setSelected('/farmsControl')}>
+                    <Image
+                        src="/img/farmIcon.png"
+                        width={18}
+                        height={18}
+                        alt="Fazendas"
+                        className="mr-3"
+                    />
+                    <span>Fazendas</span>
+                </Link>
                 {/* <Link
                     href="/"
                     className={linkClasses('/')}
@@ -96,25 +108,11 @@ export default function Menu() {
                 </Link>
 
                 <Link
-                    href="/farmsControl"
-                    className={linkClasses('/farmsControl')}
-                    onPress={() => setSelected('/farmsControl')}>
-                    <Image
-                        src="/img/farmIcon.png"
-                        width={18}
-                        height={18}
-                        alt="Fazendas"
-                        className="mr-3"
-                    />
-                    <span>Fazendas</span>
-                </Link>
-
-                <Link
                     href="/supplyControl"
                     className={linkClasses('/supplyControl')}
                     onPress={() => setSelected('/supplyControl')}>
                     <Image
-                        src="/img/farmIcon.png"
+                        src="/img/supplyIcon.png"
                         width={18}
                         height={18}
                         alt="Fazendas"
