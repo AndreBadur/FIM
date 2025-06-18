@@ -122,6 +122,20 @@ export default function Menu() {
                     />
                     <span>Insumos</span>
                 </Link>
+
+                <Link
+                    href="/taskControl"
+                    className={linkClasses('/taskControl')}
+                    onPress={() => setSelected('/taskControl')}>
+                    <Image
+                        src="/img/toDoList.png"
+                        width={18}
+                        height={18}
+                        alt="Fazendas"
+                        className="mr-3"
+                    />
+                    <span>Tarefas</span>
+                </Link>
             </nav>
 
             <div className="p-4 border-t border-gray-700 space-y-2">
