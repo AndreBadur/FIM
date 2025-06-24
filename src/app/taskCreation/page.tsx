@@ -76,17 +76,6 @@ export default function TaskCreation() {
 
                     window.location.href = '/taskControl'
                 }}>
-                <TextField name="supply_quantity" isRequired>
-                    <Label className="block text-sm font-medium text-black-700 mb-1">
-                        Quantidade de Insumo
-                    </Label>
-                    <Input
-                        type="number"
-                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    />
-                    <FieldError />
-                </TextField>
-
                 <TextField name="conclusion_date" isRequired>
                     <Label className="block text-sm font-medium text-black-700 mb-1">
                         Data de Conclusão
@@ -123,6 +112,17 @@ export default function TaskCreation() {
                         </option>
                     ))}
                 </select>
+
+                <TextField name="supply_quantity" isRequired>
+                    <Label className="block text-sm font-medium text-black-700 mb-1">
+                        Quantidade de Insumo
+                    </Label>
+                    <Input
+                        type="number"
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    />
+                    <FieldError />
+                </TextField>
 
                 <Label className="block text-sm font-medium text-black-700 mb-1">
                     Máquina
