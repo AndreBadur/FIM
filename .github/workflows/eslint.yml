@@ -37,3 +37,8 @@ jobs:
               with:
                   sarif_file: eslint-results.sarif
                   wait-for-processing: true
+            - name: run build
+              run: npm run build
+              with:
+                  wait-for-processing: true
+              continue-on-error: false
