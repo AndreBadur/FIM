@@ -43,7 +43,7 @@ const columnTable = [
         'Criado em',
         'Modificado em',
     ],
-    ['ID Fazenda', 'Categoria de Insumos', 'Custo do Insumo', 'Quantidade'],
+    ['ID Fazenda', 'Nome do Insumo', 'Categoria de Insumos', 'Custo do Insumo', 'Quantidade'],
     [
         'ID Fazenda',
         'ID Empregado',
@@ -87,7 +87,13 @@ const columnData = [
         'created_at',
         'updated_at',
     ],
-    ['id_farm', 'supply_category', 'supply_cost_price', 'supply_quantity'],
+    [
+        'id_farm',
+        'supply_name',
+        'supply_categories.category_name',
+        'supply_cost_price',
+        'supply_quantity',
+    ],
     [
         'id_farm',
         'id_employee',

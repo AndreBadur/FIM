@@ -15,18 +15,14 @@ import {
 } from 'react-aria-components'
 
 const supplyManagement = new SupplyManagement()
+const supplyTypeOptions = await supplyManagement.getAllSupplyCategories()
 
 export default function SupplyCreation() {
-    const SupplyTypeOptions = [
-        {id: 1, name: 'Café'},
-        {id: 2, name: 'Trigo'},
-    ]
+    const supplyCategories = supplyTypeOptions
 
-    const [supplyTypeId, setSupplyTypeId] = React.useState<{
-        id_tipo_supeimento: number | null
-    }>({
-        id_tipo_supeimento: null,
-    })
+    const [supplyTypeId, setSupplyTypeId] = React.useState<number>(1)
+
+    if (!supplyCategories) return <div>Erro: id não fornecido</div>
 
     return (
         <div className="flex flex-row items-center justify-center h-full w-full">
@@ -39,16 +35,13 @@ export default function SupplyCreation() {
                         Object.fromEntries(new FormData(e.currentTarget)),
                     )
 
-                    console.log(data)
-
                     const parseData: supplyType = JSON.parse(data)
                     window.location.href = '/supplyControl'
 
                     return await supplyManagement.createSupply({
+                        supply_name: parseData.supply_name,
                         id_farm: Number(verifyFarmbyId()),
-                        supply_category: Number(
-                            supplyTypeId.id_tipo_supeimento,
-                        ),
+                        supply_category: Number(supplyTypeId),
                         supply_cost_price: Number(parseData.supply_cost_price),
                         supply_quantity: Number(parseData.supply_quantity),
                     })
@@ -58,24 +51,30 @@ export default function SupplyCreation() {
                         Tipo de Suprimento
                     </Label>
                     <select
-                        value={supplyTypeId.id_tipo_supeimento ?? ''}
+                        value={supplyTypeId}
                         onChange={(e) =>
-                            setSupplyTypeId({
-                                ...supplyTypeId,
-                                id_tipo_supeimento: e.target.value
-                                    ? Number(e.target.value)
-                                    : null,
-                            })
+                            setSupplyTypeId(Number(e.target.value))
                         }
                         className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
-                        <option value="">Selecione uma suprimento</option>
-                        {SupplyTypeOptions.map((types) => (
-                            <option key={types.id} value={types.id}>
-                                {types.name}
+                        {supplyCategories.map((category) => (
+                            <option
+                                key={category.category_id}
+                                value={category.category_id}>
+                                {category.category_name}
                             </option>
                         ))}
                     </select>
                 </div>
+
+                <TextField name="supply_name" isRequired>
+                    <div className="flex flex-col">
+                        <Label className="block text-sm font-medium text-black-700 mb-1">
+                            Nome do insumo
+                        </Label>
+                        <Input className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                        <FieldError />
+                    </div>
+                </TextField>
 
                 <TextField name="supply_cost_price" isRequired>
                     <div className="flex flex-col">

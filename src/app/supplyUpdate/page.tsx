@@ -14,45 +14,8 @@ import {
     TextField,
 } from 'react-aria-components'
 
-// const supplyManagement = new SupplyManagement()
-
-// const creation = await supplyManagement.createSupply({
-//     id_farm: 22,
-//     supply_category: 1,
-//     supply_cost_price: 101,
-//     supply_quantity: 5,
-// })
-
-// const update = await supplyManagement.updateSupplyById(
-//     {
-//         supply_cost_price: 20,
-//     },
-//     {
-//         id_farm: '22',
-//         supply_id: '12',
-//     },
-// )
-
-// const result = await supplyManagement.findSupplyById({
-//     id_farm: '22',
-//     supply_id: '4',
-// })
-// console.log(result?.supply_id)
-// console.log(result?.supply_cost_price)
-// console.log(result?.supply_categories.category_name)
-
-// const deleteUnique = await supplyManagement.deleteUniqueSupplyId({
-//     id_farm: '22',
-//     supply_id: '10',
-// })
-
-// const resultAll = await supplyManagement.listAllSuppliesByFarm('22')
-// console.log(resultAll)
-
-// const getSupplyCategory = await supplyManagement.getAllSupplyCategories()
-// console.log(getSupplyCategory)
-
 const supplyManagement = new SupplyManagement()
+const supplyTypeOptions = await supplyManagement.getAllSupplyCategories()
 
 function UpdateSupplyWrapper() {
     const searchParams = useSearchParams()
@@ -64,6 +27,8 @@ function UpdateSupplyWrapper() {
         supply_quantity: '',
         supply_cost_price: '',
     })
+
+    const supplyCategories = supplyTypeOptions
 
     useEffect(() => {
         const fetchSupply = async () => {
@@ -85,11 +50,6 @@ function UpdateSupplyWrapper() {
 
         fetchSupply()
     }, [supply_id])
-
-    const SupplyTypeOptions = [
-        {id: 1, name: 'Café'},
-        {id: 2, name: 'Trigo'},
-    ]
 
     const handleUpdate = async () => {
         const payload: Partial<supplyType> = {
@@ -114,7 +74,8 @@ function UpdateSupplyWrapper() {
         window.location.href = '/supplyControl'
     }
 
-    if (!supply_id) return <div>Erro: id não fornecido</div>
+    if (!supply_id || !supplyCategories)
+        return <div>Erro: id não fornecido</div>
 
     return (
         <div className="flex flex-row items-center justify-center h-full w-full">
@@ -139,10 +100,11 @@ function UpdateSupplyWrapper() {
                             })
                         }
                         className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
-                        <option value="">Selecione uma área</option>
-                        {SupplyTypeOptions.map((tipos) => (
-                            <option key={tipos.id} value={tipos.id}>
-                                {tipos.name}
+                        {supplyCategories.map((category) => (
+                            <option
+                                key={category.category_id}
+                                value={category.category_id}>
+                                {category.category_name}
                             </option>
                         ))}
                     </select>

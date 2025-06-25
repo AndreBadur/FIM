@@ -107,8 +107,10 @@ export default function TaskCreation() {
                     name="id_supply"
                     className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
                     {supplies.map((supply) => (
-                        <option key={supply.supply_id} value={supply.supply_id}>
-                            {supply.supply_category}
+                        <option
+                            key={supply.supply_categories.category_id}
+                            value={supply.supply_id}>
+                            {supply.supply_categories.category_name}
                         </option>
                     ))}
                 </select>
