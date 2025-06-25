@@ -47,7 +47,7 @@ const columnTable = [
     [
         'ID Fazenda',
         'ID Empregado',
-        'ID Inusmo',
+        'ID Inusmos',
         'ID Maquinário',
         'Quantidade do Insumo',
         'Data de Conclusão',
