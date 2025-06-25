@@ -319,6 +319,7 @@ model supply_categories {
 
 model supplies {
   supply_id         Int                @id @default(autoincrement())
+  supply_name       String             @db.VarChar(100)
   id_farm           Int?
   supply_category   Int?
   supply_quantity   Int?

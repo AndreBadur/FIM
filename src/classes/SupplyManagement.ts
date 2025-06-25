@@ -2,20 +2,23 @@ import {verifyApiResponse} from '@/utils/verifications'
 
 export type supplyType = {
     supply_id: number
+    supply_name: string
     id_farm: number
     supply_category: number
     supply_quantity: number
     supply_cost_price: number
     created_at: Date
     updated_at: Date
-    supply_categories: {
-        category_id: number
-        category_name: string
-        category_description: string
-        is_active: boolean
-        created_at: Date
-        updated_at: Date
-    }
+    supply_categories: supply_categories
+}
+
+type supply_categories = {
+    category_id: number
+    category_name: string
+    category_description: string
+    is_active: boolean
+    created_at: Date
+    updated_at: Date
 }
 
 type specificSupplyRequest = {
@@ -29,8 +32,13 @@ export class SupplyManagement {
     public async createSupply(
         bodyRequest: Partial<supplyType>,
     ): Promise<Response | undefined> {
-        const {id_farm, supply_category, supply_quantity, supply_cost_price} =
-            bodyRequest
+        const {
+            id_farm,
+            supply_name,
+            supply_category,
+            supply_quantity,
+            supply_cost_price,
+        } = bodyRequest
 
         try {
             const response = await fetch(
@@ -42,6 +50,7 @@ export class SupplyManagement {
                     },
                     body: JSON.stringify({
                         id_farm,
+                        supply_name,
                         supply_category,
                         supply_quantity,
                         supply_cost_price,
@@ -78,6 +87,7 @@ export class SupplyManagement {
         bodyInfoRequest: specificSupplyRequest,
     ): Promise<Response | undefined> {
         const {
+            supply_name,
             supply_category,
             supply_quantity,
             supply_cost_price,
@@ -94,6 +104,7 @@ export class SupplyManagement {
                     },
                     body: JSON.stringify({
                         supply_id: bodyInfoRequest.supply_id,
+                        supply_name,
                         id_farm: bodyInfoRequest.id_farm,
                         supply_category,
                         supply_quantity,
@@ -152,7 +163,9 @@ export class SupplyManagement {
         }
     }
 
-    public async getAllSupplyCategories(): Promise<supplyType[] | undefined> {
+    public async getAllSupplyCategories(): Promise<
+        supply_categories[] | undefined
+    > {
         try {
             const response = await fetch(`api/supplies`, {
                 method: 'GET',

@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
     try {
         const data = await prisma.supplies.create({
             data: {
+                supply_name: body.supply_name,
                 id_farm: body.id_farm,
                 supply_category: body.supply_category,
                 supply_cost_price: body.supply_cost_price,

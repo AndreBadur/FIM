@@ -46,6 +46,7 @@ export async function PATCH(
                 supply_id: Number(supply_id),
             },
             data: {
+                supply_name: requestData.supply_name,
                 supply_category: requestData.supply_category,
                 supply_cost_price: requestData.supply_cost_price,
                 supply_quantity: requestData.supply_quantity,

@@ -2,7 +2,7 @@
 
 import {EmployeeManagement} from '@/classes/EmployeeManagement'
 import {MachineryManagement} from '@/classes/MachineryManagement'
-// import {SupplyManagement} from '@/classes/SupplyManagement'
+import {SupplyManagement} from '@/classes/SupplyManagement'
 import {TaskManagement, taskStatus, taskType} from '@/classes/TaskManagement'
 import {verificarFazendeiro, verifyFarmbyId} from '@/utils/utilityFunctions'
 import {useSearchParams} from 'next/navigation'
@@ -18,7 +18,8 @@ import {
 
 const taskManagement = new TaskManagement()
 const employeeManagement = new EmployeeManagement()
-// const supplyManagement = new SupplyManagement()
+const supplyManagement = new SupplyManagement()
+const supplyTypeOptions = await supplyManagement.getAllSupplyCategories()
 const machineryManagement = new MachineryManagement()
 
 function UpdateWrapper() {
@@ -27,7 +28,6 @@ function UpdateWrapper() {
     const id_farmer = verificarFazendeiro()
 
     const [employee, setEmployee] = useState<{id: number; name: string}[]>([])
-    // const [supply, setSupply] = useState<{id: number; name: string}[]>([])
     const [machinery, setMachinery] = useState<{id: number; name: string}[]>([])
 
     const [taskData, setTaskData] = useState<Partial<taskType>>({
@@ -82,26 +82,7 @@ function UpdateWrapper() {
         fetchEmployees()
     }, [])
 
-    // useEffect(() => {
-    //     const fetchSupplies = async () => {
-    //         const supply =
-    //             await supplyManagement.listAllSuppliesByFarm(verifyFarmbyId())
-    //         if (supply) {
-    //             const options = supply.map((sup) => ({
-    //                 id: sup.supply_id!,
-    //                 name: sup.supply_categories.category_name,
-    //             }))
-    //             setSupply(options)
-    //         }
-    //     }
-
-    //     fetchSupplies()
-    // }, [])
-
-    const SupplyTypeOptions = [
-        {id: 15, name: 'Café'},
-        {id: 2, name: 'Trigo'},
-    ]
+    const supplyCategories = supplyTypeOptions
 
     useEffect(() => {
         const fetchMachinery = async () => {
@@ -121,7 +102,7 @@ function UpdateWrapper() {
         fetchMachinery()
     }, [])
 
-    if (!id_task) return <div>Erro: id não fornecido</div>
+    if (!id_task || !supplyCategories) return <div>Erro: id não fornecido</div>
 
     const handleUpdate = async () => {
         await taskManagement.updateTaskByTaskId(taskData, id_farmer, id_task)
@@ -183,32 +164,15 @@ function UpdateWrapper() {
                             })
                         }
                         className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
-                        <option value="">Selecione um Insumo</option>
-                        {SupplyTypeOptions.map((sup) => (
-                            <option key={sup.id} value={sup.id.toString()}>
-                                {sup.name}
+                        {supplyCategories.map((category) => (
+                            <option
+                                key={category.category_id}
+                                value={category.category_id}>
+                                {category.category_name}
                             </option>
                         ))}
                     </select>
                 </div>
-
-                {/* <TextField name="id_supply" className="mt-3">
-                    <Label className="block text-sm font-medium text-black-700 mb-1">
-                        ID Insumo
-                    </Label>
-                    <Input
-                        type="number"
-                        value={taskData.id_supply ?? ''}
-                        onChange={(e) =>
-                            setTaskData({
-                                ...taskData,
-                                id_supply: Number(e.target.value),
-                            })
-                        }
-                        className="w-full px-3 py-2 border rounded-md"
-                    />
-                    <FieldError />
-                </TextField> */}
 
                 <div className="mt-3">
                     <Label className="block text-sm font-medium text-black-700 mb-1">
@@ -233,24 +197,6 @@ function UpdateWrapper() {
                         ))}
                     </select>
                 </div>
-
-                {/* <TextField name="id_machinery" className="mt-3">
-                    <Label className="block text-sm font-medium text-black-700 mb-1">
-                        ID Máquina
-                    </Label>
-                    <Input
-                        type="number"
-                        value={taskData.id_machinery ?? ''}
-                        onChange={(e) =>
-                            setTaskData({
-                                ...taskData,
-                                id_machinery: Number(e.target.value),
-                            })
-                        }
-                        className="w-full px-3 py-2 border rounded-md"
-                    />
-                    <FieldError />
-                </TextField> */}
 
                 <TextField name="supply_quantity" className="mt-3">
                     <Label className="block text-sm font-medium text-black-700 mb-1">
