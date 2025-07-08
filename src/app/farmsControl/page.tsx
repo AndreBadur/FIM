@@ -5,9 +5,11 @@ import {FarmManagement, farmType} from '@/classes/FarmManagements'
 import {AriaTable} from '@/components/Table'
 import {Button} from 'react-aria-components'
 import {verificarFazendeiro} from '@/utils/utilityFunctions'
+import {useRouter} from 'next/navigation'
 
 export default function DesignTest() {
     const [farmList, setFarmList] = useState<farmType[]>([])
+    const router = useRouter()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,7 +37,26 @@ export default function DesignTest() {
                     </Button>
                 </div>
 
-                <AriaTable tipo="farm" dados={farmList} />
+                <AriaTable
+                    columns={[
+                        'ID Fazendeiro',
+                        'Criado em',
+                        'Modificado em',
+                        'CNPJ',
+                        'Nome',
+                    ]}
+                    keys={[
+                        'id_farm',
+                        'created_at',
+                        'updated_at',
+                        'cnpj',
+                        'corporate_name',
+                    ]}
+                    onRowClick={(item) =>
+                        router.push(`/farmsUpdate?id=${item['id_farm']}`)
+                    }
+                    dados={farmList}
+                />
             </div>
         </div>
     )

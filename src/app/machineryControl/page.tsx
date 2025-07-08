@@ -4,9 +4,11 @@ import {useEffect, useState} from 'react'
 import {MachineryManagement, machineryType} from '@/classes/MachineryManagement'
 import {AriaTable} from '@/components/Table'
 import {verifyFarmbyId} from '@/utils/utilityFunctions'
+import {useRouter} from 'next/navigation'
 
 export default function MachineryControl() {
     const [machineryList, setMachineryList] = useState<machineryType[]>([])
+    const router = useRouter()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,7 +34,34 @@ export default function MachineryControl() {
                         </button>
                     </a>
                 </div>
-                <AriaTable tipo="machinery" dados={machineryList} />
+                <AriaTable
+                    columns={[
+                        'ID Fazenda',
+                        'ID Tipo de Maquinário',
+                        'Custo Por Hora',
+                        'última Manutenção',
+                        'Intervalo das Manutenções',
+                        'Modelo',
+                        'Nome',
+                        'Status',
+                    ]}
+                    keys={[
+                        'id_farm',
+                        'id_machinery_type',
+                        'cost_per_hour',
+                        'last_maintance_date',
+                        'maintenance_interval',
+                        'model',
+                        'name',
+                        'status',
+                    ]}
+                    onRowClick={(item) =>
+                        router.push(
+                            `/machineryUpdate?id=${item['id_machinery']}`,
+                        )
+                    }
+                    dados={machineryList}
+                />
             </div>
         </div>
     )

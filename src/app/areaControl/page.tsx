@@ -4,9 +4,11 @@ import {useEffect, useState} from 'react'
 import {AreaManagement, areaType} from '@/classes/AreaManagement'
 import {AriaTable} from '@/components/Table'
 import {verifyFarmbyId} from '@/utils/utilityFunctions'
+import {useRouter} from 'next/navigation'
 
 export default function AreaControl() {
     const [areaList, setAreaList] = useState<areaType[]>([])
+    const router = useRouter()
 
     useEffect(() => {
         const fetchAreas = async () => {
@@ -30,7 +32,26 @@ export default function AreaControl() {
                         </button>
                     </a>
                 </div>
-                <AriaTable tipo="area" dados={areaList} />
+                <AriaTable
+                    columns={[
+                        'ID tipo da Área',
+                        'ID Fazenda',
+                        'Nome',
+                        'Descrição',
+                        'Características',
+                    ]}
+                    keys={[
+                        'id_type_area',
+                        'id_farm',
+                        'name',
+                        'description',
+                        'features',
+                    ]}
+                    onRowClick={(item) =>
+                        router.push(`/areaUpdate?id=${item['id_area']}`)
+                    }
+                    dados={areaList}
+                />
             </div>
         </div>
     )
